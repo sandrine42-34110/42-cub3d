@@ -1,7 +1,11 @@
-#include <stdio.h>
+#include "cub3d.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
-	printf("hellow\n");
+	t_all	*all;
+
+	all = init_all(argc, argv);
+	if (!all)
+		return (1);
 	return (0);
 }

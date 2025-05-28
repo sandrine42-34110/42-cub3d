@@ -23,14 +23,14 @@ else
 	MLX_FLAGS = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 endif
 
-INCLUDES = -I$(HEADER_DIR) -I$(MINILIB_DIR)
+INCLUDES = -I$(HEADER_DIR) -I$(MINILIB_DIR) -I$(LIBFT_DIR)
 LIBS = -L$(LIBFT_DIR) -lft -L$(MINILIB_DIR) $(MLX_FLAGS)
 
 #listing fin de projet
 #SRCS_FILES = main.c
 SRCS_FILES = $(shell find $(SRCS_DIR) -name "*.c")
 
-OBJS = $(patsubst %.c, $(OBJS_DIR)/%.o, $(SRCS_FILES:$(SRCS_DIR)/%=%))
+OBJS = $(patsubst srcs/%.c, objs/%.o, $(SRCS_FILES))
 
 all: $(LIBFT) $(MINILIB) $(NAME)
 
@@ -46,7 +46,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBS) -o $(NAME) -lncurses -lreadline
 	@echo ✅ "$(NAME) compiled"
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+objs/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
