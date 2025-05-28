@@ -1,16 +1,20 @@
+NAME = cub3d
 
-NAME	=	cub3d
+LIBFT = libft.a
 
-CC		=	cc
-CFLAGS	=	-g -Wall -Wextra -Werror
+MINILIB = libmlx.a
 
-LIBFT_PATH	= libft/
-LIBFT_FILE	= $(LIBFT_PATH)libft.a
-MLX_PATH	= minilibx-linux/
-MLX_FILE	= $(MLX_PATH)libmlx.a
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g -O3
 
-OBJ_DIR = build
+HEADER_DIR = includes
+SRCS_DIR = srcs
+OBJS_DIR = objs
 
+LIBFT_DIR = ./libft
+MINILIB_DIR = ./minilibx-linux
+
+#Pour compiler  sur mac & ubuntu
 UNAME_S = $(shell uname -s)
 
 ifeq ($(UNAME_S), Linux)
@@ -19,39 +23,46 @@ else
 	MLX_FLAGS = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 endif
 
-#SRC = srcs/main.c \
-#		srcs/utils/xxx.c ...
-#ligne ci-dessous a remplacer par le listing comme ci-dessus
-SRC		= $(shell find srcs -name "*.c")
+INCLUDES = -I$(HEADER_DIR) -I$(MINILIB_DIR)
+LIBS = -L$(LIBFT_DIR) -lft -L$(MINILIB_DIR) $(MLX_FLAGS)
 
-OBJ		= $(SRC:srcs/%.c=$(OBJ_DIR)/%.o)
+#listing fin de projet
+#SRCS_FILES = main.c
+SRCS_FILES = $(shell find $(SRCS_DIR) -name "*.c")
 
-LIBS	= $(MLX_FLAGS) $(LIBFT_FILE)
+OBJS = $(patsubst %.c, $(OBJS_DIR)/%.o, $(SRCS_FILES:$(SRCS_DIR)/%=%))
 
-all: $(NAME)
+all: $(LIBFT) $(MINILIB) $(NAME)
 
-$(NAME): $(OBJ)
-	@make -C $(MLX_PATH) > /dev/null
-	@make -C $(LIBFT_PATH) --silent
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME) -I includes/
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR) --silent
+	@echo ✅ "libft compiled"
+
+$(MINILIB):
+	@$(MAKE) -C $(MINILIB_DIR) --silent
+	@echo ✅ "minilibx compiled"
+
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBS) -o $(NAME) -lncurses -lreadline
 	@echo ✅ "$(NAME) compiled"
 
-$(OBJ_DIR)/%.o: srcs/%.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@ -I includes/ -I $(LIBFT_PATH) -I $(MLX_PATH)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@make clean -C $(LIBFT_PATH) --silent
-	@make clean -C $(MLX_PATH) --silent
-	@rm -f $(OBJ)
+	@rm -f $(OBJS)
+	@rm -rf $(OBJS_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) clean --silent
+	@$(MAKE) -C $(MINILIB_DIR) clean
 	@echo "✅ Object files removed"
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_PATH) --silent
-	@make clean -C $(MLX_PATH) --silent
+	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
+	@$(MAKE) clean -C $(MINILIB_DIR) --silent
 	@echo "✅ Executable files removed"
-
+	
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re header
