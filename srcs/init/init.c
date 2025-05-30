@@ -26,8 +26,10 @@ t_all	*init_all(int argc, char **argv)
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (NULL);
+
 	all->height_file = 0;
 	//init_map(all, argv[1]);
 	//ft_printf("ok\n");
+	ft_printf("ok\n");
 	return (all);
 }
