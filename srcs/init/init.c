@@ -11,6 +11,28 @@ int	check_map_name(char *str)
 	return (0);
 }
 
+t_text	*init_text(void)
+{
+	t_text *text;
+
+	text = malloc(sizeof(t_text));
+	if (!text)
+		return (NULL);
+	text->no = NULL;
+	text->so = NULL;
+	text->we = NULL;
+	text->ea = NULL;	
+	text->floor_r = 0;
+	text->floor_g = 0;
+	text->floor_b = 0;
+	text->ceiling_r = 0;
+	text->ceiling_g = 0;
+	text->ceiling_b = 0;
+	text->floor = 0;
+	text->ceiling = 0;
+	return (text);
+}
+
 t_all	*init_all(int argc, char **argv)
 {
 	t_all	*all;
@@ -26,7 +48,12 @@ t_all	*init_all(int argc, char **argv)
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (NULL);
-
+	all->text = init_text();
+	if (!all->text)
+	{
+		free(all);
+		return (NULL);
+	}
 	all->height_file = 0;
 	//init_map(all, argv[1]);
 	//ft_printf("ok\n");

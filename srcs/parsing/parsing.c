@@ -31,11 +31,23 @@ void	handle_line(t_all *all, char *line)
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
 		return ;
-	if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'
-		|| line[i] == 'F' || line[i] == 'C')
+	// if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'
+	// 	|| line[i] == 'F' || line[i] == 'C')
+	// 	handle_textures(all, line);
+	// else if (line[i] == '1')
+	// 	handle_map(all, line);	//a ecrire
+	if (is_texture(all, line + i))
 		handle_textures(all, line);
-	else if (line[i] == '1')
-		handle_map(all, line);	//a ecrire
+	else if (is_color(line + i))
+		handle_colors(all, line);
+//	else if (line[i] == '1')
+//		handle_map(all, line); // à écrire
+	else
+		error_msg_and_close("Error: invalid line\n");
+
+
+
+
 }
 
 /* void	handle_file(t_all *all, char *file)
@@ -67,15 +79,15 @@ void	handle_file(t_all *all, char *file)
 	int	fd;
 	char	*line;
 
-	all->text = malloc(sizeof(t_text));
-	if (!all->text)
-		error_msg_and_close("malloc text failed!");
-	all->map = malloc(sizeof(t_map));
-	if (!all->map)
-	{
-		free_text(all->text);								//a ecrire
-		error_msg_and_close("malloc map failed!");
-	}
+	// all->text = malloc(sizeof(t_text));
+	// if (!all->text)
+	// 	error_msg_and_close("malloc text failed!");
+	// all->map = malloc(sizeof(t_map));
+	// if (!all->map)
+	// {
+	// 	free_text(all->text);								//a ecrire
+	// 	error_msg_and_close("malloc map failed!");
+	// }
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
