@@ -8,8 +8,9 @@
 
 typedef struct s_all
 {
-	int	i;
-	//t_map	map;
+	int			height_file;
+	t_map		*map;
+	t_text		*text;
 }			t_all;
 
 
@@ -18,10 +19,19 @@ typedef struct s_all
 	int		i; //bidon juste pour creer la structure
 }			t_map; */
 
+/* typedef struct s_text
+{
+	int		i; //bidon juste pour creer la structure
+}			t_text; */
+
 /* ====	init.c	=============================================================*/
 
 int		check_map_name(char *str);
 t_all	*init_all(int argc, char **argv);
+
+/* ====	parsing.c	=========================================================*/
+
+int	parse_map(all, argv[1]);
 
 /* ====	nom fichier	=========================================================*/
 

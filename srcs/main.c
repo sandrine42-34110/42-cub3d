@@ -7,5 +7,6 @@ int main(int argc, char **argv)
 	all = init_all(argc, argv);
 	if (!all)
 		return (1);
+	parse_map(all, argv[1]);
 	return (0);
 }
