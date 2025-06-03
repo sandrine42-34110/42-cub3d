@@ -6,18 +6,12 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:14:57 by badal-la          #+#    #+#             */
-/*   Updated: 2025/03/21 10:48:13 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:33:29 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief Remove all characters in set from the beginning and end of a string.
- * @param s1 (char const *) String to trim.
- * @param set (char const *) Set of characters to remove.
- * @return (char *) Newly allocated trimmed string, or NULL if allocation fails.
- */
 int	ft_strchrtrim(const char *s, int c)
 {
 	int	i;
@@ -32,6 +26,12 @@ int	ft_strchrtrim(const char *s, int c)
 	return (0);
 }
 
+/**
+ * @brief Remove all characters in set from the beginning and end of a string.
+ * @param s1 (char const *) String to trim.
+ * @param set (char const *) Set of characters to remove.
+ * @return (char *) Newly allocated trimmed string, or NULL if allocation fails.
+ */
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	i;

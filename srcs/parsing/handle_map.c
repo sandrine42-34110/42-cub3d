@@ -52,5 +52,5 @@ void	handle_map(t_all *all, char *line, int fd)
 		}
 	}
 	all->map->line[i] = NULL;
-	print_map(all);																//a supprimer
+	//print_map(all);																//a supprimer
 }

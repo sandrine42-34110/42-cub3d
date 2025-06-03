@@ -1,5 +1,21 @@
 #include "cub3d.h"
 
+int	ft_isdigit_and_spaces (char *c)
+{
+	int	i;
+
+	i = 0;
+	while (c[i])
+	{
+		if (!((c[i] >= '0' && c[i] <= '9')
+			|| c[i] == ' '
+			|| c[i] == '\t'
+			|| c[i] == '\n'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 void	parse_rgb(const char *str, int *rgb)
 {
 	int		i;
@@ -11,14 +27,16 @@ void	parse_rgb(const char *str, int *rgb)
 	{
 		ft_free_split(split, "Error : invalid RGB format\n");
 	}
+	if (split[3] && split[3][0] != '\n')
+		ft_free_split(split, "Error: too many arguments for colors\n");
 	i = -1;
 	while (++i < 3)
 	{
+		if(!ft_isdigit_and_spaces(split[i]))
+			ft_free_split(split, "Error : RGB value must be a number\n");
 		val = ft_atoi(split[i]);
 		if (val < 0 || val > 255)
-		{
 			ft_free_split(split, "Error : RGB value out of limits\n");
-		}
 		rgb[i] = val;
 	}
 	ft_free_split(split, NULL);
@@ -60,32 +78,26 @@ int	is_color(char *line)
 void	handle_colors(t_all *all, char *line)
 {
 	int		i;
-	char	**split;
 
 	i = 0;
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 		i++;
-	split = ft_split(line + i, ' ');
-	ft_printf("split[0] = %s\n", split[0]);
-	ft_printf("split[1] = %s\n", split[1]);
-	ft_printf("split[2] = %s\n", split[2]);
-	ft_printf("split[3] = %s\n", split[3]);
-	if (!split || !split[0] || !split[1] || !split[2])
+	if (line[i] == 'F')
 	{
-		ft_free_split(split, "Error: invalid color\n");
-	}
-	else if (!ft_strncmp(split[0], "F", 2) && !all->text->floor)
-	{
-		set_color(all, 'F', split[1]);
+		if (all->text->floor)
+			error_msg_and_close("Error: duplicate floor color\n");				//a surement modifier (surtout les free)
+		set_color(all, 'F', line + i + 1);
 		all->text->floor = 1;
 	}
-	else if (!ft_strncmp(split[0], "C", 2) && !all->text->ceiling)
-	{
-		set_color(all, 'C', split[1]);
+	else if (line[i] == 'C')
+	{	
+		if (all->text->ceiling)
+			error_msg_and_close("Error: duplicate ceiling color\n");			//a surement modifier (surtout les free)
+		set_color(all, 'C', line + i + 1);
 		all->text->ceiling = 1;
 	}
 	else
 	{
-		ft_free_split(split, "Error: duplicate or invalid color\n");
+		error_msg_and_close("Error: duplicate or invalid color\n");
 	}
 }

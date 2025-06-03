@@ -67,6 +67,21 @@ int	handle_line(t_all *all, char *line)
 	}
 } */
 
+void print_parsing_text(t_all *all)
+{
+	ft_printf("NO = %s\n", all->text->no);
+	ft_printf("SO = %s\n", all->text->so);
+	ft_printf("WE = %s\n", all->text->we);
+	ft_printf("EA = %s\n", all->text->ea);
+	ft_printf("F = %d\n", all->text->floor_r);
+	ft_printf("F = %d\n", all->text->floor_g);
+	ft_printf("F = %d\n", all->text->floor_b);
+	ft_printf("C = %d\n", all->text->ceiling_r);
+	ft_printf("C = %d\n", all->text->ceiling_g);
+	ft_printf("C = %d\n", all->text->ceiling_b);
+
+}
+
 void	handle_file(t_all *all, char *file)
 {
 	int	fd;
@@ -91,6 +106,7 @@ void	handle_file(t_all *all, char *file)
 		line = get_next_line(fd);
 		all->pos_line_read_file++;
 	}
+	print_parsing_text(all);													// a suppr
 	handle_map(all, line, fd); // a écrire
 	close(fd);
 }
