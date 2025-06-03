@@ -20,6 +20,7 @@ int	ft_isdigit_and_spaces (char *c)
 void	parse_rgb(const char *str, int *rgb)
 {
 	int		i;
+	int		j;
 	char	**split;
 	int		val;
 
@@ -28,16 +29,19 @@ void	parse_rgb(const char *str, int *rgb)
 	{
 		ft_free_split(split, "Error : invalid RGB format\n");
 	}
-	if ((split[1] && split[1][0] != '\n')
-		&& (split[2] && split[2][0] != '\n')
-		&& (split[3] && split[3][0] != '\n'))
-		ft_free_split(split, "Error: number of arguments for colors\n");
+
 	i = -1;
 	while (++i < 3)
 	{
+		j = 0;
 		if(!ft_isdigit_and_spaces(split[i]))
-			ft_free_split(split, "Error : RGB value must be a number\n");
+			ft_free_split(split, "Error : RGB must be positive numbers\n");
+		while (split[i][j] && (split[i][j] == ' ' || split[i][j] == '\t'))
+			j++;
+		if (split[i][j] == '\0' || split[i][j] == '\n')
+			ft_free_split(split, "Error : RGB value cannot be empty\n");
 		val = ft_atoi(split[i]);
+		ft_printf("%d\n", val);
 		if (val < 0 || val > 255)
 			ft_free_split(split, "Error : RGB value out of limits\n");
 		rgb[i] = val;
@@ -52,12 +56,14 @@ void	set_color(t_all *all, char type, const char *str)
 	parse_rgb(str, rgb);
 	if (type == 'F')
 	{
+		all->text->floor = 1;
 		all->text->floor_r = rgb[0];
 		all->text->floor_g = rgb[1];
 		all->text->floor_b = rgb[2];
 	}
 	else if (type == 'C')
 	{
+		all->text->ceiling = 1;
 		all->text->ceiling_r = rgb[0];
 		all->text->ceiling_g = rgb[1];
 		all->text->ceiling_b = rgb[2];
