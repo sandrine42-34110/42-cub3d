@@ -73,12 +73,12 @@ void print_parsing_text(t_all *all)
 	ft_printf("SO = %s\n", all->text->so);
 	ft_printf("WE = %s\n", all->text->we);
 	ft_printf("EA = %s\n", all->text->ea);
-	ft_printf("F = %d\n", all->text->floor_r);
-	ft_printf("F = %d\n", all->text->floor_g);
-	ft_printf("F = %d\n", all->text->floor_b);
-	ft_printf("C = %d\n", all->text->ceiling_r);
-	ft_printf("C = %d\n", all->text->ceiling_g);
-	ft_printf("C = %d\n", all->text->ceiling_b);
+	ft_printf("F = r=%d", all->text->floor_r);
+	ft_printf(", g=%d", all->text->floor_g);
+	ft_printf(", b=%d\n", all->text->floor_b);
+	ft_printf("C = r=%d", all->text->ceiling_r);
+	ft_printf(", g=%d", all->text->ceiling_g);
+	ft_printf(", b= %d\n", all->text->ceiling_b);
 
 }
 

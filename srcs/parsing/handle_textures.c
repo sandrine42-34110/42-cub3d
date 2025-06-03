@@ -75,13 +75,13 @@ void	handle_textures(t_all *all, char *line)
 	if (split[2] && split[2][0] != '\n')
 		ft_free_split(split, "Error: too many arguments for texture\n");
 	if (!ft_strncmp(split[0], "NO", 3) && !all->text->no)
-		all->text->no = ft_strdup(split[1]);
+		all->text->no = ft_strdup(ft_strtrim(split[1], "\n"));
 	else if (!ft_strncmp(split[0], "SO", 3) && !all->text->so)
-		all->text->so = ft_strdup(split[1]);
+		all->text->so = ft_strdup(ft_strtrim(split[1], "\n"));
 	else if (!ft_strncmp(split[0], "WE", 3) && !all->text->we)
-		all->text->we = ft_strdup(split[1]);
+		all->text->we = ft_strdup(ft_strtrim(split[1], "\n"));
 	else if (!ft_strncmp(split[0], "EA", 3) && !all->text->ea)
-		all->text->ea = ft_strdup(split[1]);
+		all->text->ea = ft_strdup(ft_strtrim(split[1], "\n"));
 	else
 		ft_free_split(split, "Error: duplicate or invalid texture\n");
 }

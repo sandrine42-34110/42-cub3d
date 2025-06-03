@@ -27,8 +27,10 @@ void	parse_rgb(const char *str, int *rgb)
 	{
 		ft_free_split(split, "Error : invalid RGB format\n");
 	}
-	if (split[3] && split[3][0] != '\n')
-		ft_free_split(split, "Error: too many arguments for colors\n");
+	if ((split[1] && split[1][0] != '\n')
+		&& (split[2] && split[2][0] != '\n')
+		&& (split[3] && split[3][0] != '\n'))
+		ft_free_split(split, "Error: number of arguments for colors\n");
 	i = -1;
 	while (++i < 3)
 	{
