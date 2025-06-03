@@ -21,7 +21,7 @@ t_text	*init_text(void)
 	text->no = NULL;
 	text->so = NULL;
 	text->we = NULL;
-	text->ea = NULL;	
+	text->ea = NULL;
 	text->floor_r = 0;
 	text->floor_g = 0;
 	text->floor_b = 0;
@@ -55,8 +55,6 @@ t_all	*init_all(int argc, char **argv)
 		return (NULL);
 	}
 	all->height_file = 0;
-	//init_map(all, argv[1]);
-//	init_map(all, argv[1]);
-	ft_printf("ok\n");
+	all->pos_line_read_file = 0;
 	return (all);
 }

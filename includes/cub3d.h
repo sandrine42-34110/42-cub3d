@@ -7,19 +7,21 @@
 #include <unistd.h>
 
 typedef struct s_text	t_text;
+typedef struct s_map	t_map;
 
 typedef struct s_all
 {
 	int			height_file;
-//	t_map		*map;
+	int			pos_line_read_file;
+	t_map		*map;
 	t_text		*text;
 }			t_all;
 
 
-/* typedef struct s_map
+typedef struct s_map
 {
-	int		i; //bidon juste pour creer la structure
-}			t_map; */
+	char	**line; 
+}			t_map;
 
 typedef struct s_text
 {
@@ -48,10 +50,14 @@ t_all	*init_all(int argc, char **argv);
 void	error_msg_and_close(char *msg);
 void	parse_map(t_all *all, char *file);
 
+/* ====	handle_map.c	=================================================*/
+
+void	handle_map(t_all *all, char *line, int fd);	
+
 /* ====	handle_textures.c	=================================================*/
 
 void	ft_free_split(char **split, char *msg);
-int		is_texture(t_all *all, char *line);
+int		is_texture(char *line);
 void	handle_textures(t_all *all, char *line);
 
 /* ====	handle_colors.c	=====================================================*/

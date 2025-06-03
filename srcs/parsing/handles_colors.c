@@ -66,7 +66,11 @@ void	handle_colors(t_all *all, char *line)
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 		i++;
 	split = ft_split(line + i, ' ');
-	if (!split || !split[0] || !split[1] || split[2])
+	ft_printf("split[0] = %s\n", split[0]);
+	ft_printf("split[1] = %s\n", split[1]);
+	ft_printf("split[2] = %s\n", split[2]);
+	ft_printf("split[3] = %s\n", split[3]);
+	if (!split || !split[0] || !split[1] || !split[2])
 	{
 		ft_free_split(split, "Error: invalid color\n");
 	}
