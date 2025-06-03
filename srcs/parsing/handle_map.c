@@ -12,6 +12,54 @@ void print_map(t_all *all)
 	}
 }
 
+/* void	fill_map(char *line, t_all *all, int fd, int i)
+{
+	int	len_line;
+
+	len_line = ft_strlen(line);
+	all->map->line[i] = ft_strndup(line, len_line - 1);
+	// if (!all->map->line[i])
+	//	error_map("add line map failed!", all);									//a ecrire free toutes les lignes avant
+	i++;
+	free(line);
+	line = get_next_line(fd);
+}
+
+void check_spaces_and_bn(char *line, int j, int fd)
+{
+	while (line[j] && (line[j] == ' ' || line[j] == '\t'))
+		j++;
+	if (line[j] != '\0' && line[j] != '\n')
+		error_msg_and_close("Error: invalid line in map\n");					// a ecrire
+}
+void	handle_map(t_all *all, char *line, int fd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	all->map->line = malloc(sizeof(char *)
+		* (all->height_file - all->pos_line_read_file + 1));
+	// if (!all->map->line)
+	//	error_map("malloc map->line failed!", all);								//a ecrire 
+	while(line)
+	{
+		j = 0;
+		while (line[j] && (line[j] == ' ' || line[j] == '\t'))
+			j++;
+		if (line[j] == '1')
+			fill_map(line, all, fd, i);
+		else
+		{
+			check_spaces_and_bn(line, j, fd);
+			free(line);
+			line = get_next_line(fd);
+		}
+	}
+	all->map->line[i] = NULL;
+	//print_map(all);																//a supprimer
+} */
+
 void	handle_map(t_all *all, char *line, int fd)
 {
 	int	i;
@@ -19,28 +67,21 @@ void	handle_map(t_all *all, char *line, int fd)
 	int	len_line;
 
 	i = 0;
-
 	all->map->line = malloc(sizeof(char *)
 		* (all->height_file - all->pos_line_read_file + 1));
-	/* if (!all->map->line)
-		error_map("malloc map->line failed!", all);								//a ecrire */
+	// if (!all->map->line)
+	//	error_map("malloc map->line failed!", all);								//a ecrire 
 	while(line)
 	{
 		j = 0;
 		while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 			j++;
-		if (line[j] == '\n')
-		{
-				free(line);
-				line = get_next_line(fd);
-				continue;
-		}
-		else if (line[j] == '1')
+		if (line[j] == '1')
 		{
 			len_line = ft_strlen(line);
 			all->map->line[i] = ft_strndup(line, len_line - 1);
-			/* if (!all->map->line[i])
-				error_map("add line map failed!", all);							//a ecrire free toutes les lignes avant */
+			// if (!all->map->line[i])
+			//	error_map("add line map failed!", all);							//a ecrire free toutes les lignes avant
 			i++;
 			free(line);
 			line = get_next_line(fd);

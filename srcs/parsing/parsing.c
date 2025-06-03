@@ -84,12 +84,9 @@ void print_parsing_text(t_all *all)
 
 void	handle_file(t_all *all, char *file)
 {
-	int	fd;
+	int		fd;
 	char	*line;
 
-	// all->text = malloc(sizeof(t_text));
-	// if (!all->text)
-	// 	error_msg_and_close("malloc text failed!");
 	all->map = malloc(sizeof(t_map));
 	if (!all->map)
 	{

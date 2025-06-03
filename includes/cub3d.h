@@ -20,7 +20,7 @@ typedef struct s_all
 
 typedef struct s_map
 {
-	char	**line; 
+	char	**line;
 }			t_map;
 
 typedef struct s_text

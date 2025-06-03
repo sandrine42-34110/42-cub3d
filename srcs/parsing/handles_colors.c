@@ -16,6 +16,7 @@ int	ft_isdigit_and_spaces (char *c)
 	}
 	return (1);
 }
+
 void	parse_rgb(const char *str, int *rgb)
 {
 	int		i;
