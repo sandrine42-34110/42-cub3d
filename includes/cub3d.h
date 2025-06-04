@@ -21,6 +21,9 @@ typedef struct s_all
 typedef struct s_map
 {
 	char	**line;
+	int		h_map;
+	int		w_map; // width of each line
+	char	or_p;
 }			t_map;
 
 typedef struct s_text
@@ -41,7 +44,15 @@ typedef struct s_text
 }			t_text;
 
 
-/* ====	free.c	=============================================================*/
+/* ====	check_text_and_map.c	==============================================*/
+
+void	check_text_and_map(t_all *all);
+
+/* ====	floodfill.c	==============================================*/
+
+void	check_close_map(t_all *all);
+
+/* ====	free.c	==============================================================*/
 
 void	free_all(t_all *all);
 
@@ -49,6 +60,7 @@ void	free_all(t_all *all);
 
 int		check_map_name(char *str);
 t_all	*init_all(int argc, char **argv);
+t_map	*init_map(void);
 
 /* ====	parsing.c	=========================================================*/
 

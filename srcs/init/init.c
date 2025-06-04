@@ -48,6 +48,7 @@ t_all	*init_all(int argc, char **argv)
 	if (!all)
 		return (NULL);
 	all->text = init_text();
+	all->map = init_map();
 	if (!all->text)
 	{
 		free(all);
@@ -56,4 +57,17 @@ t_all	*init_all(int argc, char **argv)
 	all->height_file = 0;
 	all->pos_line_read_file = 0;
 	return (all);
+}
+
+t_map	*init_map(void)
+{
+	t_map	*map;
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->line = NULL;
+	map->h_map = 0;
+	map->w_map = 0;
+	map->or_p = 0;
+	return (map);
 }

@@ -103,10 +103,9 @@ void	handle_colors(t_all *all, char *line, int fd)
 	if (line[i] == 'F')
 	{
 		if (all->text->floor)
-		{
 			error_colors(fd, line, 0, all);
-			all->text->floor = 1;
-		}
+		set_color(all, 'F', line + i + 1);
+		all->text->floor = 1;
 	}
 	else if (line[i] == 'C')
 	{

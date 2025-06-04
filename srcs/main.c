@@ -8,6 +8,7 @@ int main(int argc, char **argv)
 	if (!all)
 		return (1);
 	parse_map(all, argv[1]);
+	check_text_and_map(all);
 	free_all(all);
 	return (0);
 }

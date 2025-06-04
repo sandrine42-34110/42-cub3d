@@ -50,10 +50,6 @@ void	handle_file(t_all *all, char *file)
 	int		fd;
 	char	*line;
 
-	all->map = malloc(sizeof(t_map));
-	if (!all->map)
-		error_msg_and_close("malloc map failed!", all);
-	all->map->line = NULL;
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
@@ -64,9 +60,6 @@ void	handle_file(t_all *all, char *file)
 		line = get_next_line(fd);
 		all->pos_line_read_file++;
 	}
-	if (all->text->no == NULL || all->text->so == NULL
-		|| all->text->we == NULL || all->text->ea == NULL)
-		error_msg_and_close("Error: missing texture information\n", all);
 	//print_parsing_text(all);													// a suppr
 	handle_map(all, line, fd);
 	close(fd);
@@ -84,7 +77,7 @@ void	parse_map(t_all *all, char *file)
 	if (!line)
 	{
 		close(fd);
-		error_msg_and_close("Map file is empty!", all);
+		error_msg_and_close("Map file is empty!\n", all);
 	}
 	while (line)
 	{
