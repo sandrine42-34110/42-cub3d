@@ -8,6 +8,7 @@
 
 typedef struct s_text	t_text;
 typedef struct s_map	t_map;
+//typedef struct s_mlx	t_mlx;
 
 typedef struct s_all
 {
@@ -15,8 +16,8 @@ typedef struct s_all
 	int			pos_line_read_file;
 	t_map		*map;
 	t_text		*text;
+	//t_mlx		*mlx;
 }				t_all;
-
 
 typedef struct s_map
 {
@@ -43,6 +44,21 @@ typedef struct s_text
 	int		ceiling_b;
 }			t_text;
 
+/* typedef struct s_mlx
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	int		w_win;
+	int		h_win;
+	int		tile_size;
+	int		player_x;
+	int		player_y;
+	char	or_pl; // 'N', 'S', 'E', 'W'
+	void	*img_w_n;
+	void	*img_w_s;
+	void	*img_w_e;
+	void	*img_w_w;
+}				t_mlx; */
 
 /* ====	check_text_and_map.c	==============================================*/
 
