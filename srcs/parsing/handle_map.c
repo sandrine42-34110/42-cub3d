@@ -12,23 +12,26 @@ void print_map(t_all *all)
 	}
 }
 
-void	fill_map(char *line, t_all *all, int *i)
+/* void	fill_map(char *line, t_all *all, int *i)
 {
 	int	len_line;
 
 	len_line = ft_strlen(line);
 	all->map->line[*i] = ft_strndup(line, len_line - 1);
-	// if (!all->map->line[i])
-	//	error_map("add line map failed!", all);									//a ecrire free toutes les lignes avant
+	if (!all->map->line[*i])
+		error_msg_and_close("add line map failed!", all);
 	(*i)++;
 }
 
-void check_spaces_and_bn(char *line, int j)
+void check_spaces_and_bn(char *line, int j, t_all *all)
 {
 	while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 		j++;
 	if (line[j] != '\0' && line[j] != '\n')
-		error_msg_and_close("Error: map is not at the end of fd\n");			// a ecrire
+	{
+		free(line);
+		error_msg_and_close("Error: map is not at the end of fd\n", all);
+	}
 }
 
 void	handle_map(t_all *all, char *line, int fd)
@@ -39,62 +42,86 @@ void	handle_map(t_all *all, char *line, int fd)
 	i = 0;
 	all->map->line = malloc(sizeof(char *)
 		* (all->height_file - all->pos_line_read_file + 1));
-	// if (!all->map->line)
-	//	error_map("malloc map->line failed!", all);								//a ecrire 
+	if (!all->map->line)
+		error_msg_and_close("malloc map->line failed!",  all);
 	while(line)
 	{
 		j = 0;
 		while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 			j++;
 		if (line[j] == '1')
-		{
 			fill_map(line, all, &i);
-			free(line);
-			line = get_next_line(fd);
-		}
 		else
+			check_spaces_and_bn(line, j, all);
+		free(line);
+		line = get_next_line(fd);
+	}
+	all->map->line[i] = NULL;
+
+	print_map(all);																//a supprimer
+} */
+
+void	fill_map(char *line, t_all *all, int *i, int fd)
+{
+	char	*trim;
+
+	trim = ft_strtrim(line, "\n");
+	all->map->line[*i] = ft_strdup(trim);
+	if (!all->map->line[*i])
+	{
+		go_to_end_fd(fd, line);
+		free(trim);
+		error_msg_and_close("add line map failed!", all);
+	}
+	(*i)++;
+	free(trim);
+}
+
+void check_spaces_and_bn(char *line, int j, t_all *all, int fd)
+{
+	if (line)
+	{
+		while (line)
 		{
-			check_spaces_and_bn(line, j);
+			while (line[j] && (line[j] == ' ' || line[j] == '\t'))
+				j++;
+			if (line[j] != '\0' && line[j] != '\n')
+			{
+				go_to_end_fd(fd, line);
+				error_msg_and_close("Error: map isn't at the end of fd\n", all);
+			}
 			free(line);
 			line = get_next_line(fd);
 		}
 	}
-	all->map->line[i] = NULL;
-	print_map(all);																//a supprimer
 }
 
-/* void	handle_map(t_all *all, char *line, int fd)
+void	handle_map(t_all *all, char *line, int fd)
 {
 	int	i;
 	int	j;
-	int	len_line;
 
 	i = 0;
 	all->map->line = malloc(sizeof(char *)
 		* (all->height_file - all->pos_line_read_file + 1));
-	// if (!all->map->line)
-	//	error_map("malloc map->line failed!", all);								//a ecrire 
-	while(line)
+	if (!all->map->line)
+	{
+		go_to_end_fd(fd, line);
+		error_msg_and_close("malloc map->line failed!", all);
+	}
+	while (line)
 	{
 		j = 0;
 		while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 			j++;
 		if (line[j] == '1')
-		{
-			len_line = ft_strlen(line);
-			all->map->line[i] = ft_strndup(line, len_line - 1);
-			// if (!all->map->line[i])
-			//	error_map("add line map failed!", all);							//a ecrire free toutes les lignes avant
-			i++;
-			free(line);
-			line = get_next_line(fd);
-		}
+			fill_map(line, all, &i, fd);
 		else
-		{
-			free(line);
-			line = get_next_line(fd);
-		}
+			break ;
+		free(line);
+		line = get_next_line(fd);
 	}
 	all->map->line[i] = NULL;
-	print_map(all);																//a supprimer
-} */
+	check_spaces_and_bn(line, j, all, fd);
+	//print_map(all);																//a supprimer
+}

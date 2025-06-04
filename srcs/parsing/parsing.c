@@ -1,28 +1,13 @@
 #include "cub3d.h"
 
-void	error_msg_and_close(char *msg)
+void	error_msg_and_close(char *msg, t_all *all)
 {
 	ft_putstr_fd(msg, 2);
+	free_all(all);
 	exit(1);
 }
 
-/* void	handle_line(t_all *all, char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
-		i++;
-	if (line[i] == '\0' || line[i] == '\n')
-		return ;
-	if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W'
-		|| line[i] == 'F' || line[i] == 'C')
-		handle_textures(all, line);
-	else if (line[i] == '1')
-		handle_map(all, line);	//a ecrire
-} */
-
-int	handle_line(t_all *all, char *line)
+int	handle_line(t_all *all, char *line, int fd)
 {
 	int	i;
 
@@ -32,39 +17,18 @@ int	handle_line(t_all *all, char *line)
 	if (line[i] == '\0' || line[i] == '\n')
 		return (0);
 	if (is_texture(line + i))
-		handle_textures(all, line);
+		handle_textures(all, line, fd);
 	else if (is_color(line + i))
-		handle_colors(all, line);
+		handle_colors(all, line, fd);
 	else if (line[i] == '1')
 		return (1);
 	else
-		error_msg_and_close("Error: invalid line\n");
+	{
+		go_to_end_fd(fd, line);
+		error_msg_and_close("Error: invalid line\n", all);
+	}
 	return (0);
 }
-
-/* void	handle_file(t_all *all, char *file)
-{
-	int	fd;
-	char	*line;
-
-	all->text = malloc(sizeof(t_text));
-	if (!all->text)
-		error_msg_and_close("malloc text failed!");
-	all->map = malloc(sizeof(t_map));
-	if (!all->map)
-	{
-		free_text(all->text);								//a ecrire
-		error_msg_and_close("malloc map failed!");
-	}
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
-	{
-		handle_line(all, line);	//a ecrire
-		free(line);
-		line = get_next_line(fd);
-	}
-} */
 
 void print_parsing_text(t_all *all)
 {
@@ -88,15 +52,13 @@ void	handle_file(t_all *all, char *file)
 
 	all->map = malloc(sizeof(t_map));
 	if (!all->map)
-	{
-		//free_text(all->text);								//a ecrire
-		error_msg_and_close("malloc map failed!");
-	}
+		error_msg_and_close("malloc map failed!", all);
+	all->map->line = NULL;
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
-		if(handle_line(all, line))
+		if(handle_line(all, line, fd))
 			break ;
 		free(line);
 		line = get_next_line(fd);
@@ -104,29 +66,30 @@ void	handle_file(t_all *all, char *file)
 	}
 	if (all->text->no == NULL || all->text->so == NULL
 		|| all->text->we == NULL || all->text->ea == NULL)
-		error_msg_and_close("Error: missing texture information\n");
-	print_parsing_text(all);													// a suppr
-	handle_map(all, line, fd);													// a écrire
+		error_msg_and_close("Error: missing texture information\n", all);
+	//print_parsing_text(all);													// a suppr
+	handle_map(all, line, fd);
 	close(fd);
 }
 
 void	parse_map(t_all *all, char *file)
 {
-	int	fd;
+	int		fd;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error_msg_and_close("Opening file failed!");
+		error_msg_and_close("Opening file failed!", all);
 	line = get_next_line(fd);
 	if (!line)
 	{
 		close(fd);
-		error_msg_and_close("Map file is empty!");
+		error_msg_and_close("Map file is empty!", all);
 	}
 	while (line)
 	{
 		all->height_file++;
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);

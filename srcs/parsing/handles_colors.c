@@ -17,7 +17,7 @@ int	ft_isdigit_and_spaces (char *c)
 	return (1);
 }
 
-void	parse_rgb(const char *str, int *rgb)
+void	parse_rgb(const char *str, int *rgb, t_all *all)
 {
 	int		i;
 	int		j;
@@ -26,34 +26,30 @@ void	parse_rgb(const char *str, int *rgb)
 
 	split = ft_split(str, ',');
 	if (!split || !split[0] || !split[1] || !split[2] || split[3])
-	{
-		ft_free_split(split, "Error : invalid RGB format\n");
-	}
-
+		ft_free_split(split, "Error : invalid RGB format\n", all);
 	i = -1;
 	while (++i < 3)
 	{
 		j = 0;
 		if(!ft_isdigit_and_spaces(split[i]))
-			ft_free_split(split, "Error : RGB must be positive numbers\n");
+			ft_free_split(split, "Error : RGB must be positive numbers\n", all);
 		while (split[i][j] && (split[i][j] == ' ' || split[i][j] == '\t'))
 			j++;
 		if (split[i][j] == '\0' || split[i][j] == '\n')
-			ft_free_split(split, "Error : RGB value cannot be empty\n");
+			ft_free_split(split, "Error : RGB value cannot be empty\n", all);
 		val = ft_atoi(split[i]);
-		ft_printf("%d\n", val);
 		if (val < 0 || val > 255)
-			ft_free_split(split, "Error : RGB value out of limits\n");
+			ft_free_split(split, "Error : RGB value out of limits\n", all);
 		rgb[i] = val;
 	}
-	ft_free_split(split, NULL);
+	ft_free_split(split, NULL, all);
 }
 
 void	set_color(t_all *all, char type, const char *str)
 {
 	int	rgb[3];
 
-	parse_rgb(str, rgb);
+	parse_rgb(str, rgb, all);
 	if (type == 'F')
 	{
 		all->text->floor = 1;
@@ -69,7 +65,7 @@ void	set_color(t_all *all, char type, const char *str)
 		all->text->ceiling_b = rgb[2];
 	}
 	else
-		error_msg_and_close("Error : unknown color type\n");
+		error_msg_and_close("Error : unknown color type\n", all);
 }
 
 int	is_color(char *line)
@@ -84,7 +80,20 @@ int	is_color(char *line)
 	return (0);
 }
 
-void	handle_colors(t_all *all, char *line)
+void	error_colors(int fd, char *line, int error, t_all *all)
+{
+	char	*msg_err;
+	if (error == 0)
+		msg_err = "Error: duplicate floor color\n";
+	if (error == 1)
+		msg_err = "Error: duplicate ceiling color\n";
+	if (error == 2)
+		msg_err = "Error: duplicate or invalid color\n";
+	go_to_end_fd(fd, line);
+	error_msg_and_close(msg_err, all);
+}
+
+void	handle_colors(t_all *all, char *line, int fd)
 {
 	int		i;
 
@@ -94,19 +103,18 @@ void	handle_colors(t_all *all, char *line)
 	if (line[i] == 'F')
 	{
 		if (all->text->floor)
-			error_msg_and_close("Error: duplicate floor color\n");				//a surement modifier (surtout les free)
-		set_color(all, 'F', line + i + 1);
-		all->text->floor = 1;
+		{
+			error_colors(fd, line, 0, all);
+			all->text->floor = 1;
+		}
 	}
 	else if (line[i] == 'C')
-	{	
+	{
 		if (all->text->ceiling)
-			error_msg_and_close("Error: duplicate ceiling color\n");			//a surement modifier (surtout les free)
+			error_colors(fd, line, 1, all);
 		set_color(all, 'C', line + i + 1);
 		all->text->ceiling = 1;
 	}
 	else
-	{
-		error_msg_and_close("Error: duplicate or invalid color\n");
-	}
+		error_colors(fd, line, 2, all);
 }

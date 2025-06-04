@@ -37,7 +37,6 @@ t_all	*init_all(int argc, char **argv)
 {
 	t_all	*all;
 
-	(void)argv;
 	if (argc != 2)
 	{
 		ft_putstr_fd("error : usage : ./philo [map_name].cub\n", 2);

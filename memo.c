@@ -16,3 +16,11 @@ gestion de la transparence dans les couleurs de F et C
 /* -------------------------------------------------------------------------- */
 
  le problème dans le parsing des couleurs vient du fait qu'il y a des espaces entre les couleurs
+
+
+
+
+
+ all
+ text
+ close(fd)

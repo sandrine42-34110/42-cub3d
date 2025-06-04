@@ -15,7 +15,7 @@ typedef struct s_all
 	int			pos_line_read_file;
 	t_map		*map;
 	t_text		*text;
-}			t_all;
+}				t_all;
 
 
 typedef struct s_map
@@ -40,6 +40,11 @@ typedef struct s_text
 	int		ceiling_b;
 }			t_text;
 
+
+/* ====	free.c	=============================================================*/
+
+void	free_all(t_all *all);
+
 /* ====	init.c	=============================================================*/
 
 int		check_map_name(char *str);
@@ -47,23 +52,27 @@ t_all	*init_all(int argc, char **argv);
 
 /* ====	parsing.c	=========================================================*/
 
-void	error_msg_and_close(char *msg);
+void	error_msg_and_close(char *msg, t_all *all);
 void	parse_map(t_all *all, char *file);
 
 /* ====	handle_map.c	=================================================*/
 
-void	handle_map(t_all *all, char *line, int fd);	
+void	handle_map(t_all *all, char *line, int fd);
 
 /* ====	handle_textures.c	=================================================*/
 
-void	ft_free_split(char **split, char *msg);
+void	ft_free_split(char **split, char *msg, t_all *all);
 int		is_texture(char *line);
-void	handle_textures(t_all *all, char *line);
+void	handle_textures(t_all *all, char *line, int fd);
 
 /* ====	handle_colors.c	=====================================================*/
 
 void	set_color(t_all *all, char type, const char *str);
 int		is_color(char *line);
-void	handle_colors(t_all *all, char *line);
+void	handle_colors(t_all *all, char *line, int fd);
+
+/* ====	utils.c	=============================================================*/
+
+void	go_to_end_fd(int fd, char *line);
 
 #endif
