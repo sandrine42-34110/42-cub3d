@@ -73,7 +73,7 @@ void	control_only_one_player(t_map *map, int start_x, int start_y, t_all *all)
 	int	y;
 
 	y = start_y;
-	x = start_x;
+	x = start_x + 1;
 	while (y < map->h_map)
 	{
 		while (x < map->w_map)
