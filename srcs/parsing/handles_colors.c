@@ -26,7 +26,7 @@ void	parse_rgb(const char *str, int *rgb, t_all *all)
 
 	split = ft_split(str, ',');
 	if (!split || !split[0] || !split[1] || !split[2] || split[3])
-		ft_free_split(split, "Error : invalid RGB format\n", all);
+		ft_free_split(split, "Error : Invalid RGB format\n", all);
 	i = -1;
 	while (++i < 3)
 	{
@@ -65,7 +65,7 @@ void	set_color(t_all *all, char type, const char *str)
 		all->text->ceiling_b = rgb[2];
 	}
 	else
-		error_msg_and_close("Error : unknown color type\n", all);
+		error_msg_and_close("Error : Unknown color type\n", all);
 }
 
 int	is_color(char *line)
@@ -84,11 +84,11 @@ void	error_colors(int fd, char *line, int error, t_all *all)
 {
 	char	*msg_err;
 	if (error == 0)
-		msg_err = "Error: duplicate floor color\n";
+		msg_err = "Error: Duplicate floor color\n";
 	if (error == 1)
-		msg_err = "Error: duplicate ceiling color\n";
+		msg_err = "Error: Duplicate ceiling color\n";
 	if (error == 2)
-		msg_err = "Error: duplicate or invalid color\n";
+		msg_err = "Error: Duplicate or invalid color\n";
 	go_to_end_fd(fd, line);
 	error_msg_and_close(msg_err, all);
 }

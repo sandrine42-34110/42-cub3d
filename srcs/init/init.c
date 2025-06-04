@@ -7,7 +7,7 @@ int	check_map_name(char *str)
 	len_name_file = ft_strlen(str);
 	if (ft_strcmp(".cub",str + len_name_file - 4) == 0)
 		return(1);
-	ft_putstr_fd("error : name map is not in .cub\n", 2);
+	ft_putstr_fd("Error : Name map isn't in .cub\n", 2);
 	return (0);
 }
 
@@ -39,7 +39,7 @@ t_all	*init_all(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_putstr_fd("error : usage : ./philo [map_name].cub\n", 2);
+		ft_putstr_fd("Error : Usage : ./philo [map_name].cub\n", 2);
 		return (NULL);
 	}
 	if(!check_map_name(argv[1]))

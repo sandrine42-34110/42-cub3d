@@ -28,7 +28,7 @@ void	fill_map(char *line, t_all *all, int *i, int fd)
 	{
 		go_to_end_fd(fd, line);
 		free(trim);
-		error_msg_and_close("add line map failed!", all);
+		error_msg_and_close("Error : Add line map failed!", all);
 	}
 	(*i)++;
 	all->map->h_map = *i;
@@ -46,7 +46,7 @@ void check_spaces_and_bn(char *line, int j, t_all *all, int fd)
 			if (line[j] != '\0' && line[j] != '\n')
 			{
 				go_to_end_fd(fd, line);
-				error_msg_and_close("Error: map isn't at the end of fd\n", all);
+				error_msg_and_close("Error: Map isn't at the end of fd\n", all);
 			}
 			free(line);
 			line = get_next_line(fd);
@@ -65,14 +65,14 @@ void	handle_map(t_all *all, char *line, int fd)
 	if (!all->map->line)
 	{
 		go_to_end_fd(fd, line);
-		error_msg_and_close("malloc map->line failed!", all);
+		error_msg_and_close("Error : Malloc map->line failed!", all);
 	}
 	while (line)
 	{
 		j = 0;
 		while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 			j++;
-		if (line[j] == '1')
+		if (line[j] =='0' || line[j] == '1')
 			fill_map(line, all, &i, fd);
 		else
 			break ;

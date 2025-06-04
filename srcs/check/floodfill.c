@@ -17,7 +17,7 @@ char	**duplicate_map(t_map *map, t_all *all)
 			while (--y >= 0)
 				free(copy[y]);
 			free(copy);
-			error_msg_and_close("Malloc failed for map_copy line", all);
+			error_msg_and_close("Error : Malloc failed for map_copy line", all);
 		}
 		y++;
 	}
@@ -28,12 +28,12 @@ char	**duplicate_map(t_map *map, t_all *all)
 void flood_fill(char **map, int x, int y, t_all *all)
 {
 	if (x < 0 || y < 0 || !map[y] || map[y][x] == '\0')
-		error_msg_and_close("Map is open !", all);
+		error_msg_and_close("Error :Map is open!\n", all);
 	if (map[y][x] == '1' || map[y][x] == 'F')
 		return;
 	if (map[y][x] != '0' && map[y][x] != 'N' && map[y][x] != 'S' &&
 		map[y][x] != 'E' && map[y][x] != 'W')
-		error_msg_and_close("Map is invalid !", all);
+		error_msg_and_close("Error : Map is not valid!\n", all);
 	map[y][x] = 'F';
 	flood_fill(map, x + 1, y, all);
 	flood_fill(map, x - 1, y, all);
@@ -67,7 +67,7 @@ int	find_start(t_map *map, int *start_x, int *start_y)
 	return (0);
 }
 
-void	control_only_one_player(t_map *map, int start_x, int start_y, t_all *all)
+void	ctrl_only_one_player(t_map *map, int start_x, int start_y, t_all *all)
 {
 	int	x;
 	int	y;
@@ -80,7 +80,7 @@ void	control_only_one_player(t_map *map, int start_x, int start_y, t_all *all)
 		{
 			if (map->line[y][x] == 'N' || map->line[y][x] == 'S'
 				|| map->line[y][x] == 'E' || map->line[y][x] == 'W')
-				error_msg_and_close("Error : more than one player\n", all);
+				error_msg_and_close("Error : More than one player\n", all);
 			x++;
 		}
 		x = 0;
@@ -114,7 +114,7 @@ void	check_close_map(t_all *all)
 	y = 0;
 	if (!find_start(all->map, &x, &y))
 		error_msg_and_close("Error ! No player\n", all);
-	control_only_one_player(all->map, x, y, all);
+	ctrl_only_one_player(all->map, x, y, all);
 	map_copy = duplicate_map(all->map, all);
 	flood_fill(map_copy, x, y, all);
 	free_map_copy(map_copy, all->map->h_map);

@@ -2,25 +2,20 @@
 /*                                   bastien                                  */
 /* -------------------------------------------------------------------------- */
 
-map : 
-11111111111111
-10000000000001
-				//\n au milieu de la map?
-10000000000001
-11111111111111
 
 
-gestion de la transparence dans les couleurs de F et C
 /* -------------------------------------------------------------------------- */
 /*                                  sandrine                                  */
 /* -------------------------------------------------------------------------- */
 
- le problème dans le parsing des couleurs vient du fait qu'il y a des espaces entre les couleurs
 
 
+/* -------------------------------------------------------------------------- */
+/*                                    tests                                   */
+/* -------------------------------------------------------------------------- */
 
+forbiden.cub -> gerer les espaces dans la map et/ou les zones sans player?? 
+				Dans ce cas ca se complique pour le check de la map car flood_fill gere que la zone qui contient le player
 
-
- all
- text
- close(fd)
+texture_dir.cub -> gerer les bons chemins des texture (dans init mlx)
+texture_forbidden.cub -> idem texture_dir.cub

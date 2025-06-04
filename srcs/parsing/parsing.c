@@ -20,12 +20,12 @@ int	handle_line(t_all *all, char *line, int fd)
 		handle_textures(all, line, fd);
 	else if (is_color(line + i))
 		handle_colors(all, line, fd);
-	else if (line[i] == '1')
+	else if (line[i] == '0' || line[i] == '1')
 		return (1);
 	else
 	{
 		go_to_end_fd(fd, line);
-		error_msg_and_close("Error: invalid line\n", all);
+		error_msg_and_close("Error: Invalid line\n", all);
 	}
 	return (0);
 }
@@ -72,12 +72,12 @@ void	parse_map(t_all *all, char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error_msg_and_close("Opening file failed!", all);
+		error_msg_and_close("Error : Opening file failed!", all);
 	line = get_next_line(fd);
 	if (!line)
 	{
 		close(fd);
-		error_msg_and_close("Map file is empty!\n", all);
+		error_msg_and_close("Error : Map file is empty!\n", all);
 	}
 	while (line)
 	{
