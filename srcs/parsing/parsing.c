@@ -31,7 +31,6 @@ int	handle_line(t_all *all, char *line)
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
 		return (0);
-	//if (is_texture(all, line + i))
 	if (is_texture(line + i))
 		handle_textures(all, line);
 	else if (is_color(line + i))
@@ -103,8 +102,11 @@ void	handle_file(t_all *all, char *file)
 		line = get_next_line(fd);
 		all->pos_line_read_file++;
 	}
+	if (all->text->no == NULL || all->text->so == NULL
+		|| all->text->we == NULL || all->text->ea == NULL)
+		error_msg_and_close("Error: missing texture information\n");
 	print_parsing_text(all);													// a suppr
-	handle_map(all, line, fd); // a écrire
+	handle_map(all, line, fd);													// a écrire
 	close(fd);
 }
 

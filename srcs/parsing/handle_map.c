@@ -12,26 +12,25 @@ void print_map(t_all *all)
 	}
 }
 
-/* void	fill_map(char *line, t_all *all, int fd, int i)
+void	fill_map(char *line, t_all *all, int *i)
 {
 	int	len_line;
 
 	len_line = ft_strlen(line);
-	all->map->line[i] = ft_strndup(line, len_line - 1);
+	all->map->line[*i] = ft_strndup(line, len_line - 1);
 	// if (!all->map->line[i])
 	//	error_map("add line map failed!", all);									//a ecrire free toutes les lignes avant
-	i++;
-	free(line);
-	line = get_next_line(fd);
+	(*i)++;
 }
 
-void check_spaces_and_bn(char *line, int j, int fd)
+void check_spaces_and_bn(char *line, int j)
 {
 	while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 		j++;
 	if (line[j] != '\0' && line[j] != '\n')
-		error_msg_and_close("Error: invalid line in map\n");					// a ecrire
+		error_msg_and_close("Error: map is not at the end of fd\n");			// a ecrire
 }
+
 void	handle_map(t_all *all, char *line, int fd)
 {
 	int	i;
@@ -48,19 +47,23 @@ void	handle_map(t_all *all, char *line, int fd)
 		while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 			j++;
 		if (line[j] == '1')
-			fill_map(line, all, fd, i);
+		{
+			fill_map(line, all, &i);
+			free(line);
+			line = get_next_line(fd);
+		}
 		else
 		{
-			check_spaces_and_bn(line, j, fd);
+			check_spaces_and_bn(line, j);
 			free(line);
 			line = get_next_line(fd);
 		}
 	}
 	all->map->line[i] = NULL;
-	//print_map(all);																//a supprimer
-} */
+	print_map(all);																//a supprimer
+}
 
-void	handle_map(t_all *all, char *line, int fd)
+/* void	handle_map(t_all *all, char *line, int fd)
 {
 	int	i;
 	int	j;
@@ -93,5 +96,5 @@ void	handle_map(t_all *all, char *line, int fd)
 		}
 	}
 	all->map->line[i] = NULL;
-	//print_map(all);																//a supprimer
-}
+	print_map(all);																//a supprimer
+} */
