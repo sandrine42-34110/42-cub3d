@@ -107,6 +107,7 @@ t_mlx	*init_mlx(t_all *all);
 /* ====	parsing.c	=========================================================*/
 
 void	error_msg_and_close(char *msg, t_all *all);
+void	error_and_close_all(char *msg, t_all *all);
 void	parse_map(t_all *all, char *file);
 
 /* ====	handle_map.c	=================================================*/
