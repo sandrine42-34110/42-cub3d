@@ -16,7 +16,7 @@ void	ft_free_split(char **split, char *msg, t_all *all)
 	if (msg)
 	{
 		ft_putstr_fd(msg, 2);
-		free_all(all);
+		free_text_and_map(all);
 		exit (1);
 	}
 }

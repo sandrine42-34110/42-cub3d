@@ -4,7 +4,19 @@
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
-#include <unistd.h>
+# include <unistd.h>
+# include <math.h>
+
+# define KEY_W_UP		119
+# define KEY_S_DOWN		115
+# define KEY_A_LEFT		97
+# define KEY_D_RIGHT	100
+# define KEY_ESCAPE		65307
+
+# define W_WIN 1000
+# define H_WIN 600
+
+# define TITLE "cub3d"
 
 typedef struct s_text	t_text;
 typedef struct s_map	t_map;
@@ -24,6 +36,8 @@ typedef struct s_map
 	char	**line;
 	int		h_map;
 	int		w_map; // width of each line
+	int		x_p;
+	int		y_p;
 	char	or_p;
 }			t_map;
 
@@ -71,7 +85,9 @@ void	check_close_map(t_all *all);
 
 /* ====	free.c	==============================================================*/
 
+void	free_text_and_map(t_all *all);
 void	free_all(t_all *all);
+
 
 /* ====	init.c	=============================================================*/
 

@@ -28,12 +28,12 @@ char	**duplicate_map(t_map *map, t_all *all)
 void flood_fill(char **map, int x, int y, t_all *all)
 {
 	if (x < 0 || y < 0 || !map[y] || map[y][x] == '\0')
-		error_msg_and_close("Error : Map is open!\n", all);
+		error_msg_and_close("Error : Map isn't valid!\n", all);
 	if (map[y][x] == '1' || map[y][x] == 'F')
 		return;
 	if (map[y][x] != '0' && map[y][x] != 'N' && map[y][x] != 'S' &&
 		map[y][x] != 'E' && map[y][x] != 'W')
-		error_msg_and_close("Error : Map is not valid!\n", all);
+		error_msg_and_close("Error : Map isn't valid!\n", all);
 	map[y][x] = 'F';
 	flood_fill(map, x + 1, y, all);
 	flood_fill(map, x - 1, y, all);
@@ -64,6 +64,8 @@ int	find_start(t_map *map, int *start_x, int *start_y)
 		}
 		y++;
 	}
+	map->x_p = x;
+	map->y_p = y;
 	return (0);
 }
 

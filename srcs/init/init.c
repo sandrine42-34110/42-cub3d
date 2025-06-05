@@ -49,10 +49,9 @@ t_all	*init_all(int argc, char **argv)
 		return (NULL);
 	all->text = init_text();
 	all->map = init_map();
-	all->mlx = init_mlx(all);
-	if (!all->text || !all->map || !all->mlx)
+	if (!all->text || !all->map)
 	{
-		free_all(all);
+		free_text_and_map(all);
 		return (NULL);
 	}
 	all->height_file = 0;
@@ -69,8 +68,26 @@ t_map	*init_map(void)
 	map->line = NULL;
 	map->h_map = 0;
 	map->w_map = 0;
+	map->x_p = 0;
+	map->y_p = 0;
 	map->or_p = 0;
 	return (map);
+}
+
+int	tile_size(t_all *all)
+{
+	int	size_w;
+	int	size_h;
+
+	size_w = W_WIN / (5 * all->map->w_map);
+	size_h = H_WIN / (5 * all->map->h_map);
+	return (fmin(size_w, size_h));
+}
+
+void	load_images(t_all *all)
+{
+	all->mlx->img_w_n = mlx_xpm_file_to_image(all->mlx->mlx_ptr, \
+						all->text->no, &mlx->img_width, &mlx->img_height);
 }
 
 t_mlx	*init_mlx(t_all *all)
@@ -80,14 +97,20 @@ t_mlx	*init_mlx(t_all *all)
 	mlx = malloc(sizeof(t_mlx));
 	if (!mlx)
 		return (NULL);
-	mlx->mlx_ptr = mlx_init;
+	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr)
-		error_msg_and_close("Error : MiniLibX initialization failed!", all);
-	mlx->win_ptr = NULL;
-	mlx->w_win = 0;
-	mlx->h_win = 0;
-	mlx->tile_size = 0;
-	mlx->player_x = 0;
-	mlx->player_y = 0;
+		error_and_close_all("Error : MiniLibX initialization failed!", all);
+	if (W_WIN == 0 || H_WIN == 0)
+		error_and_close_all("Error : bad size of window\n", all);
+	mlx->w_win = W_WIN;
+	mlx->h_win = H_WIN;
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->w_win, mlx->h_win, TITLE);
+	if (!mlx->win_ptr)
+		error_and_close_all("Error : Failed to create window\n", all);
+	mlx->tile_size = tile_size(all);
+	// mlx->player_x = 0;
+	// mlx->player_y = 0;
+	if (!load_images(all))
+		error_and_close_all("Error : Texture isn't exist\n", all);
 	return (mlx);
 }

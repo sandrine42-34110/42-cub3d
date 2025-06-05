@@ -51,6 +51,16 @@ void	free_mlx(t_mlx *mlx)
 	}
 }
 
+void	free_text_and_map(t_all *all)
+{
+	if (all)
+	{
+		free_text(all->text);
+		free_map(all->map);
+		free(all);
+	}
+}
+
 void	free_all(t_all *all)
 {
 	if (all)

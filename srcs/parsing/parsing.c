@@ -3,6 +3,13 @@
 void	error_msg_and_close(char *msg, t_all *all)
 {
 	ft_putstr_fd(msg, 2);
+	free_text_and_map(all);
+	exit(1);
+}
+
+void	error_and_close_all(char *msg, t_all *all)
+{
+	ft_putstr_fd(msg, 2);
 	free_all(all);
 	exit(1);
 }
