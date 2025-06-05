@@ -8,7 +8,7 @@
 
 typedef struct s_text	t_text;
 typedef struct s_map	t_map;
-//typedef struct s_mlx	t_mlx;
+typedef struct s_mlx	t_mlx;
 
 typedef struct s_all
 {
@@ -16,7 +16,7 @@ typedef struct s_all
 	int			pos_line_read_file;
 	t_map		*map;
 	t_text		*text;
-	//t_mlx		*mlx;
+	t_mlx		*mlx;
 }				t_all;
 
 typedef struct s_map
@@ -44,7 +44,7 @@ typedef struct s_text
 	int		ceiling_b;
 }			t_text;
 
-/* typedef struct s_mlx
+typedef struct s_mlx
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -57,7 +57,9 @@ typedef struct s_text
 	void	*img_w_s;
 	void	*img_w_e;
 	void	*img_w_w;
-}				t_mlx; */
+	void	*clr_f;
+	void	*clr_c;
+}				t_mlx;
 
 /* ====	check_text_and_map.c	==============================================*/
 
@@ -74,8 +76,10 @@ void	free_all(t_all *all);
 /* ====	init.c	=============================================================*/
 
 int		check_map_name(char *str);
+t_text	*init_text(void);
 t_all	*init_all(int argc, char **argv);
 t_map	*init_map(void);
+t_mlx	*init_mlx(t_all *all);
 
 /* ====	parsing.c	=========================================================*/
 

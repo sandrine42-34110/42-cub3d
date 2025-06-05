@@ -34,7 +34,7 @@ void	free_map(t_map *map)
 	free(map);
 }
 
-/* void	free_mlx(t_mlx *mlx)
+void	free_mlx(t_mlx *mlx)
 {
 	if (!mlx)
 		return ;
@@ -49,7 +49,7 @@ void	free_map(t_map *map)
 		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_w);
 		free(mlx);
 	}
-} */
+}
 
 void	free_all(t_all *all)
 {
@@ -57,7 +57,7 @@ void	free_all(t_all *all)
 	{
 		free_text(all->text);
 		free_map(all->map);
-		//free_mlx(all->mlx); // Assuming mlx is a member of t_all
+		free_mlx(all->mlx);
 		free(all);
 	}
 }

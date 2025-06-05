@@ -49,13 +49,10 @@ t_all	*init_all(int argc, char **argv)
 		return (NULL);
 	all->text = init_text();
 	all->map = init_map();
-	//all->mlx = init_mlx();
-	if (!all->text || !all->map) // || !all->mlx)
+	all->mlx = init_mlx(all);
+	if (!all->text || !all->map || !all->mlx)
 	{
-		//free_text(all->text);
-		//free_map(all->map);
-		//free_mlx(all->mlx);
-		free(all);
+		free_all(all);
 		return (NULL);
 	}
 	all->height_file = 0;
@@ -76,7 +73,7 @@ t_map	*init_map(void)
 	return (map);
 }
 
-/* t_mlx	*init_mlx(void)
+t_mlx	*init_mlx(t_all *all)
 {
 	t_mlx	*mlx;
 
@@ -85,7 +82,7 @@ t_map	*init_map(void)
 		return (NULL);
 	mlx->mlx_ptr = mlx_init;
 	if (!mlx->mlx_ptr)
-		error("Error : MiniLibX initialization failed!");
+		error_msg_and_close("Error : MiniLibX initialization failed!", all);
 	mlx->win_ptr = NULL;
 	mlx->w_win = 0;
 	mlx->h_win = 0;
@@ -93,4 +90,4 @@ t_map	*init_map(void)
 	mlx->player_x = 0;
 	mlx->player_y = 0;
 	return (mlx);
-} */
+}
