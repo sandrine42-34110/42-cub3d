@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void print_map(t_all *all)
+void	print_map(t_all *all)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ void	fill_map(char *line, t_all *all, int *i, int fd)
 	free(trim);
 }
 
-void check_spaces_and_bn(char *line, int j, t_all *all, int fd)
+void	check_spaces_and_bn(char *line, int j, t_all *all, int fd)
 {
 	if (line)
 	{

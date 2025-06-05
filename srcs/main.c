@@ -9,6 +9,7 @@ int main(int argc, char **argv)
 		return (1);
 	parse_map(all, argv[1]);
 	check_text_and_map(all);
+	ft_printf("ok!\n");
 	free_all(all);
 	return (0);
 }

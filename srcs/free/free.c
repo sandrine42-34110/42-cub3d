@@ -34,12 +34,30 @@ void	free_map(t_map *map)
 	free(map);
 }
 
+/* void	free_mlx(t_mlx *mlx)
+{
+	if (!mlx)
+		return ;
+	if (mlx->mlx_ptr)
+	{
+		if (mlx->win_ptr)
+			mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
+		// Assuming you have functions to destroy images if they exist
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_n);
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_s);
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_e);
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_w);
+		free(mlx);
+	}
+} */
+
 void	free_all(t_all *all)
 {
 	if (all)
 	{
 		free_text(all->text);
 		free_map(all->map);
+		//free_mlx(all->mlx); // Assuming mlx is a member of t_all
 		free(all);
 	}
 }

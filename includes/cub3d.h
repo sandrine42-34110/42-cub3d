@@ -53,7 +53,6 @@ typedef struct s_text
 	int		tile_size;
 	int		player_x;
 	int		player_y;
-	char	or_pl; // 'N', 'S', 'E', 'W'
 	void	*img_w_n;
 	void	*img_w_s;
 	void	*img_w_e;

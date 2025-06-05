@@ -7,7 +7,7 @@ char	**duplicate_map(t_map *map, t_all *all)
 
 	copy = (char **)malloc(sizeof(char *) * (map->h_map + 1));
 	if (!copy)
-		error_msg_and_close("Malloc failed for map_copy", all);
+		error_msg_and_close("Malloc failed for map_copy!", all);
 	y = 0;
 	while (y < map->h_map)
 	{
@@ -17,7 +17,7 @@ char	**duplicate_map(t_map *map, t_all *all)
 			while (--y >= 0)
 				free(copy[y]);
 			free(copy);
-			error_msg_and_close("Error : Malloc failed for map_copy line", all);
+			error_msg_and_close("Error : Malloc failed for map_cpy line!", all);
 		}
 		y++;
 	}
@@ -28,7 +28,7 @@ char	**duplicate_map(t_map *map, t_all *all)
 void flood_fill(char **map, int x, int y, t_all *all)
 {
 	if (x < 0 || y < 0 || !map[y] || map[y][x] == '\0')
-		error_msg_and_close("Error :Map is open!\n", all);
+		error_msg_and_close("Error : Map is open!\n", all);
 	if (map[y][x] == '1' || map[y][x] == 'F')
 		return;
 	if (map[y][x] != '0' && map[y][x] != 'N' && map[y][x] != 'S' &&
@@ -113,7 +113,7 @@ void	check_close_map(t_all *all)
 	x = 0;
 	y = 0;
 	if (!find_start(all->map, &x, &y))
-		error_msg_and_close("Error ! No player\n", all);
+		error_msg_and_close("Error : No player!\n", all);
 	ctrl_only_one_player(all->map, x, y, all);
 	map_copy = duplicate_map(all->map, all);
 	flood_fill(map_copy, x, y, all);
