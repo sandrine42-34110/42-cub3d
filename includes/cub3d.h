@@ -18,6 +18,10 @@
 
 # define TITLE "cub3d"
 
+# define RGB(R, G, B) ((R << 16) | (G << 8) | (B)) // Encode RGB to 0xRRGGBB
+# define FCMM RGB(200, 200, 200)  // Floor Color MiniMap
+# define WCMM RGB(50, 50, 50)     // Wall Color MiniMap
+
 typedef struct s_text	t_text;
 typedef struct s_map	t_map;
 typedef struct s_mlx	t_mlx;
@@ -88,6 +92,9 @@ void	check_close_map(t_all *all);
 void	free_text_and_map(t_all *all);
 void	free_all(t_all *all);
 
+/* ====	display_map.c	==============================================*/
+
+void	display_minimap(t_all *all);
 
 /* ====	init.c	=============================================================*/
 

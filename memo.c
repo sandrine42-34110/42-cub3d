@@ -19,3 +19,9 @@ forbiden.cub -> gerer les espaces dans la map et/ou les zones sans player??
 
 texture_dir.cub -> gerer les bons chemins des texture (dans init mlx)
 texture_forbidden.cub -> idem texture_dir.cub
+
+
+Convention orientation pixel dans fenetre
+Y  X->
+|
+v

@@ -84,11 +84,13 @@ int	tile_size(t_all *all)
 	return (fmin(size_w, size_h));
 }
 
+/* 
 void	load_images(t_all *all)
 {
 	all->mlx->img_w_n = mlx_xpm_file_to_image(all->mlx->mlx_ptr, \
 						all->text->no, &mlx->img_width, &mlx->img_height);
 }
+ */
 
 t_mlx	*init_mlx(t_all *all)
 {
@@ -110,7 +112,7 @@ t_mlx	*init_mlx(t_all *all)
 	mlx->tile_size = tile_size(all);
 	// mlx->player_x = 0;
 	// mlx->player_y = 0;
-	if (!load_images(all))
-		error_and_close_all("Error : Texture isn't exist\n", all);
+	/* if (!load_images(all))
+		error_and_close_all("Error : Texture isn't exist\n", all); */
 	return (mlx);
 }
