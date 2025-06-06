@@ -19,6 +19,25 @@ void	draw_square(t_all *all, int x, int y, int size, int color)
 	}
 }
 
+void	draw_circle(t_mlx *mlx, int cx, int cy, int radius, int color)
+{
+	int x = -radius;
+	int y;
+	int sqr_radius = radius * radius;
+
+	while (x <= radius)
+	{
+		y = -radius;
+		while (y <= radius)
+		{
+			if (x * x + y * y <= sqr_radius)
+				mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, cx + x, cy + y, color);
+			y++;
+		}
+		x++;
+	}
+}
+
 t_minimap	*init_minimap(t_all *all)
 {
 	t_minimap	*minimap;
@@ -39,9 +58,12 @@ void	minimap_colors(t_all *all, int x, int y, int *color)
 		*color = 0x00FF00;
 	else if (all->map->line[y][x] == '0')
 		*color = 0xFFFFFF;
+	/* else if (all->map->line[y][x] == 'N' || all->map->line[y][x] == 'S'
+		|| all->map->line[y][x] == 'E' || all->map->line[y][x] == 'W')
+		*color = 0xFF0000; */
 	else if (all->map->line[y][x] == 'N' || all->map->line[y][x] == 'S'
 		|| all->map->line[y][x] == 'E' || all->map->line[y][x] == 'W')
-		*color = 0xFF0000;
+		*color = 0xFFFFFF;
 	else
 		*color = 0x888888;
 }
@@ -83,18 +105,30 @@ t_player	*init_player(t_all *all)
 	player->dx = 0;
 	player->dy = 0;
 	player->d_or = 0;
-	player->x = 0;
-	player->y = 0;
+	player->x = all->map->x_p;
+	player->y = all->map->y_p;
 	player->or = 0;
 	return (player);
 }
 
+// Par exemple, pour un joueur à (px, py) sur la minimap
+//draw_circle(all->mlx, px * TILE_SIZE + TILE_SIZE/2, py * TILE_SIZE + TILE_SIZE/2, TILE_SIZE/3, 0xFFFF00);
+
+
+
 void	display_player(t_all *all)
 {
-	all->player = init_player(all);
-	
-}
+	int	clr_pl;
+	int	radius;
 
+	radius = all->mlx->tile_size / 4;
+	clr_pl = 0xFF0000;
+	all->player = init_player(all);
+	draw_circle(all->mlx,
+		all->minimap->offset_x + all->player->x * all->mlx->tile_size + all->mlx->tile_size / 2,
+		all->minimap->offset_y + all->player->y * all->mlx->tile_size + all->mlx->tile_size / 2,
+		radius, clr_pl);
+}
 
 void	display_minimap(t_all *all)
 {

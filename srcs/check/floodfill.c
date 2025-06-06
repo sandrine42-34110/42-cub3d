@@ -49,6 +49,7 @@ int	find_start(t_map *map, int *start_x, int *start_y)
 	y = 0;
 	while (y < map->h_map)
 	{
+		ft_printf("on entre dans fs\n");
 		x = 0;
 		while (x < map->w_map)
 		{
@@ -58,14 +59,14 @@ int	find_start(t_map *map, int *start_x, int *start_y)
 				map->or_p = map->line[y][x];
 				*start_x = x;
 				*start_y = y;
+				map->x_p = x;
+				map->y_p = y;
 				return (1);
 			}
 			x++;
 		}
 		y++;
 	}
-	map->x_p = x;
-	map->y_p = y;
 	return (0);
 }
 

@@ -20,7 +20,7 @@ void	free_map(t_map *map)
 	int	i;
 
 	if (!map)
-		return ;
+		return;
 	if (map->line)
 	{
 		i = 0;
@@ -29,8 +29,8 @@ void	free_map(t_map *map)
 			free(map->line[i]);
 			i++;
 		}
-		free(map->line);
 	}
+	free(map->line);
 	free(map);
 }
 
@@ -61,6 +61,12 @@ void	free_text_and_map(t_all *all)
 	}
 }
 
+void	free_minimap(t_minimap *minimap)
+{
+	if (minimap)
+		free(minimap);
+}
+
 void	free_all(t_all *all)
 {
 	if (all)
@@ -68,6 +74,8 @@ void	free_all(t_all *all)
 		free_text(all->text);
 		free_map(all->map);
 		free_mlx(all->mlx);
+		if (all->minimap)
+			free_minimap(all->minimap);
 		free(all);
 	}
 }

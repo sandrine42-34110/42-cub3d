@@ -70,7 +70,7 @@ t_map	*init_map(void)
 	map->w_map = 0;
 	map->x_p = 0;
 	map->y_p = 0;
-	map->or_p = 0;
+	map->or_p = '\0';
 	return (map);
 }
 
