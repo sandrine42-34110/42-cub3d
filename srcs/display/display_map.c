@@ -1,57 +1,5 @@
 #include "cub3d.h"
 
-void	draw_square(t_all *all, int x, int y, int size, int color)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			mlx_pixel_put(all->mlx->mlx_ptr, all->mlx->win_ptr,
-				x + i, y + j, color);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	draw_circle(t_mlx *mlx, int cx, int cy, int radius, int color)
-{
-	int x = -radius;
-	int y;
-	int sqr_radius = radius * radius;
-
-	while (x <= radius)
-	{
-		y = -radius;
-		while (y <= radius)
-		{
-			if (x * x + y * y <= sqr_radius)
-				mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, cx + x, cy + y, color);
-			y++;
-		}
-		x++;
-	}
-}
-
-t_minimap	*init_minimap(t_all *all)
-{
-	t_minimap	*minimap;
-
-	minimap = malloc(sizeof(t_minimap));
-	if (!minimap)
-		error_and_close_all("Error : malloc minimap failed!", all);
-	minimap->map_width_px = 0;
-	minimap->map_height_px = 0;
-	minimap->offset_x = 0;
-	minimap->offset_y = 0;
-	return (minimap);
-}
-
 void	minimap_colors(t_all *all, int x, int y, int *color)
 {
 	if (all->map->line[y][x] == '1')
@@ -94,27 +42,6 @@ void	display_map(t_all *all)
 		y++;
 	}
 }
-
-t_player	*init_player(t_all *all)
-{
-	t_player	*player;
-
-	player = malloc(sizeof(t_player));
-	if (!player)
-		error_and_close_all("Error : malloc player failed!", all);
-	player->dx = 0;
-	player->dy = 0;
-	player->d_or = 0;
-	player->x = all->map->x_p;
-	player->y = all->map->y_p;
-	player->or = 0;
-	return (player);
-}
-
-// Par exemple, pour un joueur à (px, py) sur la minimap
-//draw_circle(all->mlx, px * TILE_SIZE + TILE_SIZE/2, py * TILE_SIZE + TILE_SIZE/2, TILE_SIZE/3, 0xFFFF00);
-
-
 
 void	display_player(t_all *all)
 {

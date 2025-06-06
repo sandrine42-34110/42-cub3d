@@ -7,14 +7,19 @@
 # include <unistd.h>
 # include <math.h>
 
-# define KEY_W_UP		119
-# define KEY_S_DOWN		115
-# define KEY_A_LEFT		97
-# define KEY_D_RIGHT	100
-# define KEY_ESCAPE		65307
+# define KEY_W_UP			119
+# define KEY_S_DOWN			115
+# define KEY_A_LEFT			97
+# define KEY_D_RIGHT		100
+# define KEY_ESCAPE			65307
+# define KEY_ARROW_LEFT		65361
+# define KEY_ARROW_RIGHT	65363
 
-# define W_WIN 1000
-# define H_WIN 600
+# define W_WIN				1000
+# define H_WIN				600
+
+# define MOVE_SPEED			0.125
+# define ANGLE_ROT			0.1
 
 # define TITLE "cub3d"
 
@@ -59,9 +64,9 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-	int		dx;
-	int		dy;
-	int		d_or;
+	double	dx;
+	double	dy;
+	double	d_or;
 	int		x;
 	int		y;
 	int		or;
@@ -114,6 +119,10 @@ void	check_close_map(t_all *all);
 int		close_window(t_all *all);
 int		key_hook(int keycode, t_all *all);
 
+/* ====	utils_display.c	======================================================*/
+
+void	draw_square(t_all *all, int x, int y, int size, int color);
+void	draw_circle(t_mlx *mlx, int cx, int cy, int radius, int color);
 
 /* ====	free.c	==============================================================*/
 
@@ -131,6 +140,22 @@ t_text	*init_text(void);
 t_all	*init_all(int argc, char **argv);
 t_map	*init_map(void);
 t_mlx	*init_mlx(t_all *all);
+
+/* ====	init_display.c	=============================================================*/
+
+t_minimap	*init_minimap(t_all *all);
+t_player	*init_player(t_all *all);
+
+/* ====	utils_init.c	=============================================================*/
+
+int	check_map_name(char *str);
+int	tile_size(t_all *all);
+int	begin_dir_pl(char dir);
+
+/* ====	move.c	=============================================================*/
+
+int		translation(int keycode, double *dx, double *dy);
+void	move_player(t_all *all, int keycode);
 
 /* ====	parsing.c	=========================================================*/
 

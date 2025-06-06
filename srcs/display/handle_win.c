@@ -16,13 +16,14 @@ int	close_window(t_all *all)
 	return (mlx_loop_end(all->mlx->mlx_ptr));
 }
 
+
 int	key_hook(int keycode, t_all *all)
 {
 	if (keycode == KEY_ESCAPE)
 	{
 		close_window(all);
 	}
-	// else
-	// 	move_player(all, keycode);
+	else
+		move_player(all, keycode);
 	return (0);
 }

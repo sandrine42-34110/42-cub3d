@@ -9,3 +9,4 @@ void	go_to_end_fd(int fd, char *line)
 	}
 	close(fd);
 }
+
