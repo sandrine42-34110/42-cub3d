@@ -22,9 +22,11 @@
 # define FCMM RGB(200, 200, 200)  // Floor Color MiniMap
 # define WCMM RGB(50, 50, 50)     // Wall Color MiniMap
 
-typedef struct s_text	t_text;
-typedef struct s_map	t_map;
-typedef struct s_mlx	t_mlx;
+typedef struct s_text		t_text;
+typedef struct s_map		t_map;
+typedef struct s_mlx		t_mlx;
+typedef struct s_minimap	t_minimap;
+typedef struct s_player		t_player;
 
 typedef struct s_all
 {
@@ -33,6 +35,8 @@ typedef struct s_all
 	t_map		*map;
 	t_text		*text;
 	t_mlx		*mlx;
+	t_minimap	*minimap;
+	t_player	*player;
 }				t_all;
 
 typedef struct s_map
@@ -44,6 +48,24 @@ typedef struct s_map
 	int		y_p;
 	char	or_p;
 }			t_map;
+
+typedef struct s_minimap
+{
+	int		offset_x;
+	int		offset_y;
+	int		map_width_px;
+	int		map_height_px;
+}			t_minimap;
+
+typedef struct s_player
+{
+	int		dx;
+	int		dy;
+	int		d_or;
+	int		x;
+	int		y;
+	int		or;
+}			t_player;
 
 typedef struct s_text
 {
@@ -83,9 +105,15 @@ typedef struct s_mlx
 
 void	check_text_and_map(t_all *all);
 
-/* ====	floodfill.c	==============================================*/
+/* ====	floodfill.c	==========================================================*/
 
 void	check_close_map(t_all *all);
+
+/* ====	handle_win.c	======================================================*/
+
+int		close_window(t_all *all);
+int		key_hook(int keycode, t_all *all);
+
 
 /* ====	free.c	==============================================================*/
 

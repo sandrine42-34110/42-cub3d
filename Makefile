@@ -13,7 +13,8 @@ CFLAGS = -Wall -Wextra -Werror -g -I . -I includes
 
 SRC =	srcs/check/check_text_and_map.c \
 		srcs/check/floodfill.c \
-		srcs/display_map/display_map.c \
+		srcs/display/display_map.c \
+		srcs/display/handle_win.c \
 		srcs/free/free.c \
 		srcs/init/init.c \
 		srcs/parsing/handle_map.c \

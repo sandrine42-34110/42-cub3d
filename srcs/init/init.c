@@ -79,8 +79,8 @@ int	tile_size(t_all *all)
 	int	size_w;
 	int	size_h;
 
-	size_w = W_WIN / (5 * all->map->w_map);
-	size_h = H_WIN / (5 * all->map->h_map);
+	size_w = W_WIN / (3 * all->map->w_map);
+	size_h = H_WIN / (3 * all->map->h_map);
 	return (fmin(size_w, size_h));
 }
 

@@ -11,9 +11,9 @@ int main(int argc, char **argv)
 	check_text_and_map(all);
 	all->mlx = init_mlx(all);
 	display_minimap(all);
-	//mlx_hook(vars.win, 17, 0, close_window, &vars);
-    //    mlx_key_hook(vars.win, key_hook, &vars);
-        mlx_loop(all->mlx->mlx_ptr);
+	mlx_hook(all->mlx->mlx_ptr, 17, 0, close_window, &all);
+	mlx_hook(all->mlx->mlx_ptr, 2, (1L << 0), key_hook, &all);
+	mlx_loop(all->mlx->mlx_ptr);
 
 	ft_printf("ok!\n");
 	free_text_and_map(all);
