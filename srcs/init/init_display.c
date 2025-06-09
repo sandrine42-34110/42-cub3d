@@ -24,8 +24,8 @@ t_player	*init_player(t_all *all)
 	player->dx = 0;
 	player->dy = 0;
 	player->d_or = 0;
-	player->x = all->map->x_p;
-	player->y = all->map->y_p;
+	player->x = all->map->x_p + 0.5;
+	player->y = all->map->y_p + 0.5;
 	player->or = begin_dir_pl(all->map->or_p);
 	return (player);
 }

@@ -1,72 +1,64 @@
 NAME = cub3d
 
-LIBFT = libft.a
+LIBFT_DIR = ./libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-MINILIB = libmlx.a
+MINILIBX_LINUX_DIR = ./minilibx-linux
+MLX = $(MINILIBX_LINUX_DIR)/libmlx.a
+
+SRC_DIR = srcs
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -O3
+CFLAGS = -Wall -Wextra -Werror -g -I . -I includes
 
-HEADER_DIR = includes
-SRCS_DIR = srcs
-OBJS_DIR = objs
+SRC =	srcs/check/check_text_and_map.c \
+		srcs/check/floodfill.c \
+		srcs/display/display_map.c \
+		srcs/display/handle_win.c \
+		srcs/display/utils_display.c \
+		srcs/free/free.c \
+		srcs/init/init_display.c \
+		srcs/init/init.c \
+		srcs/init/utils_init.c \
+		srcs/move/move_player.c \
+		srcs/parsing/handle_map.c \
+		srcs/parsing/handle_textures.c \
+		srcs/parsing/handles_colors.c \
+		srcs/parsing/parsing.c \
+		srcs/main.c \
+		srcs/utils.c
 
-LIBFT_DIR = ./libft
-MINILIB_DIR = ./minilibx-linux
+OBJ = ${SRC:srcs/%.c=srcs/obj/%.o}
 
-MLX_PATH 	= minilibx-linux/
-#MLX_FILE 	= $(MLX_PATH)libmlx.a
+#valgrind: re all
+#	valgrind --leak-check=full --show-leak-kinds=all -track-origins=yes ./$(NAME)
 
-#Pour compiler  sur mac & ubuntu
-UNAME_S = $(shell uname -s)
-
-ifeq ($(UNAME_S), Linux)
-	MLX_FLAGS = -L$(MLX_PATH) -lmlx -lX11 -lXext -lm
-else
-	MLX_FLAGS = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
-endif
-
-INCLUDES = -I$(HEADER_DIR) -I$(MINILIB_DIR) -I$(LIBFT_DIR)
-LIBS = -L$(LIBFT_DIR) -lft -L$(MINILIB_DIR) $(MLX_FLAGS)
-
-#listing fin de projet
-#SRCS_FILES = main.c
-SRCS_FILES = $(shell find $(SRCS_DIR) -name "*.c")
-
-OBJS = $(patsubst srcs/%.c, objs/%.o, $(SRCS_FILES))
-
-all: $(LIBFT) $(MINILIB) $(NAME)
+all: ${NAME}
+${NAME}: $(LIBFT) $(MLX) ${OBJ}
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -lXext -lX11 -lm -lbsd -o $(NAME)
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR) --silent
-	@echo ✅ "libft compiled"
+	@make -s -C $(LIBFT_DIR)
+	@make -s -C $(LIBFT_DIR) bonus
+#	@echo "compilating $@"
 
-$(MINILIB):
-	@$(MAKE) -C $(MINILIB_DIR) --silent
-	@echo ✅ "minilibx compiled"
+$(MLX):
+	@make -s -C $(MINILIBX_LINUX_DIR)
+	@echo ✅ "mlx compiled"
 
-$(NAME): $(OBJS)
-#	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBS) -o $(NAME) -lncurses -lreadline
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBS) -o $(NAME)
-	@echo ✅ "$(NAME) compiled"
-
-objs/%.o: srcs/%.c
+srcs/obj/%.o: srcs/%.c
+#	@mkdir -p obj
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@${CC} ${CFLAGS} -I $(LIBFT_DIR) -I $(MINILIBX_LINUX_DIR) -I . -c $< -o $@
 
 clean:
-	@rm -f $(OBJS)
-	@rm -rf $(OBJS_DIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean --silent
-	@$(MAKE) -C $(MINILIB_DIR) clean
-	@echo "✅ Object files removed"
+	@make -s -C $(LIBFT_DIR) clean
+	@make -s -C $(MINILIBX_LINUX_DIR) clean
+#	@rm -rf obj
+	@rm -rf srcs/obj
 
 fclean: clean
-	@rm -f $(NAME)
-	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
-	@$(MAKE) clean -C $(MINILIB_DIR) --silent
-	@echo "✅ Executable files removed"
-	
-re: fclean all
+	@make -s -C $(LIBFT_DIR) fclean
+	@rm -f ${NAME}
 
-.PHONY: all clean fclean re header
+re: fclean all

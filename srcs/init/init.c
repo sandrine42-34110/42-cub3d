@@ -93,5 +93,7 @@ t_mlx	*init_mlx(t_all *all)
 	// mlx->player_y = 0;
 	/* if (!load_images(all))
 		error_and_close_all("Error : Texture isn't exist\n", all); */
+	all->minimap = init_minimap(all);
+	all->player = init_player(all);
 	return (mlx);
 }

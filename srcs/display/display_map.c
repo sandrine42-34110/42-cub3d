@@ -22,7 +22,7 @@ void	display_map(t_all *all)
 	int	y;
 	int	color;
 
-	all->minimap = init_minimap(all);
+	//all->minimap = init_minimap(all);
 	all->minimap->map_width_px = all->map->w_map * all->mlx->tile_size;
 	all->minimap->map_height_px = all->map->h_map * all->mlx->tile_size;
 	all->minimap->offset_x = W_WIN - all->minimap->map_width_px;
@@ -50,10 +50,10 @@ void	display_player(t_all *all)
 
 	radius = all->mlx->tile_size / 4;
 	clr_pl = 0xFF0000;
-	all->player = init_player(all);
+	//all->player = init_player(all);
 	draw_circle(all->mlx,
-		all->minimap->offset_x + all->player->x * all->mlx->tile_size + all->mlx->tile_size / 2,
-		all->minimap->offset_y + all->player->y * all->mlx->tile_size + all->mlx->tile_size / 2,
+		all->minimap->offset_x + all->player->x * all->mlx->tile_size,
+		all->minimap->offset_y + all->player->y * all->mlx->tile_size,
 		radius, clr_pl);
 }
 

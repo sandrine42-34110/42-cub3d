@@ -21,17 +21,18 @@ int	tile_size(t_all *all)
 	return (fmin(size_w, size_h));
 }
 
-int	begin_dir_pl(char dir)
+double	begin_dir_pl(char dir)
 {
-	int	angle;
+	double	angle;
 
+	angle = 0;
 	if (dir == 'E')
 		angle = 0;
 	else if (dir == 'N')
-		angle = pi() / 2;
+		angle = M_PI / 2;
 	else if (dir == 'W')
-		angle = pi();
+		angle = M_PI;
 	else if (dir == 'S')
-		angle = 3 * pi() / 2;
+		angle = 3 * M_PI / 2;
 	return (angle);
 }

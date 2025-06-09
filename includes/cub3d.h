@@ -6,7 +6,8 @@
 
 # include <unistd.h>
 # include <math.h>
-
+# include <stdio.h>
+/* 
 # define KEY_W_UP			119
 # define KEY_S_DOWN			115
 # define KEY_A_LEFT			97
@@ -14,6 +15,27 @@
 # define KEY_ESCAPE			65307
 # define KEY_ARROW_LEFT		65361
 # define KEY_ARROW_RIGHT	65363
+ */
+
+#ifdef __APPLE__
+# define KEY_W_UP			13
+# define KEY_S_DOWN			1
+# define KEY_A_LEFT			0
+# define KEY_D_RIGHT		2
+# define KEY_ARROW_UP		126
+# define KEY_ARROW_DOWN		125
+# define KEY_ARROW_LEFT		123
+# define KEY_ARROW_RIGHT	124
+# define KEY_ESCAPE			53
+#else
+# define KEY_W_UP 119
+# define KEY_S_DOWN 115
+# define KEY__ALEFT 97
+# define KEY_D_RIGHT 100
+# define KEY_ESCAPE			65307
+# define KEY_ARROW_LEFT		65361
+# define KEY_ARROW_RIGHT	65363
+#endif
 
 # define W_WIN				1000
 # define H_WIN				600
@@ -67,9 +89,9 @@ typedef struct s_player
 	double	dx;
 	double	dy;
 	double	d_or;
-	int		x;
-	int		y;
-	int		or;
+	double	x;
+	double	y;
+	double	or;
 }			t_player;
 
 typedef struct s_text
@@ -150,11 +172,11 @@ t_player	*init_player(t_all *all);
 
 int	check_map_name(char *str);
 int	tile_size(t_all *all);
-int	begin_dir_pl(char dir);
+double	begin_dir_pl(char dir);
 
 /* ====	move.c	=============================================================*/
 
-int		translation(int keycode, double *dx, double *dy);
+int		translation(int keycode, double angle, double *dx, double *dy);
 void	move_player(t_all *all, int keycode);
 
 /* ====	parsing.c	=========================================================*/

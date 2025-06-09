@@ -9,7 +9,7 @@ MLX = $(MINILIBX_LINUX_DIR)/libmlx.a
 SRC_DIR = srcs
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I . -I includes
+CFLAGS = -Wall -Wextra -Werror -g -I . -I includes -DGL_SILENCE_DEPRECATION
 
 SRC =	srcs/check/check_text_and_map.c \
 		srcs/check/floodfill.c \
@@ -30,31 +30,40 @@ SRC =	srcs/check/check_text_and_map.c \
 
 OBJ = ${SRC:srcs/%.c=srcs/obj/%.o}
 
-#valgrind: re all
-#	valgrind --leak-check=full --show-leak-kinds=all -track-origins=yes ./$(NAME)
+# Détection système
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)
+	MLX_DIR = minilibx_macos
+	MLX = $(MLX_DIR)/libmlx.a
+	MLX_FLAGS = -framework OpenGL -framework AppKit
+else
+	MLX_DIR = minilibx-linux
+	MLX = $(MLX_DIR)/libmlx.a
+	MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+endif
 
 all: ${NAME}
-${NAME}: $(LIBFT) $(MLX) ${OBJ}
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) -lXext -lX11 -lm -lbsd -o $(NAME)
+
+$(NAME): $(OBJ) $(LIBFT)
+	@make -s -C $(MLX_DIR)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
 
 $(LIBFT):
 	@make -s -C $(LIBFT_DIR)
 	@make -s -C $(LIBFT_DIR) bonus
-#	@echo "compilating $@"
 
 $(MLX):
-	@make -s -C $(MINILIBX_LINUX_DIR)
+	@make -s -C $(MLX_DIR)
 	@echo ✅ "mlx compiled"
 
 srcs/obj/%.o: srcs/%.c
-#	@mkdir -p obj
 	@mkdir -p $(dir $@)
 	@${CC} ${CFLAGS} -I $(LIBFT_DIR) -I $(MINILIBX_LINUX_DIR) -I . -c $< -o $@
 
 clean:
 	@make -s -C $(LIBFT_DIR) clean
-	@make -s -C $(MINILIBX_LINUX_DIR) clean
-#	@rm -rf obj
+	@make -s -C $(MLX_DIR) clean
 	@rm -rf srcs/obj
 
 fclean: clean

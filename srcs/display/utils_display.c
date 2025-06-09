@@ -31,7 +31,8 @@ void	draw_circle(t_mlx *mlx, int cx, int cy, int radius, int color)
 		while (y <= radius)
 		{
 			if (x * x + y * y <= sqr_radius)
-				mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, cx + x, cy + y, color);
+				mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr,
+					cx + x, cy + y, color);
 			y++;
 		}
 		x++;
