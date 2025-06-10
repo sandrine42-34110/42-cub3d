@@ -109,6 +109,12 @@ void	new_pos_player(t_all *all)
 	}
 }
  */
+
+
+
+
+
+
 void	move_player(t_all *all, int keycode)
 {
 	printf("keycode = %d\n posx pl = %.3f - posy pl = %.3f - or pl = %.3f\n", keycode, all->player->x, all->player->y, all->player->or);

@@ -30,7 +30,7 @@
 #else
 # define KEY_W_UP 119
 # define KEY_S_DOWN 115
-# define KEY__ALEFT 97
+# define KEY_A_LEFT 97
 # define KEY_D_RIGHT 100
 # define KEY_ESCAPE			65307
 # define KEY_ARROW_LEFT		65361
