@@ -3,15 +3,15 @@
 void	minimap_colors(t_all *all, int x, int y, int *color)
 {
 	if (all->map->line[y][x] == '1')
-		*color = 0x00FF00;
+		*color = WCMM;
 	else if (all->map->line[y][x] == '0')
-		*color = 0xFFFFFF;
+		*color = FCMM;
 	/* else if (all->map->line[y][x] == 'N' || all->map->line[y][x] == 'S'
 		|| all->map->line[y][x] == 'E' || all->map->line[y][x] == 'W')
 		*color = 0xFF0000; */
 	else if (all->map->line[y][x] == 'N' || all->map->line[y][x] == 'S'
 		|| all->map->line[y][x] == 'E' || all->map->line[y][x] == 'W')
-		*color = 0xFFFFFF;
+		*color = FCMM;
 	else
 		*color = 0x888888;
 }
@@ -65,3 +65,5 @@ void	display_minimap(t_all *all)
 	draw_vision_cone(all);
 	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->img->img, 0, 0);
 }
+
+

@@ -37,8 +37,8 @@
 # define KEY_ARROW_RIGHT	65363
 #endif
 
-# define W_WIN				1000
-# define H_WIN				600
+# define W_WIN				1500
+# define H_WIN				900
 
 # define MOVE_SPEED			0.125
 # define ANGLE_ROT			0.1
@@ -47,10 +47,7 @@
 
 # define RGB(R, G, B) ((R << 16) | (G << 8) | (B)) // Encode RGB to 0xRRGGBB
 # define FCMM RGB(200, 200, 200)  // Floor Color MiniMap
-# define WCMM RGB(50, 50, 50)     // Wall Color MiniMap
-
-# define CC 0x87CEEB
-# define FC 0x87CEEB
+# define WCMM RGB(128, 0, 128)     // Wall Color MiniMap
 
 typedef struct s_text		t_text;
 typedef struct s_map		t_map;

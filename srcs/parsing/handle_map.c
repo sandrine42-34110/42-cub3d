@@ -34,6 +34,32 @@ void	fill_map(char *line, t_all *all, int *i, int fd)
 	all->map->h_map = *i;
 	free(trim);
 }
+// DEBUG
+void	taller_line(t_all *all)
+{
+	int		x;
+	int		y;
+	char	*new_line;
+
+	y = 0;
+	while (y < all->map->h_map)
+	{
+		x = ft_strlen(all->map->line[y]);
+		if (x < all->map->w_map)
+		{
+			new_line = all->map->line[y];
+			free(all->map->line[y]);
+			while(x < all->map->w_map)
+			{
+				new_line[x] = ' ';
+				x++;
+			}
+			new_line[x] = '\0';
+			all->map->line[y] = ft_strdup(new_line);
+		}
+		y++;
+	}
+}
 
 void	check_spaces_and_bn(char *line, int j, t_all *all, int fd)
 {
@@ -52,6 +78,7 @@ void	check_spaces_and_bn(char *line, int j, t_all *all, int fd)
 			line = get_next_line(fd);
 		}
 	}
+	taller_line(all);
 }
 
 void	handle_map(t_all *all, char *line, int fd)

@@ -20,11 +20,17 @@ void	invalid_tile(t_all *all)
 		x = 0;
 		while (x < all->map->w_map)
 		{
-			if (all->map->line[y][x] != 'N' && all->map->line[y][x] != 'S'
+			if (all->map->line[y][x] != '\0')									//DEBUG fin de ligne mais a garder
+				break ;
+			else if (all->map->line[y][x] != 'N' && all->map->line[y][x] != 'S'
 				&& all->map->line[y][x] != 'E' && all->map->line[y][x] != 'W'
 				&& all->map->line[y][x] != '0' && all->map->line[y][x] != '1'
 				&& all->map->line[y][x] != ' ')
+			{
+				printf("DEBUG line = %s\n", all->map->line[y]);
+				printf("DEBUG x= %d -y= %d\n", x, y);
 				error_msg_and_close("Error : Invalid map\n", all);
+			}
 			x++;
 		}
 		y++;
