@@ -138,6 +138,7 @@ typedef struct s_mlx
 
 typedef struct s_raycast
 {
+	int		pos_ray;
 	double	px;
 	double	py;
 	double	ray_dir_x;
@@ -164,19 +165,33 @@ void	check_close_map(t_all *all);
 int		close_window(t_all *all);
 int		key_hook(int keycode, t_all *all);
 
+/* ====	raycating.c	==========================================================*/
+
+void	draw_line(t_mlx *mlx);
+void	draw_orientation_line(t_all *all);
+void	adjust_ray_to_wall_border(t_all *all);
+void	draw_vision_line(t_all *all, double angle);
+void	draw_vision_cone(t_all *all);
+
+
 /* ====	utils_display.c	======================================================*/
 
 void	draw_square(t_all *all, int x, int y, int size, int color);
 void	draw_circle(t_mlx *mlx, int cx, int cy, int radius, int color);
 
-/* ====	free.c	==============================================================*/
 
-void	free_text_and_map(t_all *all);
-void	free_all(t_all *all);
+/* ====	display_3d.c	==============================================*/
+
+
 
 /* ====	display_map.c	==============================================*/
 
 void	display_minimap(t_all *all);
+
+/* ====	free.c	==============================================================*/
+
+void	free_text_and_map(t_all *all);
+void	free_all(t_all *all);
 
 /* ====	init.c	=============================================================*/
 

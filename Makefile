@@ -13,8 +13,10 @@ CFLAGS = -Wall -Wextra -Werror -g -I . -I includes -DGL_SILENCE_DEPRECATION
 
 SRC =	srcs/check/check_text_and_map.c \
 		srcs/check/floodfill.c \
+		srcs/display/display_3d.c \
 		srcs/display/display_map.c \
 		srcs/display/handle_win.c \
+		srcs/display/raycasting.c \
 		srcs/display/utils_display.c \
 		srcs/free/free.c \
 		srcs/init/init_display.c \

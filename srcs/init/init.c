@@ -78,6 +78,7 @@ t_raycast	*init_raycast(t_all *all)
 	raycast = malloc(sizeof(t_raycast));
 	if (!raycast)
 		error_and_close_all("Error : raycast malloc failed!\n", all);
+	raycast->pos_ray = 0;
 	raycast->px = 0;
 	raycast->px = 0;
 	raycast->ray_dir_x = 0;
