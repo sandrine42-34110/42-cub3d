@@ -29,3 +29,18 @@ t_player	*init_player(t_all *all)
 	player->or = begin_dir_pl(all->map->or_p);
 	return (player);
 }
+
+t_img	*init_img(t_all *all)
+{
+	t_img	*img;
+
+	img = malloc(sizeof(t_img));
+	if (!img)
+		error_and_close_all("Error : malloc image failed!", all);
+	img->img = mlx_new_image(all->mlx->mlx_ptr, W_WIN, H_WIN);
+	if (!img->img)
+		error_and_close_all("Error : create image failed!", all);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp,
+		&img->line_length, &img->endian);
+	return (img);
+}

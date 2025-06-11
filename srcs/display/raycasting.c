@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void draw_line(t_mlx *mlx)
+void draw_line(t_all *all, t_mlx *mlx)
 {
 	int dx = abs(mlx->x1 - mlx->x0);
 	int dy = -abs(mlx->y1 - mlx->y0);
@@ -20,7 +20,8 @@ void draw_line(t_mlx *mlx)
 
 	while (1)
 	{
-		mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, mlx->x0, mlx->y0, mlx->color);
+		//mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, mlx->x0, mlx->y0, mlx->color);
+		put_pixel(all->img, mlx->x0, mlx->y0, all->mlx->color);
 		if (mlx->x0 == mlx->x1 && mlx->y0 == mlx->y1)
 			break;
 		e2 = 2 * err;
@@ -54,7 +55,8 @@ void	draw_orientation_line(t_all *all)
 	line_len = 20.0;
 	end_x = px + cos(angle) * line_len;
 	end_y = py + sin(angle) * line_len;
-	draw_line(all->mlx);
+	draw_3d(all);
+	draw_line(all, all->mlx);
 }
 
 void adjust_ray_to_wall_border(t_all *all)
@@ -103,7 +105,7 @@ void draw_vision_line(t_all *all, double angle)
 	all->mlx->x1 = all->raycast->end_x;
 	all->mlx->y1 = all->raycast->end_y;
 	all->mlx->color = 0x0000FF;
-	draw_line(all->mlx);
+	draw_line(all, all->mlx);
 
 }
 

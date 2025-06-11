@@ -49,12 +49,16 @@
 # define FCMM RGB(200, 200, 200)  // Floor Color MiniMap
 # define WCMM RGB(50, 50, 50)     // Wall Color MiniMap
 
+# define CC 0x87CEEB
+# define FC 0x87CEEB
+
 typedef struct s_text		t_text;
 typedef struct s_map		t_map;
 typedef struct s_mlx		t_mlx;
 typedef struct s_minimap	t_minimap;
 typedef struct s_player		t_player;
 typedef struct s_raycast	t_raycast;
+typedef struct s_img		t_img;
 
 
 typedef struct s_all
@@ -67,6 +71,7 @@ typedef struct s_all
 	t_minimap	*minimap;
 	t_player	*player;
 	t_raycast	*raycast;
+	t_img		*img;
 }				t_all;
 
 typedef struct s_map
@@ -78,6 +83,16 @@ typedef struct s_map
 	int		y_p;
 	char	or_p;
 }			t_map;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+}	t_img;
+
 
 typedef struct s_minimap
 {
@@ -167,7 +182,7 @@ int		key_hook(int keycode, t_all *all);
 
 /* ====	raycating.c	==========================================================*/
 
-void	draw_line(t_mlx *mlx);
+void	draw_line(t_all *all, t_mlx *mlx);
 void	draw_orientation_line(t_all *all);
 void	adjust_ray_to_wall_border(t_all *all);
 void	draw_vision_line(t_all *all, double angle);
@@ -176,13 +191,14 @@ void	draw_vision_cone(t_all *all);
 
 /* ====	utils_display.c	======================================================*/
 
+void	put_pixel(t_img *img, int x, int y, int color);
 void	draw_square(t_all *all, int x, int y, int size, int color);
-void	draw_circle(t_mlx *mlx, int cx, int cy, int radius, int color);
+void	draw_circle(t_all *all, int cx, int cy, int radius, int color);
 
 
 /* ====	display_3d.c	==============================================*/
 
-
+void	draw_3d(t_all *all);
 
 /* ====	display_map.c	==============================================*/
 
@@ -205,6 +221,7 @@ t_mlx	*init_mlx(t_all *all);
 
 t_minimap	*init_minimap(t_all *all);
 t_player	*init_player(t_all *all);
+t_img		*init_img(t_all *all);
 
 /* ====	utils_init.c	=============================================================*/
 

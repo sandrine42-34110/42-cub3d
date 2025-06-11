@@ -51,7 +51,7 @@ void	display_player(t_all *all)
 	radius = all->mlx->tile_size / 4;
 	clr_pl = 0xFF0000;
 	//all->player = init_player(all);
-	draw_circle(all->mlx,
+	draw_circle(all,
 		all->minimap->offset_x + all->player->x * all->mlx->tile_size,
 		all->minimap->offset_y + all->player->y * all->mlx->tile_size,
 		radius, clr_pl);
@@ -63,4 +63,5 @@ void	display_minimap(t_all *all)
 	display_player(all);
 	draw_orientation_line(all);
 	draw_vision_cone(all);
+	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->img->img, 0, 0);
 }

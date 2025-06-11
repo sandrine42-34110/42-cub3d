@@ -120,3 +120,4 @@ t_mlx	*init_mlx(t_all *all)
 	return (mlx);
 }
 
+
