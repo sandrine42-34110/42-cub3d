@@ -65,12 +65,15 @@ void	free_text_and_map(t_all *all)
 	}
 }
 
-void	free_minimap_and_player(t_all *all)
+void	free_minimap_and_player_and_raycast(t_all *all)
 {
 	if (all->minimap)
 		free(all->minimap);
 	if (all->player)
 		free(all->player);
+	if (all->raycast)
+		free(all->raycast);
+	
 }
 
 void	free_all(t_all *all)
@@ -79,7 +82,7 @@ void	free_all(t_all *all)
 	{
 		free_text(all->text);
 		free_map(all->map);
-		free_minimap_and_player(all);
+		free_minimap_and_player_and_raycast(all);
 		free_mlx(all->mlx);
 		free(all);
 	}

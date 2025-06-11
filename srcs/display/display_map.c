@@ -57,30 +57,40 @@ void	display_player(t_all *all)
 		radius, clr_pl);
 }
 
-void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color)
+void draw_line(t_mlx *mlx)
 {
-	int dx = abs(x1 - x0);
-	int dy = -abs(y1 - y0);
-	int sx = x0 < x1 ? 1 : -1;
-	int sy = y0 < y1 ? 1 : -1;
+	int dx = abs(mlx->x1 - mlx->x0);
+	int dy = -abs(mlx->y1 - mlx->y0);
+	int	sx;
+	int sy;
 	int err = dx + dy;
 	int e2;
+	// int sx = x0 < x1 ? 1 : -1;
+	// int sy = y0 < y1 ? 1 : -1;
+	if (mlx->x0 < mlx->x1)
+		sx = 1;
+	else
+		sx = -1;
+	if (mlx->y0 < mlx->y1)
+		sy = 1;
+	else
+		sy = -1;
 
 	while (1)
 	{
-		mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, x0, y0, color);
-		if (x0 == x1 && y0 == y1)
+		mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, mlx->x0, mlx->y0, mlx->color);
+		if (mlx->x0 == mlx->x1 && mlx->y0 == mlx->y1)
 			break;
 		e2 = 2 * err;
 		if (e2 >= dy)
 		{
 			err += dy;
-			x0 += sx;
+			mlx->x0 += sx;
 		}
 		if (e2 <= dx)
 		{
 			err += dx;
-			y0 += sy;
+			mlx->y0 += sy;
 		}
 	}
 }
@@ -94,66 +104,83 @@ void	draw_orientation_line(t_all *all)
 	double	end_x;
 	double	end_y;
 
+	all->mlx->color=0xFF0000;
+
 	px = all->minimap->offset_x + all->player->x * all->mlx->tile_size;
 	py = all->minimap->offset_y + all->player->y * all->mlx->tile_size;
 	angle = all->player->or;
 	line_len = 20.0;
 	end_x = px + cos(angle) * line_len;
 	end_y = py + sin(angle) * line_len;
-	draw_line(all->mlx, (int)px, (int)py, (int)end_x, (int)end_y, 0xFF0000);
+	draw_line(all->mlx);
 }
 
-void draw_vision_line(t_all *all, double angle, int color)
+void adjust_ray_to_wall_border(t_all *all)
 {
-	double	px = all->player->x;
-	double	py = all->player->y;
-	double	ray_dir_x = cos(angle);
-	double	ray_dir_y = sin(angle);
-	double	ray_x = px;
-	double	ray_y = py;
-	int		max_steps = 10; // Portée maximale
-	int		step = 0;
-	int		hit = 0;
+	int	x;
+	int	y;
 
-	while (step < max_steps && !hit)
+	x = (int)all->raycast->ray_x;
+	y = (int)all->raycast->ray_y;
+	while (all->map->line[y][x] == '1')
 	{
-		ray_x += ray_dir_x * 0.2;
-		ray_y += ray_dir_y * 0.2;
-		if (all->map->line[(int)ray_y][(int)ray_x] == '1')
-			hit = 1;
-		step++;
+		all->raycast->ray_x -= all->raycast->ray_dir_x * 0.01;
+		all->raycast->ray_y -= all->raycast->ray_dir_y * 0.01;
+		x = (int)all->raycast->ray_x;
+		y = (int)all->raycast->ray_y;
 	}
+}
 
-	int	start_x = all->minimap->offset_x + px * all->mlx->tile_size;
-	int	start_y = all->minimap->offset_y + py * all->mlx->tile_size;
-	int	end_x = all->minimap->offset_x + ray_x * all->mlx->tile_size;
-	int	end_y = all->minimap->offset_y + ray_y * all->mlx->tile_size;
-	draw_line(all->mlx, start_x, start_y, end_x, end_y, color);
+void draw_vision_line(t_all *all, double angle)
+{
+	int		hit;
+
+	hit = 0;
+	all->raycast->px = all->player->x;
+	all->raycast->py = all->player->y;
+	all->raycast->ray_dir_x = cos(angle);
+	all->raycast->ray_dir_y = sin(angle);
+	all->raycast->ray_x = all->raycast->px;
+	all->raycast->ray_y = all->raycast->py;
+	all->mlx->color=0x0000FF;
+	while (!hit)
+	{
+		all->raycast->ray_x += all->raycast->ray_dir_x * 0.2;
+		all->raycast->ray_y += all->raycast->ray_dir_y * 0.2;
+		if (all->map->line[(int)all->raycast->ray_y][(int)all->raycast->ray_x] == '1')
+		{
+			hit = 1;
+			adjust_ray_to_wall_border(all);
+		}
+	}
+	all->raycast->start_x = all->minimap->offset_x + all->raycast->px * all->mlx->tile_size;
+	all->raycast->start_y = all->minimap->offset_y + all->raycast->py * all->mlx->tile_size;
+	all->raycast->end_x = all->minimap->offset_x + all->raycast->ray_x * all->mlx->tile_size;
+	all->raycast->end_y = all->minimap->offset_y + all->raycast->ray_y * all->mlx->tile_size;
+	all->mlx->x0 = all->raycast->start_x;
+	all->mlx->y0 = all->raycast->start_y;
+	all->mlx->x1 = all->raycast->end_x;
+	all->mlx->y1 = all->raycast->end_y;
+	all->mlx->color = 0x0000FF;
+	draw_line(all->mlx);
+
 }
 
 void draw_vision_cone(t_all *all)
 {
-	double	base_angle = all->player->or;
-	double	angle_left = base_angle - (45.0 * M_PI / 180.0);  // -45°
-	double	angle_right = base_angle + (45.0 * M_PI / 180.0); // +45°
-	double	angle_quarter_left = base_angle - (22.5 * M_PI / 180.0); // -22.5°
-	double	angle_quarter_right = base_angle + (22.5 * M_PI / 180.0); // +22.5°
-	double	angle_mid_left = base_angle - (11.25 * M_PI / 180.0); // -11.25°
-	double	angle_mid_right = base_angle + (11.25 * M_PI / 180.0); // +11.25°
+	int		i = 0;
+	int		nb_rays = W_WIN; // Nombre de rayons à tracer
+	double	fov = 90.0 * M_PI / 180.0; // Champ de vision en radians
+	double	start_angle = all->player->or - fov / 2;
+	double	angle_step = fov / nb_rays;
 
-	// Trace la ligne centrale (orientation principale)
-	draw_vision_line(all, base_angle, 0xFF0000);
-
-	// Trace les 6 lignes autour (pour un effet "cône")
-	draw_vision_line(all, angle_left, 0x00FF00);
-	draw_vision_line(all, angle_right, 0x00FF00);
-	draw_vision_line(all, angle_quarter_left, 0x00FF00);
-	draw_vision_line(all, angle_quarter_right, 0x00FF00);
-	draw_vision_line(all, angle_mid_left, 0x00FF00);
-	draw_vision_line(all, angle_mid_right, 0x00FF00);
+	while (i < nb_rays)
+	{
+		double ray_angle = start_angle + i * angle_step;
+		draw_vision_line(all, ray_angle); // Bleu pour les rayons
+		i++;
+	}
 }
-
-
 
 void	display_minimap(t_all *all)
 {

@@ -54,6 +54,8 @@ typedef struct s_map		t_map;
 typedef struct s_mlx		t_mlx;
 typedef struct s_minimap	t_minimap;
 typedef struct s_player		t_player;
+typedef struct s_raycast	t_raycast;
+
 
 typedef struct s_all
 {
@@ -64,6 +66,7 @@ typedef struct s_all
 	t_mlx		*mlx;
 	t_minimap	*minimap;
 	t_player	*player;
+	t_raycast	*raycast;
 }				t_all;
 
 typedef struct s_map
@@ -126,7 +129,27 @@ typedef struct s_mlx
 	void	*img_w_w;
 	void	*clr_f;
 	void	*clr_c;
+	int		x0;		//draw_line
+	int		y0;
+	int		x1;
+	int		y1;
+	int		color;
 }				t_mlx;
+
+typedef struct s_raycast
+{
+	double	px;
+	double	py;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	ray_x;
+	double	ray_y;
+	int		start_x;
+	int		start_y;
+	int		end_x;
+	int		end_y;
+}				t_raycast;
+
 
 /* ====	check_text_and_map.c	==============================================*/
 

@@ -71,6 +71,26 @@ void	load_images(t_all *all)
 }
  */
 
+t_raycast	*init_raycast(t_all *all)
+{
+	t_raycast	*raycast;
+
+	raycast = malloc(sizeof(t_raycast));
+	if (!raycast)
+		error_and_close_all("Error : raycast malloc failed!\n", all);
+	raycast->px = 0;
+	raycast->px = 0;
+	raycast->ray_dir_x = 0;
+	raycast->ray_dir_y = 0;
+	raycast->ray_x = 0;
+	raycast->ray_y = 0;
+	raycast->start_x = 0;
+	raycast->start_y = 0;
+	raycast->end_x = 0;
+	raycast->end_y = 0;
+	return (raycast);
+}
+
 t_mlx	*init_mlx(t_all *all)
 {
 	t_mlx	*mlx;
@@ -95,5 +115,7 @@ t_mlx	*init_mlx(t_all *all)
 		error_and_close_all("Error : Texture isn't exist\n", all); */
 	all->minimap = init_minimap(all);
 	all->player = init_player(all);
+	all->raycast = init_raycast(all);
 	return (mlx);
 }
+
