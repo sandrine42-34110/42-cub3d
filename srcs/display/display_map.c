@@ -99,7 +99,7 @@ void	draw_orientation_line(t_all *all)
 	angle = all->player->or;
 	line_len = 20.0;
 	end_x = px + cos(angle) * line_len;
-	end_y = py - sin(angle) * line_len;
+	end_y = py + sin(angle) * line_len;
 	draw_line(all->mlx, (int)px, (int)py, (int)end_x, (int)end_y, 0xFF0000);
 }
 
@@ -108,7 +108,7 @@ void draw_vision_line(t_all *all, double angle, int color)
 	double	px = all->player->x;
 	double	py = all->player->y;
 	double	ray_dir_x = cos(angle);
-	double	ray_dir_y = -sin(angle);
+	double	ray_dir_y = sin(angle);
 	double	ray_x = px;
 	double	ray_y = py;
 	int		max_steps = 10; // Portée maximale

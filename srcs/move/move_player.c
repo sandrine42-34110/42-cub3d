@@ -53,34 +53,34 @@ int	rotate(int keycode, double *or)
 	}
 } */
 
-void	new_pos_player(t_all *all)
-{
-	double	new_x = all->player->x + all->player->dx;
-	double	new_y = all->player->y + all->player->dy;
-	int		map_x = (int)new_x;
-	int		map_y = (int)new_y;
+// void	new_pos_player(t_all *all)
+// {
+// 	double	new_x = all->player->x + all->player->dx;
+// 	double	new_y = all->player->y + all->player->dy;
+// 	int		map_x = (int)new_x;
+// 	int		map_y = (int)new_y;
 
-	if (all->map->line[(int)all->player->y][map_x] != '1')
-		all->player->x = new_x;
-	else
-	{
-		if (all->player->dx > 0)
-			all->player->x = map_x - 0.1;
-		else if (all->player->dx < 0)
-			all->player->x = map_x + 1.0 + 0.1;
-	}
+// 	if (all->map->line[(int)all->player->y][map_x] != '1')
+// 		all->player->x = new_x;
+// 	else
+// 	{
+// 		if (all->player->dx > 0)
+// 			all->player->x = map_x - 0.1;
+// 		else if (all->player->dx < 0)
+// 			all->player->x = map_x + 1.0 + 0.1;
+// 	}
 
-	if (all->map->line[map_y][(int)all->player->x] != '1')
-		all->player->y = new_y;
-	else
-	{
-		if (all->player->dy > 0)
-			all->player->y = map_y - 0.1;
-		else
-			all->player->y = map_y + 1.0 + 0.1;
-	}
-}
-/* 
+// 	if (all->map->line[map_y][(int)all->player->x] != '1')
+// 		all->player->y = new_y;
+// 	else
+// 	{
+// 		if (all->player->dy > 0)
+// 			all->player->y = map_y - 0.1;
+// 		else
+// 			all->player->y = map_y + 1.0 + 0.1;
+// 	}
+// }
+
 void	new_pos_player(t_all *all)
 {
 	double	new_x = all->player->x + all->player->dx;
@@ -108,7 +108,6 @@ void	new_pos_player(t_all *all)
 			all->player->y = map_y + 1.0 + 0.1;
 	}
 }
- */
 
 
 

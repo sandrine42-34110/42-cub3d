@@ -16,14 +16,22 @@
 	return (mlx_loop_end(all->mlx->mlx_ptr));
 } */
 
+// int	close_window(t_all *all)
+// {
+// 	#ifdef __linux__
+// 		mlx_loop_end(all->mlx->mlx_ptr);
+// 	#endif
+// 		free_all(all);
+	
+// 	exit(1);
+// 	return (0);
+// }
+
 int	close_window(t_all *all)
 {
-	#ifdef __linux__
-		mlx_loop_end(all->mlx->mlx_ptr);
-	#endif
-		free_all(all);
-	exit(1);
-	return (0);
+
+	// free_all(all);
+	return (mlx_loop_end(all->mlx->mlx_ptr));
 }
 
 int	key_hook(int keycode, t_all *all)

@@ -77,7 +77,7 @@ t_mlx	*init_mlx(t_all *all)
 
 	mlx = malloc(sizeof(t_mlx));
 	if (!mlx)
-		return (NULL);
+		error_and_close_all("Error : mlx malloc failed!\n", all);
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr)
 		error_and_close_all("Error : MiniLibX initialization failed!", all);

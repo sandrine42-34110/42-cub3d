@@ -29,10 +29,10 @@ double	begin_dir_pl(char dir)
 	if (dir == 'E')
 		angle = 0;
 	else if (dir == 'N')
-		angle = M_PI / 2;
+		angle = 3 * M_PI / 2;
 	else if (dir == 'W')
 		angle = M_PI;
 	else if (dir == 'S')
-		angle = 3 * M_PI / 2;
+			angle = M_PI / 2;
 	return (angle);
 }

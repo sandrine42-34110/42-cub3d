@@ -40,15 +40,19 @@ void	free_mlx(t_mlx *mlx)
 		return ;
 	if (mlx->mlx_ptr)
 	{
-		if (mlx->win_ptr)
-			mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
+		free(mlx->mlx_ptr);
+		// if (mlx->win_ptr)
+		// 	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
+		// if (mlx->mlx_ptr)
+		// 	mlx_destroy_display(mlx->mlx_ptr);
+
 		// Assuming you have functions to destroy images if they exist
 		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_n);
 		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_s);
 		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_e);
 		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_w);
-		free(mlx);
 	}
+	free(mlx);
 }
 
 void	free_text_and_map(t_all *all)
@@ -61,10 +65,12 @@ void	free_text_and_map(t_all *all)
 	}
 }
 
-void	free_minimap(t_minimap *minimap)
+void	free_minimap_and_player(t_all *all)
 {
-	if (minimap)
-		free(minimap);
+	if (all->minimap)
+		free(all->minimap);
+	if (all->player)
+		free(all->player);
 }
 
 void	free_all(t_all *all)
@@ -73,9 +79,8 @@ void	free_all(t_all *all)
 	{
 		free_text(all->text);
 		free_map(all->map);
+		free_minimap_and_player(all);
 		free_mlx(all->mlx);
-		if (all->minimap)
-			free_minimap(all->minimap);
 		free(all);
 	}
 }
