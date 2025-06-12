@@ -92,20 +92,20 @@ void	new_pos_player(t_all *all)
 		all->player->x = new_x;
 	else
 	{
-		if (all->player->dx > 0 && all->map->line[(int)all->player->y][(int)map_x + 1] == '1' && new_x - new_x > 0.9)
-			all->player->x = map_x - 0.1;
-		else if (all->player->dx < 0 && all->map->line[(int)all->player->y][(int)map_x - 1] == '1' && new_x - new_x < 0.1)
-			all->player->x = map_x + 1.0 + 0.1;
+		if (all->player->dx > 0 && all->map->line[(int)all->player->y][(int)map_x + 1] == '1' && new_x - new_x > 0.6)
+			all->player->x = map_x - 0.4;
+		else if (all->player->dx < 0 && all->map->line[(int)all->player->y][(int)map_x - 1] == '1' && new_x - new_x < 0.4)
+			all->player->x = map_x + 1.0 + 0.4;
 	}
 
 	if (all->map->line[(int)map_y][(int)all->player->x] != '1')
 		all->player->y = new_y;
 	else
 	{
-		if (all->player->dy > 0 && all->map->line[(int)map_y][(int)all->player->x] == '1' && new_y - new_y > 0.9)
-			all->player->y = map_y - 0.1;
-		else if (all->player->dy < 0 && all->map->line[(int)map_y][(int)all->player->x] == '1' && new_y - new_y < 0.1)
-			all->player->y = map_y + 1.0 + 0.1;
+		if (all->player->dy > 0 && all->map->line[(int)map_y][(int)all->player->x] == '1' && new_y - new_y > 0.6)
+			all->player->y = map_y - 0.4;
+		else if (all->player->dy < 0 && all->map->line[(int)map_y][(int)all->player->x] == '1' && new_y - new_y < 0.4)
+			all->player->y = map_y + 1.0 + 0.4;
 	}
 }
 

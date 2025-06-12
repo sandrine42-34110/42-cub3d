@@ -81,7 +81,6 @@ void	draw_walls(t_all *all, double angle)
 	// height_wall = H_WIN / len_ray;
 	y = (int)round((H_WIN - height_wall) / 2.0f);
 	end_y = (int)round((H_WIN + height_wall) / 2.0f);
-	printf("%f\n", y);
 	if (y < 0) 
 		y = 0;
 	if	(end_y >= H_WIN)
