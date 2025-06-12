@@ -106,19 +106,19 @@ void draw_vision_line(t_all *all, double angle)
 	all->mlx->y1 = all->raycast->end_y;
 	all->mlx->color = 0x0000FF;
 	draw_line(all, all->mlx);
-
+	draw_walls(all, angle);
 }
 
 void draw_vision_cone(t_all *all)
 {
-	int		nb_rays;
+	double	nb_rays;
 	double	fov; 
 	double	start_angle;
 	double	angle_step;
 	double	ray_angle;
 
 	nb_rays = W_WIN; // Nombre de rayons à tracer
-	fov = 90.0 * M_PI / 180.0; // Champ de vision en radians
+	fov = 60.0 * M_PI / 180.0; // Champ de vision en radians
 	start_angle = all->player->or - fov / 2;
 	angle_step = fov / nb_rays;
 	all->raycast->pos_ray = 0;

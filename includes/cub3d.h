@@ -157,10 +157,10 @@ typedef struct s_raycast
 	double	ray_dir_y;
 	double	ray_x;
 	double	ray_y;
-	int		start_x;
-	int		start_y;
-	int		end_x;
-	int		end_y;
+	double	start_x;
+	double	start_y;
+	double	end_x;
+	double	end_y;
 }				t_raycast;
 
 
@@ -180,7 +180,6 @@ int		key_hook(int keycode, t_all *all);
 /* ====	raycating.c	==========================================================*/
 
 void	draw_line(t_all *all, t_mlx *mlx);
-void	draw_orientation_line(t_all *all);
 void	adjust_ray_to_wall_border(t_all *all);
 void	draw_vision_line(t_all *all, double angle);
 void	draw_vision_cone(t_all *all);
@@ -195,7 +194,9 @@ void	draw_circle(t_all *all, int cx, int cy, int radius, int color);
 
 /* ====	display_3d.c	==============================================*/
 
-void	draw_3d(t_all *all);
+void	draw_ceiling(t_all *all);
+void	draw_floor(t_all *all);
+void	draw_walls(t_all *all, double angle);
 
 /* ====	display_map.c	==============================================*/
 

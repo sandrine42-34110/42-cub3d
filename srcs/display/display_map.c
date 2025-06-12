@@ -62,10 +62,10 @@ void	display_minimap(t_all *all)
 {
 	display_map(all);
 	display_player(all);
-
-	// draw_orientation_line(all);
+	draw_ceiling(all);
+	draw_floor(all);
 	draw_vision_cone(all);
-	draw_3d(all);
+	
 	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->img->img, 0, 0);
 }
 

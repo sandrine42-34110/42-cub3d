@@ -13,8 +13,6 @@ void	draw_ceiling(t_all *all)
 		x = 0;
 		while (x < W_WIN)
 		{
-			// mlx_pixel_put(all->mlx->mlx_ptr, all->mlx->win_ptr,
-			// 	x, y, color);
 			put_pixel(all->img, x, y, color);
 			x++;
 		}
@@ -35,8 +33,6 @@ void	draw_floor(t_all *all)
 		x = 0;
 		while (x < W_WIN)
 		{
-			// mlx_pixel_put(all->mlx->mlx_ptr, all->mlx->win_ptr,
-			// 	x, y, color);
 			if ((y >= H_WIN - all->minimap->map_height_px + 1) && (x > W_WIN - all->minimap->map_width_px))
 				break ;
 			else
@@ -46,9 +42,77 @@ void	draw_floor(t_all *all)
 		y++;
 	}
 }
-void	draw_3d(t_all *all)
+
+double normalize_angle(double angle)
 {
-	draw_ceiling(all);
-	draw_floor(all);
-	//draw_walls(all);
+	while (angle < 0)
+		angle += 2 * M_PI;
+	while (angle > 2 * M_PI)
+		angle -= 2 * M_PI;
+	return angle;
 }
+
+void	draw_walls(t_all *all, double angle)
+{
+	double	len_ray;
+	double	height_wall;
+	double	y;
+	int		color = 0x00FFFF;
+	int		end_y;
+
+
+	angle = normalize_angle(angle);
+	double diff_angle = angle - all->player->or;
+	if (diff_angle > M_PI)
+		diff_angle -= 2 * M_PI;
+	if (diff_angle < -M_PI)
+		diff_angle += 2 * M_PI;
+	// len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) + pow((all->raycast->end_y - all->raycast->start_y), 2)) / cos(angle - all->player->or);
+	// len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) + pow((all->raycast->end_y - all->raycast->start_y), 2)) / cos(diff_angle);
+	len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) +
+				   pow((all->raycast->end_y - all->raycast->start_y), 2));
+	len_ray = len_ray * cos(diff_angle);
+	
+	double scale = 8; // ou 2.0 selon le rendu voulu
+	height_wall = ((double)H_WIN / len_ray) * scale;
+
+	// height_wall = H_WIN / len_ray;
+	y = (int)((H_WIN - height_wall) / 2);
+	end_y = (int)((H_WIN + height_wall) / 2);
+	if (y < 0) 
+		y = 0;
+	if	(end_y >= H_WIN)
+		end_y = H_WIN - 1;
+	while (y < end_y)
+	{
+		put_pixel(all->img, all->raycast->pos_ray, y, color);
+		y++;
+
+	}
+	
+
+}
+// void	draw_walls(t_all *all, double angle)
+// {
+// 	double	len_ray;
+// 	double	height_wall;
+// 	double	y;
+// 	int		end_y;
+// 	int		color;
+
+// 	color = 0x00FFFF;
+// 	angle = normalize_angle(angle - all->player->or);
+// 	len_ray = sqrt(pow(all->raycast->end_x - all->raycast->start_x, 2)
+// 			+ pow(all->raycast->end_y - all->raycast->start_y, 2)) / cos(angle);
+// 	height_wall = (H_WIN / len_ray) * 1.5;
+// 	y = (H_WIN - height_wall) / 2;
+// 	end_y = (int)((H_WIN + height_wall) / 2);
+// 	if (y < 0)
+// 		y = 0;
+// 	if (end_y >= H_WIN)
+// 		end_y = H_WIN - 1;
+// 	while (y < end_y)
+// 		put_pixel(all->img, all->raycast->pos_ray, (int)(y++), color);
+// }
+
+
