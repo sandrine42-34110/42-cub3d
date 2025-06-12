@@ -7,7 +7,7 @@ void	print_map(t_all *all)
 	i = 0;
 	while (all->map->line[i])
 	{
-		ft_printf("%s\n", all->map->line[i]);
+		ft_printf("|%s|\n", all->map->line[i]);
 		i++;
 	}
 }
@@ -34,12 +34,13 @@ void	fill_map(char *line, t_all *all, int *i, int fd)
 	all->map->h_map = *i;
 	free(trim);
 }
-// DEBUG
+
 void	taller_line(t_all *all)
 {
 	int		x;
 	int		y;
 	char	*new_line;
+	char	*temp;
 
 	y = 0;
 	while (y < all->map->h_map)
@@ -47,15 +48,16 @@ void	taller_line(t_all *all)
 		x = ft_strlen(all->map->line[y]);
 		if (x < all->map->w_map)
 		{
-			new_line = all->map->line[y];
+			new_line = ft_strdup(all->map->line[y]);
 			free(all->map->line[y]);
 			while(x < all->map->w_map)
 			{
-				new_line[x] = ' ';
+				temp = ft_strjoin(new_line, " ");
+				free (new_line);
+				new_line = temp;
 				x++;
 			}
-			new_line[x] = '\0';
-			all->map->line[y] = ft_strdup(new_line);
+			all->map->line[y] = new_line;
 		}
 		y++;
 	}

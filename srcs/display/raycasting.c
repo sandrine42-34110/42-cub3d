@@ -38,26 +38,26 @@ void draw_line(t_all *all, t_mlx *mlx)
 	}
 }
 
-void	draw_orientation_line(t_all *all)
-{
-	double	px;
-	double	py;
-	double	angle;
-	double	line_len; // Longueur du trait en pixels
-	double	end_x;
-	double	end_y;
+// void	draw_orientation_line(t_all *all)
+// {
+// 	double	px;
+// 	double	py;
+// 	double	angle;
+// 	double	line_len; // Longueur du trait en pixels
+// 	double	end_x;
+// 	double	end_y;
 
-	all->mlx->color=0xFF0000;
+// 	all->mlx->color=0xFF0000;
 
-	px = all->minimap->offset_x + all->player->x * all->mlx->tile_size;
-	py = all->minimap->offset_y + all->player->y * all->mlx->tile_size;
-	angle = all->player->or;
-	line_len = 20.0;
-	end_x = px + cos(angle) * line_len;
-	end_y = py + sin(angle) * line_len;
-	draw_3d(all);
-	draw_line(all, all->mlx);
-}
+// 	px = all->minimap->offset_x + all->player->x * all->mlx->tile_size;
+// 	py = all->minimap->offset_y + all->player->y * all->mlx->tile_size;
+// 	angle = all->player->or;
+// 	line_len = 20.0;
+// 	end_x = px + cos(angle) * line_len;
+// 	end_y = py + sin(angle) * line_len;
+// 	draw_3d(all);
+// 	draw_line(all, all->mlx);
+// }
 
 void adjust_ray_to_wall_border(t_all *all)
 {

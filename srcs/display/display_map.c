@@ -28,6 +28,7 @@ void	display_map(t_all *all)
 	all->minimap->offset_x = W_WIN - all->minimap->map_width_px;
 	all->minimap->offset_y = H_WIN - all->minimap->map_height_px;
 	y = 0;
+
 	while (y < all->map->h_map)
 	{
 		x = 0;
@@ -61,8 +62,10 @@ void	display_minimap(t_all *all)
 {
 	display_map(all);
 	display_player(all);
-	draw_orientation_line(all);
+
+	// draw_orientation_line(all);
 	draw_vision_cone(all);
+	draw_3d(all);
 	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->img->img, 0, 0);
 }
 
