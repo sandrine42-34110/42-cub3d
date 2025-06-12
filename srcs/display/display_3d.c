@@ -69,16 +69,19 @@ void	draw_walls(t_all *all, double angle)
 		diff_angle += 2 * M_PI;
 	// len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) + pow((all->raycast->end_y - all->raycast->start_y), 2)) / cos(angle - all->player->or);
 	// len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) + pow((all->raycast->end_y - all->raycast->start_y), 2)) / cos(diff_angle);
+	
 	len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) +
 				   pow((all->raycast->end_y - all->raycast->start_y), 2));
 	len_ray = len_ray * cos(diff_angle);
 	
+
 	double scale = 8; // ou 2.0 selon le rendu voulu
 	height_wall = ((double)H_WIN / len_ray) * scale;
 
 	// height_wall = H_WIN / len_ray;
-	y = (int)((H_WIN - height_wall) / 2);
-	end_y = (int)((H_WIN + height_wall) / 2);
+	y = (int)round((H_WIN - height_wall) / 2.0f);
+	end_y = (int)round((H_WIN + height_wall) / 2.0f);
+	printf("%f\n", y);
 	if (y < 0) 
 		y = 0;
 	if	(end_y >= H_WIN)

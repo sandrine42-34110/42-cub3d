@@ -68,8 +68,8 @@ void adjust_ray_to_wall_border(t_all *all)
 	y = (int)all->raycast->ray_y;
 	while (all->map->line[y][x] == '1')
 	{
-		all->raycast->ray_x -= all->raycast->ray_dir_x * 0.01;
-		all->raycast->ray_y -= all->raycast->ray_dir_y * 0.01;
+		all->raycast->ray_x -= all->raycast->ray_dir_x * 0.0001;
+		all->raycast->ray_y -= all->raycast->ray_dir_y * 0.0001;
 		x = (int)all->raycast->ray_x;
 		y = (int)all->raycast->ray_y;
 	}
@@ -96,10 +96,10 @@ void draw_vision_line(t_all *all, double angle)
 			adjust_ray_to_wall_border(all);
 		}
 	}
-	all->raycast->start_x = all->minimap->offset_x + all->raycast->px * all->mlx->tile_size;
-	all->raycast->start_y = all->minimap->offset_y + all->raycast->py * all->mlx->tile_size;
-	all->raycast->end_x = all->minimap->offset_x + all->raycast->ray_x * all->mlx->tile_size;
-	all->raycast->end_y = all->minimap->offset_y + all->raycast->ray_y * all->mlx->tile_size;
+	all->raycast->start_x = (double)all->minimap->offset_x + all->raycast->px * (double)all->mlx->tile_size;
+	all->raycast->start_y = (double)all->minimap->offset_y + all->raycast->py * (double)all->mlx->tile_size;
+	all->raycast->end_x = (double)all->minimap->offset_x + all->raycast->ray_x * (double)all->mlx->tile_size;
+	all->raycast->end_y = (double)all->minimap->offset_y + all->raycast->ray_y * (double)all->mlx->tile_size;
 	all->mlx->x0 = all->raycast->start_x;
 	all->mlx->y0 = all->raycast->start_y;
 	all->mlx->x1 = all->raycast->end_x;
@@ -120,10 +120,11 @@ void draw_vision_cone(t_all *all)
 	nb_rays = W_WIN; // Nombre de rayons à tracer
 	fov = 60.0 * M_PI / 180.0; // Champ de vision en radians
 	start_angle = all->player->or - fov / 2;
-	angle_step = fov / nb_rays;
+	angle_step = fov / (double)nb_rays;
 	all->raycast->pos_ray = 0;
 	while (all->raycast->pos_ray < nb_rays)
 	{
+
 		ray_angle = start_angle + all->raycast->pos_ray * angle_step;
 		draw_vision_line(all, ray_angle); // Bleu pour les rayons
 		(all->raycast->pos_ray)++;

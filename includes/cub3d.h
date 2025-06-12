@@ -40,8 +40,8 @@
 # define W_WIN				1500
 # define H_WIN				900
 
-# define MOVE_SPEED			0.125
-# define ANGLE_ROT			0.1
+# define MOVE_SPEED			0.125f
+# define ANGLE_ROT			0.1f
 
 # define TITLE "cub3d"
 
@@ -141,10 +141,10 @@ typedef struct s_mlx
 	void	*img_w_w;
 	void	*clr_f;
 	void	*clr_c;
-	int		x0;		//draw_line
-	int		y0;
-	int		x1;
-	int		y1;
+	int	x0;		//draw_line
+	int	y0;
+	int	x1;
+	int	y1;
 	int		color;
 }				t_mlx;
 
@@ -157,10 +157,10 @@ typedef struct s_raycast
 	double	ray_dir_y;
 	double	ray_x;
 	double	ray_y;
-	int		start_x;
-	int		start_y;
-	int		end_x;
-	int		end_y;
+	double	start_x;
+	double	start_y;
+	double	end_x;
+	double	end_y;
 }				t_raycast;
 
 
