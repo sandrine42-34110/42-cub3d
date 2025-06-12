@@ -60,7 +60,7 @@ void	draw_walls(t_all *all, double angle)
 	int		color = 0x00FFFF;
 	int		end_y;
 
-
+	//printf("wall\n");
 	angle = normalize_angle(angle);
 	double diff_angle = angle - all->player->or;
 	if (diff_angle > M_PI)

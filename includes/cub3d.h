@@ -157,10 +157,10 @@ typedef struct s_raycast
 	double	ray_dir_y;
 	double	ray_x;
 	double	ray_y;
-	double	start_x;
-	double	start_y;
-	double	end_x;
-	double	end_y;
+	int		start_x;
+	int		start_y;
+	int		end_x;
+	int		end_y;
 }				t_raycast;
 
 

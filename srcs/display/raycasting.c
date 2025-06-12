@@ -111,7 +111,7 @@ void draw_vision_line(t_all *all, double angle)
 
 void draw_vision_cone(t_all *all)
 {
-	double	nb_rays;
+	int		nb_rays;
 	double	fov; 
 	double	start_angle;
 	double	angle_step;
