@@ -16,22 +16,22 @@
 	return (mlx_loop_end(all->mlx->mlx_ptr));
 } */
 
-// int	close_window(t_all *all)
-// {
-// 	#ifdef __linux__
-// 		mlx_loop_end(all->mlx->mlx_ptr);
-// 	#endif
-// 		free_all(all);
-	
-// 	exit(1);
-// 	return (0);
-// }
+// Fonction À utiliser lorsque on aura plus besoin de travailler sur le Mac
+/* int	close_window(t_all *all)
+{
+	return (mlx_loop_end(all->mlx->mlx_ptr));
+} */
 
+// Fonction À supprimer lorsque on aura plus besoin de travailler sur le Mac
 int	close_window(t_all *all)
 {
 
-	// free_all(all);
-	return (mlx_loop_end(all->mlx->mlx_ptr));
+	#ifdef __linux__
+		return (mlx_loop_end(all->mlx->mlx_ptr));
+	#else
+		(void)all;
+		exit(0);
+	#endif
 }
 
 int	key_hook(int keycode, t_all *all)
