@@ -67,8 +67,6 @@ void	draw_walls(t_all *all, double angle)
 		diff_angle -= 2 * M_PI;
 	if (diff_angle < -M_PI)
 		diff_angle += 2 * M_PI;
-	// len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) + pow((all->raycast->end_y - all->raycast->start_y), 2)) / cos(angle - all->player->or);
-	// len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) + pow((all->raycast->end_y - all->raycast->start_y), 2)) / cos(diff_angle);
 	
 	len_ray = sqrt(pow((all->raycast->end_x - all->raycast->start_x), 2) +
 				   pow((all->raycast->end_y - all->raycast->start_y), 2));
@@ -87,9 +85,11 @@ void	draw_walls(t_all *all, double angle)
 		end_y = H_WIN - 1;
 	while (y < end_y)
 	{
+		if ((y >= H_WIN - all->minimap->map_height_px + 1) && (all->raycast->pos_ray > W_WIN - all->minimap->map_width_px))
+				break ;
+			else
 		put_pixel(all->img, all->raycast->pos_ray, y, color);
 		y++;
-
 	}
 	
 

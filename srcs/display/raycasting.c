@@ -118,7 +118,7 @@ void draw_vision_cone(t_all *all)
 	double	ray_angle;
 
 	nb_rays = W_WIN; // Nombre de rayons à tracer
-	fov = 60.0 * M_PI / 180.0; // Champ de vision en radians
+	fov = 90.0 * M_PI / 180.0; // Champ de vision en radians
 	start_angle = all->player->or - fov / 2;
 	angle_step = fov / (double)nb_rays;
 	all->raycast->pos_ray = 0;
