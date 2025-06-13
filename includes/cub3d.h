@@ -42,6 +42,8 @@
 
 # define MOVE_SPEED			0.125f
 # define ANGLE_ROT			0.1f
+# define COLL_PAD			0.1f
+
 
 # define TITLE "cub3d"
 
