@@ -44,6 +44,7 @@
 # define ANGLE_ROT			0.1f
 # define COLL_PAD			0.1f
 
+# define FOV_RAD (90.0 * M_PI / 180.0)
 
 # define TITLE "cub3d"
 
@@ -152,7 +153,7 @@ typedef struct s_mlx
 
 typedef struct s_raycast
 {
-	int		pos_ray;
+	int		pos_px_x;
 	double	px;
 	double	py;
 	double	ray_dir_x;
@@ -183,9 +184,8 @@ int		key_hook(int keycode, t_all *all);
 
 void	draw_line(t_all *all, t_mlx *mlx);
 void	adjust_ray_to_wall_border(t_all *all);
-void	draw_vision_line(t_all *all, double angle);
+void	draw_vision_line(t_all *all);
 void	draw_vision_cone(t_all *all);
-
 
 /* ====	utils_display.c	======================================================*/
 
@@ -198,7 +198,7 @@ void	draw_circle(t_all *all, int cx, int cy, int radius, int color);
 
 void	draw_ceiling(t_all *all);
 void	draw_floor(t_all *all);
-void	draw_walls(t_all *all, double angle);
+void	draw_walls(t_all *all);
 
 /* ====	display_map.c	==============================================*/
 

@@ -59,22 +59,7 @@ void draw_line(t_all *all, t_mlx *mlx)
 // 	draw_line(all, all->mlx);
 // }
 
-void adjust_ray_to_wall_border(t_all *all)
-{
-	int	x;
-	int	y;
-
-	x = (int)all->raycast->ray_x;
-	y = (int)all->raycast->ray_y;
-	while (all->map->line[y][x] == '1')
-	{
-		all->raycast->ray_x -= all->raycast->ray_dir_x * 0.0001;
-		all->raycast->ray_y -= all->raycast->ray_dir_y * 0.0001;
-		x = (int)all->raycast->ray_x;
-		y = (int)all->raycast->ray_y;
-	}
-}
-
+/* 
 void draw_vision_line(t_all *all, double angle)
 {
 	int		hit;
@@ -121,12 +106,74 @@ void draw_vision_cone(t_all *all)
 	fov = 90.0 * M_PI / 180.0; // Champ de vision en radians
 	start_angle = all->player->or - fov / 2;
 	angle_step = fov / (double)nb_rays;
-	all->raycast->pos_ray = 0;
-	while (all->raycast->pos_ray < nb_rays)
+	all->raycast->pos_px_x = 0;
+	while (all->raycast->pos_px_x < nb_rays)
 	{
 
-		ray_angle = start_angle + all->raycast->pos_ray * angle_step;
+		ray_angle = start_angle + all->raycast->pos_px_x * angle_step;
 		draw_vision_line(all, ray_angle); // Bleu pour les rayons
-		(all->raycast->pos_ray)++;
+		(all->raycast->pos_px_x)++;
 	}
+} */
+
+void adjust_ray_to_wall_border(t_all *all)
+{
+	int	x;
+	int	y;
+
+	x = (int)all->raycast->ray_x;
+	y = (int)all->raycast->ray_y;
+	while (all->map->line[y][x] == '1')
+	{
+		all->raycast->ray_x -= all->raycast->ray_dir_x * 0.0001;
+		all->raycast->ray_y -= all->raycast->ray_dir_y * 0.0001;
+		x = (int)all->raycast->ray_x;
+		y = (int)all->raycast->ray_y;
+	}
+}
+
+void	draw_vision_cone(t_all *all)
+{
+	double	camera_x;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+
+	dir_x = cos(all->player->or);
+	dir_y = sin(all->player->or);
+	plane_x = -dir_y * tan(90.0 * M_PI / 360.0);
+	plane_y = dir_x * tan(90.0 * M_PI / 360.0);
+
+	all->raycast->pos_px_x = 0;
+	while (all->raycast->pos_px_x < W_WIN)
+	{
+		camera_x = 2.0 * all->raycast->pos_px_x / W_WIN - 1.0;
+		all->raycast->ray_dir_x = dir_x + plane_x * camera_x;
+		all->raycast->ray_dir_y = dir_y + plane_y * camera_x;
+		draw_vision_line(all);
+		all->raycast->pos_px_x++;
+	}
+}
+
+void	draw_vision_line(t_all *all)
+{
+	int	hit;
+
+	hit = 0;
+	all->raycast->px = all->player->x;
+	all->raycast->py = all->player->y;
+	all->raycast->ray_x = all->raycast->px;
+	all->raycast->ray_y = all->raycast->py;
+	while (!hit)
+	{
+		all->raycast->ray_x += all->raycast->ray_dir_x * 0.2;
+		all->raycast->ray_y += all->raycast->ray_dir_y * 0.2;
+		if (all->map->line[(int)all->raycast->ray_y][(int)all->raycast->ray_x] == '1')
+		{
+			hit = 1;
+			adjust_ray_to_wall_border(all);
+		}
+	}
+	draw_walls(all);
 }
