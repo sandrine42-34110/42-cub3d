@@ -110,10 +110,6 @@ t_mlx	*init_mlx(t_all *all)
 	if (!mlx->win_ptr)
 		error_and_close_all("Error : Failed to create window\n", all);
 	mlx->tile_size = tile_size(all);
-	// mlx->player_x = 0;
-	// mlx->player_y = 0;
-	/* if (!load_images(all))
-		error_and_close_all("Error : Texture isn't exist\n", all); */
 	all->minimap = init_minimap(all);
 	all->player = init_player(all);
 	all->raycast = init_raycast(all);

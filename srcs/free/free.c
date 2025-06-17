@@ -75,7 +75,14 @@ void	free_display(t_all *all)
 		free(all->raycast);
 	if (all->screen)
 		free(all->screen);
-	
+	if (all->mlx->img_w_n.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_n.img);
+	if (all->mlx->img_w_s.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_s.img);
+	if (all->mlx->img_w_e.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_e.img);
+	if (all->mlx->img_w_w.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_w.img);
 }
 
 void	free_all(t_all *all)

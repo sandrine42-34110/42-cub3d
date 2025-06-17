@@ -91,6 +91,8 @@ typedef struct s_img
 	int		bpp;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
 }	t_img;
 
 
@@ -138,10 +140,10 @@ typedef struct s_mlx
 	int		tile_size;
 	int		player_x;
 	int		player_y;
-	void	*img_w_n;
-	void	*img_w_s;
-	void	*img_w_e;
-	void	*img_w_w;
+	t_img	img_w_n;
+	t_img	img_w_s;
+	t_img	img_w_e;
+	t_img	img_w_w;
 	void	*clr_f;
 	void	*clr_c;
 	int	x0;		//draw_line
@@ -228,6 +230,7 @@ t_img		*init_img(t_all *all);
 int	check_map_name(char *str);
 int	tile_size(t_all *all);
 double	begin_dir_pl(char dir);
+void	load_images(t_all *all);
 
 /* ====	move.c	=============================================================*/
 
