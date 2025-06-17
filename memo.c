@@ -2,11 +2,10 @@
 /*                                   bastien                                  */
 /* -------------------------------------------------------------------------- */
 
+gerer les rayons qui traversent les angles de murs 
 
-gestion de l arrivee contre le mur
-gerer murs qui se superposent a la minimap
-
-
+orientation textures en cours, j ai telecharge les textures et tente un ajout avec chatgt dans draw vision cone mais c est pas top. 
+Il faut voir si c est pas dû au fait que les rayons traversent les murs.
 
 
 /* -------------------------------------------------------------------------- */

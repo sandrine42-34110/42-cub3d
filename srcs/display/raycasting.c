@@ -133,7 +133,7 @@ void adjust_ray_to_wall_border(t_all *all)
 }
 
 
-void	draw_vision_line(t_all *all)
+/* void	draw_vision_line(t_all *all)
 {
 	int	hit;
 
@@ -157,6 +157,65 @@ void	draw_vision_line(t_all *all)
 	all->raycast->start_y = (double)all->minimap->offset_y + all->raycast->py * (double)all->mlx->tile_size;
 	all->raycast->end_x = (double)all->minimap->offset_x + all->raycast->ray_x * (double)all->mlx->tile_size;
 	all->raycast->end_y = (double)all->minimap->offset_y + all->raycast->ray_y * (double)all->mlx->tile_size;
+	all->mlx->x0 = all->raycast->start_x;
+	all->mlx->y0 = all->raycast->start_y;
+	all->mlx->x1 = all->raycast->end_x;
+	all->mlx->y1 = all->raycast->end_y;
+	all->mlx->color = 0x0000FF;
+	draw_line(all, all->mlx);
+} */
+
+void	draw_vision_line(t_all *all)
+{
+	int		hit;
+	double	prev_x;
+	double	prev_y;
+	double	dx;
+	double	dy;
+
+	hit = 0;
+	all->raycast->px = all->player->x;
+	all->raycast->py = all->player->y;
+	all->raycast->ray_x = all->raycast->px;
+	all->raycast->ray_y = all->raycast->py;
+	while (!hit)
+	{
+		prev_x = all->raycast->ray_x;
+		prev_y = all->raycast->ray_y;
+		all->raycast->ray_x += all->raycast->ray_dir_x * 0.2;
+		all->raycast->ray_y += all->raycast->ray_dir_y * 0.2;
+		if (all->map->line[(int)all->raycast->ray_y]
+			[(int)all->raycast->ray_x] == '1')
+		{
+			hit = 1;
+			adjust_ray_to_wall_border(all);
+			dx = fabs(all->raycast->ray_x - prev_x);
+			dy = fabs(all->raycast->ray_y - prev_y);
+			if (dx > dy)
+			{
+				if (all->raycast->ray_dir_x > 0)
+					all->raycast->wall_tex = TEX_WE;
+				else
+					all->raycast->wall_tex = TEX_EA;
+			}
+			else
+			{
+				if (all->raycast->ray_dir_y > 0)
+					all->raycast->wall_tex = TEX_NO;
+				else
+					all->raycast->wall_tex = TEX_SO;
+			}
+		}
+	}
+	draw_walls(all);
+	all->raycast->start_x = (double)all->minimap->offset_x
+		+ all->raycast->px * (double)all->mlx->tile_size;
+	all->raycast->start_y = (double)all->minimap->offset_y
+		+ all->raycast->py * (double)all->mlx->tile_size;
+	all->raycast->end_x = (double)all->minimap->offset_x
+		+ all->raycast->ray_x * (double)all->mlx->tile_size;
+	all->raycast->end_y = (double)all->minimap->offset_y
+		+ all->raycast->ray_y * (double)all->mlx->tile_size;
 	all->mlx->x0 = all->raycast->start_x;
 	all->mlx->y0 = all->raycast->start_y;
 	all->mlx->x1 = all->raycast->end_x;

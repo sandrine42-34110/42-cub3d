@@ -166,8 +166,16 @@ typedef struct s_raycast
 	double	start_y;
 	double	end_x;
 	double	end_y;
+	int		wall_tex;
 }				t_raycast;
 
+enum e_texture
+{
+	TEX_NO,
+	TEX_SO,
+	TEX_WE,
+	TEX_EA
+}	t_tex_dir;
 
 /* ====	check_text_and_map.c	==============================================*/
 
