@@ -66,7 +66,7 @@ void	display_minimap(t_all *all)
 	draw_floor(all);
 	draw_vision_cone(all);
 	
-	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->img->img, 0, 0);
+	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->screen->img, 0, 0);
 }
 
 

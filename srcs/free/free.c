@@ -73,8 +73,8 @@ void	free_display(t_all *all)
 		free(all->player);
 	if (all->raycast)
 		free(all->raycast);
-	if (all->img)
-		free(all->img);
+	if (all->screen)
+		free(all->screen);
 	
 }
 

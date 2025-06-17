@@ -13,7 +13,7 @@ void	draw_ceiling(t_all *all)
 		x = 0;
 		while (x < W_WIN)
 		{
-			put_pixel(all->img, x, y, color);
+			put_pixel(all->screen, x, y, color);
 			x++;
 		}
 		y++;
@@ -36,7 +36,7 @@ void	draw_floor(t_all *all)
 			if ((y >= H_WIN - all->minimap->map_height_px + 1) && (x > W_WIN - all->minimap->map_width_px))
 				break ;
 			else
-				put_pixel(all->img, x, y, color);
+				put_pixel(all->screen, x, y, color);
 			x++;
 		}
 		y++;
@@ -68,7 +68,7 @@ void	draw_walls(t_all *all)
 		if (y[0] >= H_WIN - all->minimap->map_height_px + 1
 			&& all->raycast->pos_px_x > W_WIN - all->minimap->map_width_px)
 			break ;
-		put_pixel(all->img, all->raycast->pos_px_x, y[0]++, 0x00FFFF);
+		put_pixel(all->screen, all->raycast->pos_px_x, y[0]++, 0x00FFFF);
 	}
 }
 

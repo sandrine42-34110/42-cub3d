@@ -71,7 +71,7 @@ typedef struct s_all
 	t_minimap	*minimap;
 	t_player	*player;
 	t_raycast	*raycast;
-	t_img		*img;
+	t_img		*screen;
 }				t_all;
 
 typedef struct s_map

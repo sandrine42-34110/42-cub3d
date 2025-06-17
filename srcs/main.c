@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 	parse_map(all, argv[1]);
 	check_text_and_map(all);
 	all->mlx = init_mlx(all);
-	all->img = init_img(all);
+	all->screen = init_img(all);
 	display_minimap(all);
 	ft_printf("ok\n");
 	mlx_hook(all->mlx->win_ptr, 17, 0, close_window, all);
