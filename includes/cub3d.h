@@ -37,8 +37,8 @@
 # define KEY_ARROW_RIGHT	65363
 #endif
 
-# define W_WIN				1500
-# define H_WIN				900
+# define W_WIN				3000
+# define H_WIN				1800
 
 # define MOVE_SPEED			0.125f
 # define ANGLE_ROT			0.1f
@@ -169,7 +169,7 @@ typedef struct s_raycast
 	int		wall_tex;
 }				t_raycast;
 
-enum e_texture
+typedef enum e_texture
 {
 	TEX_NO,
 	TEX_SO,

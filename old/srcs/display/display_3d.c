@@ -43,7 +43,7 @@ void	draw_floor(t_all *all)
 	}
 }
 
-/* void	draw_walls(t_all *all)
+void	draw_walls(t_all *all)
 {
 	double	vx;
 	double	vy;
@@ -69,68 +69,6 @@ void	draw_floor(t_all *all)
 			&& all->raycast->pos_px_x > W_WIN - all->minimap->map_width_px)
 			break ;
 		put_pixel(all->screen, all->raycast->pos_px_x, y[0]++, 0x00FFFF);
-	}
-} */
-
-void	draw_walls(t_all *all)
-{
-	double	vx, vy, perp;
-	double	h;
-	int		y_start, y_end;
-	int		y;
-	double	step;
-	double	tex_pos;
-	int		tex_x, tex_y;
-	t_img	*tex;
-
-	vx = all->raycast->ray_x - all->raycast->px;
-	vy = all->raycast->ray_y - all->raycast->py;
-	perp = vx * cos(all->player->or) + vy * sin(all->player->or);
-	if (perp < 0.0001)
-		perp = 0.0001;
-	h = (1.0 / perp) * ((W_WIN / 2.0) / tan(FOV_RAD / 2.0));
-
-	y_start = (int)((H_WIN - h) / 2.0);
-	y_end = (int)((H_WIN + h) / 2.0);
-	if (y_start < 0)
-		y_start = 0;
-	if (y_end >= H_WIN)
-		y_end = H_WIN - 1;
-
-	// ← Texture à utiliser selon wall_tex
-	if (all->raycast->wall_tex == TEX_NO)
-		tex = &all->mlx->img_w_n;
-	else if (all->raycast->wall_tex == TEX_SO)
-		tex = &all->mlx->img_w_s;
-	else if (all->raycast->wall_tex == TEX_WE)
-		tex = &all->mlx->img_w_w;
-	else
-		tex = &all->mlx->img_w_e;
-
-	// ← Calcul tex_x (position horizontale sur la texture)
-	double wall_x;
-	if (all->raycast->wall_tex == TEX_NO || all->raycast->wall_tex == TEX_SO)
-		wall_x = all->raycast->ray_x;
-	else
-		wall_x = all->raycast->ray_y;
-	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * (double)tex->width);
-	if ((all->raycast->wall_tex == TEX_EA || all->raycast->wall_tex == TEX_NO))
-		tex_x = tex->width - tex_x - 1;
-
-	// ← Rendu ligne par ligne verticalement
-	step = (double)tex->height / h;
-	tex_pos = (y_start - H_WIN / 2.0 + h / 2.0) * step;
-	y = y_start;
-	while (y < y_end)
-	{
-		tex_y = (int)tex_pos & (tex->height - 1);
-		tex_pos += step;
-		int	color = *((unsigned int *)(tex->addr + tex_y * tex->line_length + tex_x * (tex->bpp / 8)));
-		if ((y >= H_WIN - all->minimap->map_height_px + 1) && (all->raycast->pos_px_x > W_WIN - all->minimap->map_width_px))
-			break ;
-		else
-			put_pixel(all->screen, all->raycast->pos_px_x, y++, color);
 	}
 }
 
@@ -207,6 +145,101 @@ void	draw_walls(t_all *all, double angle)
 // 		end_y = H_WIN - 1;
 // 	while (y < end_y)
 // 		put_pixel(all->img, all->raycast->pos_ray, (int)(y++), color);
+// }
+
+// void	init_raycast(t_all *all)
+// {
+// 	all->raycast->px = all->player->x;
+// 	all->raycast->py = all->player->y;
+// 	all->raycast->ray_x = all->raycast->px;
+// 	all->raycast->ray_y = all->raycast->py;
+// }
+
+void    set_wall_texture(t_all *all)
+{
+	int side;  /* 0 = mur vertical (E/O), 1 = horizontal (N/S) */
+
+	if (fabs(all->raycast->ray_dir_x) > fabs(all->raycast->ray_dir_y))
+		side = 0;                       /* on va franchir une ligne de grille X avant Y */
+	else
+		side = 1;                       /* on franchira Y avant X */
+
+	if (side == 0)                      /* mur E / W */
+	{
+		if (all->raycast->ray_dir_x > 0)
+			all->raycast->wall_tex = TEX_WE; /* on vient de l’est → mur OUEST */
+		else
+			all->raycast->wall_tex = TEX_EA; /* on vient de l’ouest → mur EST  */
+	}
+	else                                /* mur N / S */
+	{
+		if (all->raycast->ray_dir_y > 0)
+			all->raycast->wall_tex = TEX_NO; /* on vient du sud → mur NORD    */
+		else
+			all->raycast->wall_tex = TEX_SO; /* on vient du nord → mur SUD     */
+	}
+}
+
+// void	find_wall_hit(t_all *all)
+// {
+// 	int		hit = 0;
+// 	double	prev_x, prev_y;
+
+// 	while (!hit)
+// 	{
+// 		prev_x = all->raycast->ray_x;
+// 		prev_y = all->raycast->ray_y;
+// 		all->raycast->ray_x += all->raycast->ray_dir_x * 0.005;
+// 		all->raycast->ray_y += all->raycast->ray_dir_y * 0.005;
+// 		if (all->map->line[(int)all->raycast->ray_y][(int)all->raycast->ray_x] == '1')
+// 		{
+// 			hit = 1;
+// 			check_hit_orientation(all, prev_x, prev_y);
+// 			set_wall_texture(all);
+// 		}
+// 	}
+// }
+
+// void	check_hit_orientation(t_all *all, double prev_x, double prev_y)
+// {
+// 	double	dx = fabs(all->raycast->ray_x - prev_x);
+// 	double	dy = fabs(all->raycast->ray_y - prev_y);
+
+// 	if (dx > dy)
+// 		all->raycast->hit_vertical = 1;
+// 	else
+// 		all->raycast->hit_vertical = 0;
+// }
+
+// void	draw_ray_on_minimap(t_all *all)
+// {
+// 	int		x0, y0, x1, y1;
+// 	int		color;
+
+// 	x0 = all->minimap->offset_x + all->raycast->px * all->mlx->tile_size;
+// 	y0 = all->minimap->offset_y + all->raycast->py * all->mlx->tile_size;
+
+// 	x1 = all->minimap->offset_x + all->raycast->ray_x * all->mlx->tile_size;
+// 	y1 = all->minimap->offset_y + all->raycast->ray_y * all->mlx->tile_size;
+
+// 	color = 0x0000FF; // bleu pour le rayon
+
+// 	all->mlx->x0 = x0;
+// 	all->mlx->y0 = y0;
+// 	all->mlx->x1 = x1;
+// 	all->mlx->y1 = y1;
+// 	all->mlx->color = color;
+// 	draw_line(all, all->mlx);
+// }
+
+
+// void	draw_vision_line(t_all *all)
+// {
+// 	init_raycast(all);
+// 	find_wall_hit(all);
+// 	draw_walls(all);
+// 	//printf("apres draw_wall\n");
+// 	draw_ray_on_minimap(all);
 // }
 
 

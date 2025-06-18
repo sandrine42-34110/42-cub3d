@@ -57,7 +57,7 @@ void	display_player(t_all *all)
 		all->minimap->offset_y + all->player->y * all->mlx->tile_size,
 		radius, clr_pl);
 }
-/* 
+
 void	display_textures_sample(t_all *all)
 {
 	int	padding;
@@ -74,7 +74,7 @@ void	display_textures_sample(t_all *all)
 		all->mlx->img_w_e.img, padding + (size + padding) * 2, padding);
 	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr,
 		all->mlx->img_w_w.img, padding + (size + padding) * 3, padding);
-} */
+}
 
 void	display_minimap(t_all *all)
 {
@@ -84,7 +84,7 @@ void	display_minimap(t_all *all)
 	draw_floor(all);
 	draw_vision_cone(all);
 	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->screen->img, 0, 0);
-	//display_textures_sample(all);
+	display_textures_sample(all);
 }
 
 

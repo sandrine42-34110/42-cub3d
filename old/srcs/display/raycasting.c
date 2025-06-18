@@ -148,124 +148,87 @@ void draw_vision_cone(t_all *all)
 	draw_line(all, all->mlx);
 } */
 
-// void	draw_vision_line(t_all *all)
-// {
-// 	int		hit;
-// 	double	prev_x;
-// 	double	prev_y;
-// 	double	dx;
-// 	double	dy;
 
-// 	hit = 0;
-// 	all->raycast->px = all->player->x;
-// 	all->raycast->py = all->player->y;
-// 	all->raycast->ray_x = all->raycast->px;
-// 	all->raycast->ray_y = all->raycast->py;
-// 	while (!hit)
-// 	{
-// 		prev_x = all->raycast->ray_x;
-// 		prev_y = all->raycast->ray_y;
-// 		all->raycast->ray_x += all->raycast->ray_dir_x * 0.005;
-// 		all->raycast->ray_y += all->raycast->ray_dir_y * 0.005;
-// 		if (all->map->line[(int)all->raycast->ray_y]
-// 			[(int)all->raycast->ray_x] == '1')
-// 		{
-// 			hit = 1;
-// 			dx = fabs(all->raycast->ray_x - prev_x);
-// 			dy = fabs(all->raycast->ray_y - prev_y);
-// 			if (dx > dy)
-// 			{
-// 				if (all->raycast->ray_dir_x > 0)
-// 					all->raycast->wall_tex = TEX_WE;
-// 				else
-// 					all->raycast->wall_tex = TEX_EA;
-// 			}
-// 			else
-// 			{
-// 				if (all->raycast->ray_dir_y > 0)
-// 					all->raycast->wall_tex = TEX_NO;
-// 				else
-// 					all->raycast->wall_tex = TEX_SO;
-// 			}
-// 		}
-// 		//printf("DEBUG wall_text = %d\n", all->raycast->wall_tex);
-// 	}
-// 	draw_walls(all);
-// 	all->raycast->start_x = (double)all->minimap->offset_x
-// 		+ all->raycast->px * (double)all->mlx->tile_size;
-// 	all->raycast->start_y = (double)all->minimap->offset_y
-// 		+ all->raycast->py * (double)all->mlx->tile_size;
-// 	all->raycast->end_x = (double)all->minimap->offset_x
-// 		+ all->raycast->ray_x * (double)all->mlx->tile_size;
-// 	all->raycast->end_y = (double)all->minimap->offset_y
-// 		+ all->raycast->ray_y * (double)all->mlx->tile_size;
-// 	all->mlx->x0 = all->raycast->start_x;
-// 	all->mlx->y0 = all->raycast->start_y;
-// 	all->mlx->x1 = all->raycast->end_x;
-// 	all->mlx->y1 = all->raycast->end_y;
-// 	all->mlx->color = 0x0000FF;
-// 	draw_line(all, all->mlx);
-// }
 
 void	draw_vision_line(t_all *all)
 {
 	int		hit;
 	double	prev_x;
 	double	prev_y;
-	int		cell_x, cell_y;
-	int		prev_cx, prev_cy;
+	double	dx;
+	double	dy;
+	// double diff_x;
+	// double diff_y;
 
 	hit = 0;
 	all->raycast->px = all->player->x;
 	all->raycast->py = all->player->y;
 	all->raycast->ray_x = all->raycast->px;
 	all->raycast->ray_y = all->raycast->py;
-	while (!hit)
-	{
+	while (!hit){
 		prev_x = all->raycast->ray_x;
 		prev_y = all->raycast->ray_y;
-		all->raycast->ray_x += all->raycast->ray_dir_x * 0.005;
-		all->raycast->ray_y += all->raycast->ray_dir_y * 0.005;
-
-		cell_x = (int)all->raycast->ray_x;
-		cell_y = (int)all->raycast->ray_y;
-		prev_cx = (int)prev_x;
-		prev_cy = (int)prev_y;
-
-		if (all->map->line[cell_y][cell_x] == '1')
+		if (all->map->line[(int)all->raycast->ray_y]
+			[(int)all->raycast->ray_x] == '1')
 		{
-			if (cell_x != prev_cx && cell_y == prev_cy)
+			// diff_x = ((int)all->raycast->ray_x - (int)prev_x);
+			// diff_y = ((int)all->raycast->ray_y - (int)prev_y);
+			// if (diff_x != 0 && diff_y != 0)
+			// {
+			// 	diff_x = fabs(all->raycast->ray_x - prev_x);
+			// 	diff_y = fabs(all->raycast->ray_y - prev_y);
+			// 	if (diff_x < diff_y && diff_x < 0.5)
+			// 			all->raycast->wall_tex = TEX_EA;
+			// 	else if (diff_y < diff_x && diff_y < 0.5)
+			// 			all->raycast->wall_tex = TEX_SO;
+			// 	else if (diff_x > diff_y && diff_x >= 0.5)
+			// 		all->raycast->wall_tex = TEX_WE;
+			// 	else if (diff_y > diff_x && diff_y >= 0.5)
+			// 			all->raycast->wall_tex = TEX_NO;
+			// }
+			// else if (diff_x != 0)
+			// {
+			// 	if (diff_x < 0)
+			// 		all->raycast->wall_tex = TEX_EA;
+			// 	else
+			// 		all->raycast->wall_tex = TEX_WE;
+			// }
+			// else if (diff_y != 0)
+			// {
+			// 	if (diff_y < 0)
+			// 		all->raycast->wall_tex = TEX_NO;
+			// 	else
+			// 		all->raycast->wall_tex = TEX_SO;
+			// }
+			hit = 1;
+			dx = fabs(all->raycast->ray_x - prev_x);
+			dy = fabs(all->raycast->ray_y - prev_y);
+			if (dx > dy)
 			{
 				if (all->raycast->ray_dir_x > 0)
 					all->raycast->wall_tex = TEX_WE;
 				else
 					all->raycast->wall_tex = TEX_EA;
 			}
-			else if (cell_y != prev_cy && cell_x == prev_cx)
+			else
 			{
 				if (all->raycast->ray_dir_y > 0)
 					all->raycast->wall_tex = TEX_NO;
 				else
 					all->raycast->wall_tex = TEX_SO;
 			}
-			else
-			{
-				double dx = fabs(all->raycast->ray_x - prev_x);
-				double dy = fabs(all->raycast->ray_y - prev_y);
-				if (dx > dy)
-					all->raycast->wall_tex = (all->raycast->ray_dir_x > 0) ? TEX_WE : TEX_EA;
-				else
-					all->raycast->wall_tex = (all->raycast->ray_dir_y > 0) ? TEX_NO : TEX_SO;
-			}
-			hit = 1;
 		}
+		//printf("DEBUG wall_text = %d\n", all->raycast->wall_tex);
 	}
 	draw_walls(all);
-
-	all->raycast->start_x = all->minimap->offset_x + all->raycast->px * all->mlx->tile_size;
-	all->raycast->start_y = all->minimap->offset_y + all->raycast->py * all->mlx->tile_size;
-	all->raycast->end_x = all->minimap->offset_x + all->raycast->ray_x * all->mlx->tile_size;
-	all->raycast->end_y = all->minimap->offset_y + all->raycast->ray_y * all->mlx->tile_size;
+	all->raycast->start_x = (double)all->minimap->offset_x
+		+ all->raycast->px * (double)all->mlx->tile_size;
+	all->raycast->start_y = (double)all->minimap->offset_y
+		+ all->raycast->py * (double)all->mlx->tile_size;
+	all->raycast->end_x = (double)all->minimap->offset_x
+		+ all->raycast->ray_x * (double)all->mlx->tile_size;
+	all->raycast->end_y = (double)all->minimap->offset_y
+		+ all->raycast->ray_y * (double)all->mlx->tile_size;
 	all->mlx->x0 = all->raycast->start_x;
 	all->mlx->y0 = all->raycast->start_y;
 	all->mlx->x1 = all->raycast->end_x;
@@ -288,6 +251,8 @@ void	draw_vision_cone(t_all *all)
 	plane_y = dir_x * tan(90.0 * M_PI / 360.0);
 
 	all->raycast->pos_px_x = 0;
+	
+	
 	while (all->raycast->pos_px_x < W_WIN)
 	{
 		camera_x = 2.0 * all->raycast->pos_px_x / W_WIN - 1.0;
@@ -296,4 +261,6 @@ void	draw_vision_cone(t_all *all)
 		draw_vision_line(all);
 		all->raycast->pos_px_x++;
 	}
+	
+	ft_printf("DEBUG player is NULL\n");
 }
