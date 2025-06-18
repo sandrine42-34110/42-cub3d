@@ -58,6 +58,24 @@ void	display_player(t_all *all)
 		radius, clr_pl);
 }
 
+void	display_textures_sample(t_all *all)
+{
+	int	padding;
+	int	size;
+
+	padding = 10;
+	size = 64;
+
+	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr,
+		all->mlx->img_w_n.img, padding, padding);
+	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr,
+		all->mlx->img_w_s.img, padding + size + padding, padding);
+	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr,
+		all->mlx->img_w_e.img, padding + (size + padding) * 2, padding);
+	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr,
+		all->mlx->img_w_w.img, padding + (size + padding) * 3, padding);
+}
+
 void	display_minimap(t_all *all)
 {
 	display_map(all);
@@ -66,6 +84,7 @@ void	display_minimap(t_all *all)
 	draw_floor(all);
 	draw_vision_cone(all);
 	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->screen->img, 0, 0);
+	display_textures_sample(all);
 }
 
 

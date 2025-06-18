@@ -146,10 +146,10 @@ typedef struct s_mlx
 	t_img	img_w_w;
 	void	*clr_f;
 	void	*clr_c;
-	int	x0;		//draw_line
-	int	y0;
-	int	x1;
-	int	y1;
+	int		x0;		//draw_line
+	int		y0;
+	int		x1;
+	int		y1;
 	int		color;
 }				t_mlx;
 
@@ -231,7 +231,7 @@ t_mlx	*init_mlx(t_all *all);
 
 t_minimap	*init_minimap(t_all *all);
 t_player	*init_player(t_all *all);
-t_img		*init_img(t_all *all);
+t_img		*init_screen(t_all *all);
 
 /* ====	utils_init.c	=============================================================*/
 

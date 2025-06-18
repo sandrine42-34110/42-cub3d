@@ -30,7 +30,7 @@ t_player	*init_player(t_all *all)
 	return (player);
 }
 
-t_img	*init_img(t_all *all)
+t_img	*init_screen(t_all *all)
 {
 	t_img	*img;
 
@@ -44,3 +44,4 @@ t_img	*init_img(t_all *all)
 		&img->line_length, &img->endian);
 	return (img);
 }
+

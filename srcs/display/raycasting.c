@@ -116,23 +116,6 @@ void draw_vision_cone(t_all *all)
 	}
 } */
 
-void adjust_ray_to_wall_border(t_all *all)
-{
-	int	x;
-	int	y;
-
-	x = (int)all->raycast->ray_x;
-	y = (int)all->raycast->ray_y;
-	while (all->map->line[y][x] == '1')
-	{
-		all->raycast->ray_x -= all->raycast->ray_dir_x * 0.0001;
-		all->raycast->ray_y -= all->raycast->ray_dir_y * 0.0001;
-		x = (int)all->raycast->ray_x;
-		y = (int)all->raycast->ray_y;
-	}
-}
-
-
 /* void	draw_vision_line(t_all *all)
 {
 	int	hit;
@@ -182,13 +165,12 @@ void	draw_vision_line(t_all *all)
 	{
 		prev_x = all->raycast->ray_x;
 		prev_y = all->raycast->ray_y;
-		all->raycast->ray_x += all->raycast->ray_dir_x * 0.2;
-		all->raycast->ray_y += all->raycast->ray_dir_y * 0.2;
+		all->raycast->ray_x += all->raycast->ray_dir_x * 0.005;
+		all->raycast->ray_y += all->raycast->ray_dir_y * 0.005;
 		if (all->map->line[(int)all->raycast->ray_y]
 			[(int)all->raycast->ray_x] == '1')
 		{
 			hit = 1;
-			adjust_ray_to_wall_border(all);
 			dx = fabs(all->raycast->ray_x - prev_x);
 			dy = fabs(all->raycast->ray_y - prev_y);
 			if (dx > dy)
@@ -206,6 +188,7 @@ void	draw_vision_line(t_all *all)
 					all->raycast->wall_tex = TEX_SO;
 			}
 		}
+		//printf("DEBUG wall_text = %d\n", all->raycast->wall_tex);
 	}
 	draw_walls(all);
 	all->raycast->start_x = (double)all->minimap->offset_x

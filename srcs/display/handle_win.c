@@ -25,7 +25,16 @@
 // Fonction À supprimer lorsque on aura plus besoin de travailler sur le Mac
 int	close_window(t_all *all)
 {
-
+	if (all->mlx->img_w_n.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_n.img);
+	if (all->mlx->img_w_s.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_s.img);
+	if (all->mlx->img_w_e.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_e.img);
+	if (all->mlx->img_w_w.img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_w.img);
+	if (all->screen->img)
+		mlx_destroy_image(all->mlx->mlx_ptr, all->screen->img);
 	#ifdef __linux__
 		return (mlx_loop_end(all->mlx->mlx_ptr));
 	#else

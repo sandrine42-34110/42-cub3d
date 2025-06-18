@@ -46,11 +46,10 @@ void	free_mlx(t_mlx *mlx)
 		// if (mlx->mlx_ptr)
 		// 	mlx_destroy_display(mlx->mlx_ptr);
 
-		// Assuming you have functions to destroy images if they exist
-		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_n);
-		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_s);
-		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_e);
-		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_w);
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_n.img);
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_s.img);
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_e.img);
+		// mlx_destroy_image(mlx->mlx_ptr, mlx->img_w_w.img);
 	}
 	free(mlx);
 }
@@ -65,16 +64,11 @@ void	free_text_and_map(t_all *all)
 	}
 }
 
+
 void	free_display(t_all *all)
 {
-	if (all->minimap)
-		free(all->minimap);
-	if (all->player)
-		free(all->player);
-	if (all->raycast)
-		free(all->raycast);
-	if (all->screen)
-		free(all->screen);
+
+	/* printf("DEBUG free_display before destroy img\n");
 	if (all->mlx->img_w_n.img)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_n.img);
 	if (all->mlx->img_w_s.img)
@@ -83,6 +77,17 @@ void	free_display(t_all *all)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_e.img);
 	if (all->mlx->img_w_w.img)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_w.img);
+	printf("DEBUG free_display after destroy img\n"); */
+	if (all->minimap)
+		free(all->minimap);
+	if (all->player)
+		free(all->player);
+	if (all->raycast)
+		free(all->raycast);
+	if (all->screen)
+		free(all->screen);
+
+	
 }
 
 void	free_all(t_all *all)

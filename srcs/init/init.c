@@ -109,6 +109,10 @@ t_mlx	*init_mlx(t_all *all)
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->w_win, mlx->h_win, TITLE);
 	if (!mlx->win_ptr)
 		error_and_close_all("Error : Failed to create window\n", all);
+	ft_memset(&mlx->img_w_n, 0, sizeof(t_img));
+	ft_memset(&mlx->img_w_s, 0, sizeof(t_img));
+	ft_memset(&mlx->img_w_e, 0, sizeof(t_img));
+	ft_memset(&mlx->img_w_w, 0, sizeof(t_img));
 	mlx->tile_size = tile_size(all);
 	all->minimap = init_minimap(all);
 	all->player = init_player(all);

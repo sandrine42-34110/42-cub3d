@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	check_text_and_map(all);
 	all->mlx = init_mlx(all);
 	load_images(all);
-	all->screen = init_img(all);
+	all->screen = init_screen(all);
 	display_minimap(all);
 	ft_printf("ok\n");
 	mlx_hook(all->mlx->win_ptr, 17, 0, close_window, all);
@@ -50,4 +50,3 @@ int main(int argc, char **argv)
 	// free_text_and_map(all);
 	return (0);
 }
- 
