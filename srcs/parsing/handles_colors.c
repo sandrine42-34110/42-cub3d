@@ -14,7 +14,7 @@ void	parse_rgb(const char *str, int *rgb, t_all *all)
 	while (++i < 3)
 	{
 		j = 0;
-		if(!ft_isdigit_and_spaces(split[i]))
+		if (!ft_isdigit_and_spaces(split[i]))
 			ft_free_split(split, "Error : RGB must be positive numbers\n", all);
 		while (split[i][j] && (split[i][j] == ' ' || split[i][j] == '\t'))
 			j++;
@@ -66,6 +66,7 @@ int	is_color(char *line)
 void	error_colors(int fd, char *line, int error, t_all *all)
 {
 	char	*msg_err;
+
 	if (error == 0)
 		msg_err = "Error: Duplicate floor color\n";
 	if (error == 1)
@@ -78,7 +79,7 @@ void	error_colors(int fd, char *line, int error, t_all *all)
 
 void	handle_colors(t_all *all, char *line, int fd)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))

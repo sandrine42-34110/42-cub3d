@@ -7,8 +7,8 @@ void	check_text(t_all *all)
 		error_msg_and_close("Error : Missing texture information\n", all);
 	if (all->text->floor == 0 || all->text->ceiling == 0)
 		error_msg_and_close("Error : Missing color information\n", all);
-	
 }
+
 void	invalid_tile(t_all *all)
 {
 	int	x;
@@ -20,7 +20,7 @@ void	invalid_tile(t_all *all)
 		x = 0;
 		while (x < all->map->w_map)
 		{
-			if (all->map->line[y][x] != '\0')									//DEBUG fin de ligne mais a garder
+			if (all->map->line[y][x] != '\0')
 				break ;
 			else if (all->map->line[y][x] != 'N' && all->map->line[y][x] != 'S'
 				&& all->map->line[y][x] != 'E' && all->map->line[y][x] != 'W'

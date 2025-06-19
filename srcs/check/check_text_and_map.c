@@ -7,7 +7,6 @@ void	check_text(t_all *all)
 		error_msg_and_close("Error : Missing texture information\n", all);
 	if (all->text->floor == 0 || all->text->ceiling == 0)
 		error_msg_and_close("Error : Missing color information\n", all);
-	
 }
 
 void	invalid_tile(t_all *all)

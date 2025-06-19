@@ -70,18 +70,14 @@ void	new_pos_player(t_all *all)
 
 void	move_player(t_all *all, int keycode)
 {
-	printf("keycode = %d\n posx pl = %.3f - posy pl = %.3f - or pl = %.3f\n", keycode, all->player->x, all->player->y, all->player->or);
 	if (keycode == KEY_W_UP || keycode == KEY_S_DOWN
 		|| keycode == KEY_A_LEFT || keycode == KEY_D_RIGHT)
 	{
 		translation(keycode, all->player->or, &all->player->dx,
 			&all->player->dy);
-		printf("dx = %.3f - dy = %.3f\n", all->player->dx, all->player->dy);
 		new_pos_player(all);
-		printf("new posx pl = %.3f - new posy pl = %.3f\n",
-			all->player->x, all->player->y);
 	}
 	else if (keycode == KEY_ARROW_LEFT || keycode == KEY_ARROW_RIGHT)
 		rotate(keycode, &all->player->or);
-	display_minimap(all);
+	display_screen(all);
 }

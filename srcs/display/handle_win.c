@@ -12,12 +12,7 @@ int	close_window(t_all *all)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_w.img);
 	if (all->screen->img)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->screen->img);
-	#ifdef __linux__
-		return (mlx_loop_end(all->mlx->mlx_ptr));
-	#else
-		(void)all;
-		exit(0);
-	#endif
+	return (mlx_loop_end(all->mlx->mlx_ptr));
 }
 
 int	key_hook(int keycode, t_all *all)

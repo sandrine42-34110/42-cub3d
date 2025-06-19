@@ -2,7 +2,7 @@
 
 t_text	*init_text(void)
 {
-	t_text *text;
+	t_text	*text;
 
 	text = malloc(sizeof(t_text));
 	if (!text)
@@ -31,7 +31,7 @@ t_all	*init_all(int argc, char **argv)
 		ft_putstr_fd("Error : Usage : ./philo [map_name].cub\n", 2);
 		return (NULL);
 	}
-	if(!check_map_name(argv[1]))
+	if (!check_map_name(argv[1]))
 		return (NULL);
 	all = malloc(sizeof(t_all));
 	if (!all)
@@ -51,6 +51,7 @@ t_all	*init_all(int argc, char **argv)
 t_map	*init_map(void)
 {
 	t_map	*map;
+
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
@@ -111,5 +112,3 @@ t_mlx	*init_mlx(t_all *all)
 	all->raycast = init_raycast(all);
 	return (mlx);
 }
-
-

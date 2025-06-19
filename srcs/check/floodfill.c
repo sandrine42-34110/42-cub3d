@@ -30,7 +30,7 @@ void	flood_fill(char **map, int x, int y, t_all *all)
 	if (x < 0 || y < 0 || !map[y] || map[y][x] == '\0')
 		error_msg_and_close("Error : Map isn't valid!\n", all);
 	if (map[y][x] == '1' || map[y][x] == 'F')
-		return;
+		return ;
 	if (map[y][x] != '0' && map[y][x] != 'N' && map[y][x] != 'S' &&
 		map[y][x] != 'E' && map[y][x] != 'W')
 		error_msg_and_close("Error : Map isn't valid!\n", all);

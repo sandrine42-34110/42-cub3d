@@ -41,7 +41,7 @@ void	check_text_name(char *str, t_all *all, int fd)
 	int	len_text_file;
 
 	len_text_file = ft_strlen(str);
-	if (ft_strcmp(".xpm",str + len_text_file - 4) == 0)
+	if (ft_strcmp(".xpm", str + len_text_file - 4) == 0)
 		return ;
 	go_to_end_fd(fd, str);
 	error_msg_and_close("Error : Texture file must be a .xpm file\n", all);

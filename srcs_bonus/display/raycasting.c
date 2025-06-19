@@ -28,8 +28,8 @@ void	draw_vision_cone(t_all *all)
 
 	dir_x = cos(all->player->or);
 	dir_y = sin(all->player->or);
-	plane_x = -dir_y * tan(FOV * M_PI / 360.0);
-	plane_y = dir_x * tan(FOV * M_PI / 360.0);
+	plane_x = -dir_y * tan(FOV_RAD / 2.0);
+	plane_y = dir_x * tan(FOV_RAD / 2.0);
 	all->raycast->pos_px_x = 0;
 	while (all->raycast->pos_px_x < W_WIN)
 	{

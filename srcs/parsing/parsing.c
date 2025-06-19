@@ -46,7 +46,7 @@ void	handle_file(t_all *all, char *file)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if(handle_line(all, line, fd))
+		if (handle_line(all, line, fd))
 			break ;
 		free(line);
 		line = get_next_line(fd);

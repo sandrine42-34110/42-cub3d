@@ -41,6 +41,6 @@ t_img	*init_screen(t_all *all)
 	if (!img->img)
 		error_and_close_all("Error : create image failed!", all);
 	img->addr = mlx_get_data_addr(img->img, &img->bpp,
-		&img->line_length, &img->endian);
+			&img->line_length, &img->endian);
 	return (img);
 }

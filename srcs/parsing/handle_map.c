@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	ft_isdigit_and_spaces (char *c)
+int	ft_isdigit_and_spaces(char *c)
 {
 	int	i;
 
@@ -8,9 +8,9 @@ int	ft_isdigit_and_spaces (char *c)
 	while (c[i])
 	{
 		if (!((c[i] >= '0' && c[i] <= '9')
-			|| c[i] == ' '
-			|| c[i] == '\t'
-			|| c[i] == '\n'))
+				|| c[i] == ' '
+				|| c[i] == '\t'
+				|| c[i] == '\n'))
 			return (0);
 		i++;
 	}
@@ -55,7 +55,7 @@ void	taller_line(t_all *all)
 		{
 			new_line = ft_strdup(all->map->line[y]);
 			free(all->map->line[y]);
-			while(x < all->map->w_map)
+			while (x < all->map->w_map)
 			{
 				temp = ft_strjoin(new_line, " ");
 				free (new_line);
@@ -106,7 +106,7 @@ void	handle_map(t_all *all, char *line, int fd)
 		j = 0;
 		while (line[j] && (line[j] == ' ' || line[j] == '\t'))
 			j++;
-		if (line[j] =='0' || line[j] == '1')
+		if (line[j] == '0' || line[j] == '1')
 			fill_map(line, all, &i, fd);
 		else
 			break ;
