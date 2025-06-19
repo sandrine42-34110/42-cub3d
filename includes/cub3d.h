@@ -182,6 +182,17 @@ typedef struct s_raycast
 	int		side;
 }				t_raycast;
 
+typedef struct s_wall
+{
+	double	step;
+	double	tex_pos;
+	int		tex_x;
+	int		tex_y;
+	t_img	*tex;
+	double	wall_x;
+	int		color;
+}			t_wall;
+
 typedef enum e_texture
 {
 	TEX_NO,

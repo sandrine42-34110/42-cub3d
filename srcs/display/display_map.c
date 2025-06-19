@@ -53,7 +53,6 @@ void	display_player(t_all *all)
 		radius, clr_pl);
 }
 
-
 void	display_screen(t_all *all)
 {
 	display_map(all);
@@ -61,7 +60,6 @@ void	display_screen(t_all *all)
 	draw_ceiling(all);
 	draw_floor(all);
 	draw_vision_cone(all);
-	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr, all->screen->img, 0, 0);
+	mlx_put_image_to_window(all->mlx->mlx_ptr, all->mlx->win_ptr,
+		all->screen->img, 0, 0);
 }
-
-

@@ -28,14 +28,16 @@ void	draw_floor(t_all *all)
 	int	y;
 	int	color;
 
-	color = ((all->text->floor_r << 16) | (all->text->floor_g << 8) | (all->text->floor_b));
+	color = ((all->text->floor_r << 16) | (all->text->floor_g << 8)
+		| (all->text->floor_b));
 	y = H_WIN / 2;
 	while (y < H_WIN)
 	{
 		x = 0;
 		while (x < W_WIN)
 		{
-			if ((y >= H_WIN - all->minimap->map_height_px + 1) && (x > W_WIN - all->minimap->map_width_px))
+			if ((y >= H_WIN - all->minimap->map_height_px + 1)
+				&& (x > W_WIN - all->minimap->map_width_px))
 				break ;
 			else
 				put_pixel(all->screen, x, y, color);
@@ -45,6 +47,74 @@ void	draw_floor(t_all *all)
 	}
 }
 
+double	height_wall(t_all *all, int *y_0, int *y_1)
+{
+	double h;
+
+	if (all->raycast->perp < 0.0001)
+		all->raycast->perp = 0.0001;
+	h = (1.0 / all->raycast->perp) * ((W_WIN / 2.0) / tan(FOV_RAD / 2.0));
+	*y_0 = (int)((H_WIN - h) / 2.0);
+	*y_1 = (int)((H_WIN + h) / 2.0);
+	if (*y_0 < 0)
+		*y_0 = 0;
+	if (*y_1 >= H_WIN)
+		*y_1 = H_WIN - 1;
+	return (h);
+}
+
+void	wall_tex(t_all *all, t_wall *will, double h, int y_0)
+{
+	if (all->raycast->wall_tex == TEX_NO)
+		will->tex = &all->mlx->img_w_n;
+	else if (all->raycast->wall_tex == TEX_SO)
+		will->tex = &all->mlx->img_w_s;
+	else if (all->raycast->wall_tex == TEX_WE)
+		will->tex = &all->mlx->img_w_w;
+	else
+		will->tex = &all->mlx->img_w_e;
+	if (all->raycast->wall_tex == TEX_NO || all->raycast->wall_tex == TEX_SO)
+		will->wall_x = all->raycast->ray_x;
+	else
+		will->wall_x = all->raycast->ray_y;
+	will->wall_x -= floor(will->wall_x);
+	will->tex_x = (int)(will->wall_x * (double)will->tex->width);
+	if (will->tex_x < 0)
+		will->tex_x += will->tex->width;
+	if ((all->raycast->wall_tex == TEX_EA || all->raycast->wall_tex == TEX_NO))
+		will->tex_x = will->tex->width - will->tex_x - 1;
+	// ← Rendu ligne par ligne verticalement
+	will->step = (double)will->tex->height / h;
+	will->tex_pos = (y_0 - H_WIN / 2.0 + h / 2.0) * will->step;
+}
+
+void	draw_walls(t_all *all)
+{
+	t_wall	will;
+	double	h;
+	int		y[3];
+
+	h = height_wall(all, &y[0], &y[1]);
+	wall_tex(all, &will, h, y[0]);
+	y[2] = y[0];
+	while (y[2] < y[1])
+	{
+		will.tex_y = (int)will.tex_pos & (will.tex->height - 1);
+		if (will.tex_y < 0)
+			will.tex_y += will.tex->height;
+		will.tex_pos += will.step;
+		will.color = *((unsigned int *)(will.tex->addr
+			+ will.tex_y * will.tex->line_length
+			+ will.tex_x * (will.tex->bpp / 8)));
+		if ((y[2] >= H_WIN - all->minimap->map_height_px + 1)
+			&& (all->raycast->pos_px_x > W_WIN - all->minimap->map_width_px))
+			break ;
+		else
+			put_pixel(all->screen, all->raycast->pos_px_x, y[2]++, will.color);
+	}
+}
+
+/* 
 void	draw_walls(t_all *all)
 {
 	double	perp;
@@ -105,4 +175,5 @@ void	draw_walls(t_all *all)
 			put_pixel(all->screen, all->raycast->pos_px_x, y++, color);
 	}
 }
+ */
 
