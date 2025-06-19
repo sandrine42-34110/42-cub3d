@@ -151,7 +151,18 @@ typedef struct s_mlx
 	int		x1;
 	int		y1;
 	int		color;
+
 }				t_mlx;
+
+typedef struct s_bresenham
+{
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	int		err;
+	int		e2;
+}			t_bresenham;
 
 typedef struct s_raycast
 {
@@ -168,6 +179,7 @@ typedef struct s_raycast
 	double	end_y;
 	double	perp;
 	int		wall_tex;
+	int		side;
 }				t_raycast;
 
 typedef enum e_texture
@@ -186,6 +198,38 @@ void	check_text_and_map(t_all *all);
 
 void	check_close_map(t_all *all);
 
+/* ====	utils_display.c	======================================================*/
+
+void	put_pixel(t_img *img, int x, int y, int color);
+void	draw_square(t_all *all, int x, int y, int size, int color);
+void	draw_circle(t_all *all, int cx, int cy, int radius, int color);
+
+/* ====	dda.c	=====================================================*/
+
+void		dda_init(t_all *all, int *mx, int *my, double d[8]);
+void		dda_loop(t_all *all, int mx, int my, double d[8]);
+void		attribute_texture(t_all *all, double d[8]);
+void		dda_cast(t_all *all);
+
+/* ====	display_3d.c	==============================================*/
+
+void	minimap_colors(t_all *all, int x, int y, int *color);
+void	draw_ceiling(t_all *all);
+void	draw_floor(t_all *all);
+void	draw_walls(t_all *all);
+
+/* ====	display_map.c	==============================================*/
+
+void	display_map(t_all *all);
+void	display_player(t_all *all);
+void	display_screen(t_all *all);
+
+/* ====	draw_line.c	======================================================*/
+
+void	init_draw_vars(t_mlx *mlx, t_bresenham *b);
+void	draw_line_step(t_mlx *mlx, t_bresenham *b);
+void		draw_line(t_all *all, t_mlx *mlx);
+
 /* ====	handle_win.c	======================================================*/
 
 int		close_window(t_all *all);
@@ -193,27 +237,8 @@ int		key_hook(int keycode, t_all *all);
 
 /* ====	raycating.c	==========================================================*/
 
-void	draw_line(t_all *all, t_mlx *mlx);
-void	adjust_ray_to_wall_border(t_all *all);
 void	draw_vision_line(t_all *all);
 void	draw_vision_cone(t_all *all);
-
-/* ====	utils_display.c	======================================================*/
-
-void	put_pixel(t_img *img, int x, int y, int color);
-void	draw_square(t_all *all, int x, int y, int size, int color);
-void	draw_circle(t_all *all, int cx, int cy, int radius, int color);
-
-
-/* ====	display_3d.c	==============================================*/
-
-void	draw_ceiling(t_all *all);
-void	draw_floor(t_all *all);
-void	draw_walls(t_all *all);
-
-/* ====	display_map.c	==============================================*/
-
-void	display_screen(t_all *all);
 
 /* ====	free.c	==============================================================*/
 
@@ -244,8 +269,8 @@ t_img		*init_screen(t_all *all);
 
 /* ====	utils_init.c	=============================================================*/
 
-int	check_map_name(char *str);
-int	tile_size(t_all *all);
+int		check_map_name(char *str);
+int		tile_size(t_all *all);
 double	begin_dir_pl(char dir);
 void	load_images(t_all *all);
 
