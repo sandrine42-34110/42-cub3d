@@ -19,8 +19,6 @@ void	draw_square(t_all *all, int x, int y, int size, int color)
 		j = 0;
 		while (j < size)
 		{
-			// mlx_pixel_put(all->mlx->mlx_ptr, all->mlx->win_ptr,
-			// 	x + i, y + j, color);
 			put_pixel(all->screen, x + i, y + j, color);
 			j++;
 		}

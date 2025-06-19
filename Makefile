@@ -19,6 +19,7 @@ SRC =	srcs/check/check_text_and_map.c \
 		srcs/display/raycasting.c \
 		srcs/display/utils_display.c \
 		srcs/free/free.c \
+		srcs/free/free1.c \
 		srcs/init/init_display.c \
 		srcs/init/init.c \
 		srcs/init/utils_init.c \

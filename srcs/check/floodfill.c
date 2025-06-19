@@ -25,7 +25,7 @@ char	**duplicate_map(t_map *map, t_all *all)
 	return (copy);
 }
 
-void flood_fill(char **map, int x, int y, t_all *all)
+void	flood_fill(char **map, int x, int y, t_all *all)
 {
 	if (x < 0 || y < 0 || !map[y] || map[y][x] == '\0')
 		error_msg_and_close("Error : Map isn't valid!\n", all);
@@ -88,22 +88,6 @@ void	ctrl_only_one_player(t_map *map, int start_x, int start_y, t_all *all)
 		x = 0;
 		y++;
 	}
-}
-
-void	free_map_copy(char **map_copy, int height)
-{
-	int	y;
-
-	if (!map_copy)
-		return ;
-	y = 0;
-	while (y < height)
-	{
-		if (map_copy[y])
-			free(map_copy[y]);
-		y++;
-	}
-	free(map_copy);
 }
 
 void	check_close_map(t_all *all)

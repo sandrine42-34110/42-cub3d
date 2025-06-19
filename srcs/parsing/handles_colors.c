@@ -1,22 +1,5 @@
 #include "cub3d.h"
 
-int	ft_isdigit_and_spaces (char *c)
-{
-	int	i;
-
-	i = 0;
-	while (c[i])
-	{
-		if (!((c[i] >= '0' && c[i] <= '9')
-			|| c[i] == ' '
-			|| c[i] == '\t'
-			|| c[i] == '\n'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	parse_rgb(const char *str, int *rgb, t_all *all)
 {
 	int		i;

@@ -37,8 +37,8 @@
 # define KEY_ARROW_RIGHT	65363
 #endif
 
-# define W_WIN				3000
-# define H_WIN				1800
+# define W_WIN				1500
+# define H_WIN				900
 
 # define MOVE_SPEED			0.125f
 # define ANGLE_ROT			0.1f
@@ -166,6 +166,7 @@ typedef struct s_raycast
 	double	start_y;
 	double	end_x;
 	double	end_y;
+	double	perp;
 	int		wall_tex;
 }				t_raycast;
 
@@ -216,8 +217,16 @@ void	display_minimap(t_all *all);
 
 /* ====	free.c	==============================================================*/
 
+void	free_map(t_map *map);
+void	free_mlx(t_mlx *mlx);
 void	free_text_and_map(t_all *all);
+void	free_display(t_all *all);
 void	free_all(t_all *all);
+
+/* ====	free1.c	==============================================================*/
+
+void	free_text(t_text *text);
+void	free_map_copy(char **map_copy, int height);
 
 /* ====	init.c	=============================================================*/
 
@@ -253,6 +262,7 @@ void	parse_map(t_all *all, char *file);
 
 /* ====	handle_map.c	=================================================*/
 
+int		ft_isdigit_and_spaces (char *c);
 void	handle_map(t_all *all, char *line, int fd);
 
 /* ====	handle_textures.c	=================================================*/

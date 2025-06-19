@@ -63,14 +63,6 @@ t_map	*init_map(void)
 	return (map);
 }
 
-/* 
-void	load_images(t_all *all)
-{
-	all->mlx->img_w_n = mlx_xpm_file_to_image(all->mlx->mlx_ptr, \
-						all->text->no, &mlx->img_width, &mlx->img_height);
-}
- */
-
 t_raycast	*init_raycast(t_all *all)
 {
 	t_raycast	*raycast;

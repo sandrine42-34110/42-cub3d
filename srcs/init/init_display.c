@@ -44,4 +44,3 @@ t_img	*init_screen(t_all *all)
 		&img->line_length, &img->endian);
 	return (img);
 }
-

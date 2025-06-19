@@ -1,15 +1,20 @@
 #include "cub3d.h"
 
-void	print_map(t_all *all)
+int	ft_isdigit_and_spaces (char *c)
 {
 	int	i;
 
 	i = 0;
-	while (all->map->line[i])
+	while (c[i])
 	{
-		ft_printf("|%s|\n", all->map->line[i]);
+		if (!((c[i] >= '0' && c[i] <= '9')
+			|| c[i] == ' '
+			|| c[i] == '\t'
+			|| c[i] == '\n'))
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
 void	fill_map(char *line, t_all *all, int *i, int fd)
@@ -110,5 +115,4 @@ void	handle_map(t_all *all, char *line, int fd)
 	}
 	all->map->line[i] = NULL;
 	check_spaces_and_bn(line, j, all, fd);
-	//print_map(all);																//a supprimer
 }

@@ -37,7 +37,6 @@ double	begin_dir_pl(char dir)
 	return (angle);
 }
 
-
 void	load_texture(t_all *all, t_img *img, char *path)
 {
 	img->img = mlx_xpm_file_to_image(all->mlx->mlx_ptr,

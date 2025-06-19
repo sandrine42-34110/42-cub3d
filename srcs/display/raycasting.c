@@ -20,7 +20,6 @@ void draw_line(t_all *all, t_mlx *mlx)
 
 	while (1)
 	{
-		//mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, mlx->x0, mlx->y0, mlx->color);
 		put_pixel(all->screen, mlx->x0, mlx->y0, all->mlx->color);
 		if (mlx->x0 == mlx->x1 && mlx->y0 == mlx->y1)
 			break;
@@ -38,230 +37,94 @@ void draw_line(t_all *all, t_mlx *mlx)
 	}
 }
 
-// void	draw_orientation_line(t_all *all)
-// {
-// 	double	px;
-// 	double	py;
-// 	double	angle;
-// 	double	line_len; // Longueur du trait en pixels
-// 	double	end_x;
-// 	double	end_y;
 
-// 	all->mlx->color=0xFF0000;
-
-// 	px = all->minimap->offset_x + all->player->x * all->mlx->tile_size;
-// 	py = all->minimap->offset_y + all->player->y * all->mlx->tile_size;
-// 	angle = all->player->or;
-// 	line_len = 20.0;
-// 	end_x = px + cos(angle) * line_len;
-// 	end_y = py + sin(angle) * line_len;
-// 	draw_3d(all);
-// 	draw_line(all, all->mlx);
-// }
-
-/* 
-void draw_vision_line(t_all *all, double angle)
+/* -------- init du DDA ----------------------------------------------------- */
+static void	dda_init(t_all *all, int *mx, int *my,
+						double d[8]) /* dirx,diry,ddx,ddy,sx,sy,sdx,sdy */
 {
-	int		hit;
-
-	hit = 0;
-	all->raycast->px = all->player->x;
-	all->raycast->py = all->player->y;
-	all->raycast->ray_dir_x = cos(angle);
-	all->raycast->ray_dir_y = sin(angle);
-	all->raycast->ray_x = all->raycast->px;
-	all->raycast->ray_y = all->raycast->py;
-	while (!hit)
+	*mx = (int)all->raycast->px;
+	*my = (int)all->raycast->py;
+	d[0] = all->raycast->ray_dir_x;
+	d[1] = all->raycast->ray_dir_y;
+	d[2] = fabs(1.0 / d[0]);
+	d[3] = fabs(1.0 / d[1]);
+	if (d[0] < 0)
 	{
-		all->raycast->ray_x += all->raycast->ray_dir_x * 0.2;
-		all->raycast->ray_y += all->raycast->ray_dir_y * 0.2;
-		if (all->map->line[(int)all->raycast->ray_y][(int)all->raycast->ray_x] == '1')
-		{
-			hit = 1;
-			adjust_ray_to_wall_border(all);
-		}
+		d[4] = -1;
+		d[6] = (all->raycast->px - *mx) * d[2];
 	}
-	all->raycast->start_x = (double)all->minimap->offset_x + all->raycast->px * (double)all->mlx->tile_size;
-	all->raycast->start_y = (double)all->minimap->offset_y + all->raycast->py * (double)all->mlx->tile_size;
-	all->raycast->end_x = (double)all->minimap->offset_x + all->raycast->ray_x * (double)all->mlx->tile_size;
-	all->raycast->end_y = (double)all->minimap->offset_y + all->raycast->ray_y * (double)all->mlx->tile_size;
-	all->mlx->x0 = all->raycast->start_x;
-	all->mlx->y0 = all->raycast->start_y;
-	all->mlx->x1 = all->raycast->end_x;
-	all->mlx->y1 = all->raycast->end_y;
-	all->mlx->color = 0x0000FF;
-	draw_line(all, all->mlx);
-	draw_walls(all, angle);
+	else
+	{
+		d[4] = 1;
+		d[6] = (*mx + 1.0 - all->raycast->px) * d[2];
+	}
+	if (d[1] < 0)
+	{
+		d[5] = -1;
+		d[7] = (all->raycast->py - *my) * d[3];
+	}
+	else
+	{
+		d[5] = 1;
+		d[7] = (*my + 1.0 - all->raycast->py) * d[3];
+	}
 }
 
-void draw_vision_cone(t_all *all)
+/* -------- boucle : avance jusqu’au mur ----------------------------------- */
+static void	dda_loop(t_all *all, int mx, int my, double d[8])
 {
-	int		nb_rays;
-	double	fov; 
-	double	start_angle;
-	double	angle_step;
-	double	ray_angle;
+	int	side;
 
-	nb_rays = W_WIN; // Nombre de rayons à tracer
-	fov = 90.0 * M_PI / 180.0; // Champ de vision en radians
-	start_angle = all->player->or - fov / 2;
-	angle_step = fov / (double)nb_rays;
-	all->raycast->pos_px_x = 0;
-	while (all->raycast->pos_px_x < nb_rays)
+	while (all->map->line[my][mx] != '1')
 	{
-
-		ray_angle = start_angle + all->raycast->pos_px_x * angle_step;
-		draw_vision_line(all, ray_angle); // Bleu pour les rayons
-		(all->raycast->pos_px_x)++;
-	}
-} */
-
-/* void	draw_vision_line(t_all *all)
-{
-	int	hit;
-
-	hit = 0;
-	all->raycast->px = all->player->x;
-	all->raycast->py = all->player->y;
-	all->raycast->ray_x = all->raycast->px;
-	all->raycast->ray_y = all->raycast->py;
-	while (!hit)
-	{
-		all->raycast->ray_x += all->raycast->ray_dir_x * 0.2;
-		all->raycast->ray_y += all->raycast->ray_dir_y * 0.2;
-		if (all->map->line[(int)all->raycast->ray_y][(int)all->raycast->ray_x] == '1')
+		if (d[6] < d[7])
 		{
-			hit = 1;
-			adjust_ray_to_wall_border(all);
+			d[6] += d[2];
+			mx += (int)d[4];
+			side = 0;
+		}
+		else
+		{
+			d[7] += d[3];
+			my += (int)d[5];
+			side = 1;
 		}
 	}
-	draw_walls(all);
-	all->raycast->start_x = (double)all->minimap->offset_x + all->raycast->px * (double)all->mlx->tile_size;
-	all->raycast->start_y = (double)all->minimap->offset_y + all->raycast->py * (double)all->mlx->tile_size;
-	all->raycast->end_x = (double)all->minimap->offset_x + all->raycast->ray_x * (double)all->mlx->tile_size;
-	all->raycast->end_y = (double)all->minimap->offset_y + all->raycast->ray_y * (double)all->mlx->tile_size;
-	all->mlx->x0 = all->raycast->start_x;
-	all->mlx->y0 = all->raycast->start_y;
-	all->mlx->x1 = all->raycast->end_x;
-	all->mlx->y1 = all->raycast->end_y;
-	all->mlx->color = 0x0000FF;
-	draw_line(all, all->mlx);
-} */
+	if (side == 0)
+		all->raycast->perp = (mx - all->raycast->px
+				+ (1 - (int)d[4]) / 2.0) / d[0];
+	else
+		all->raycast->perp = (my - all->raycast->py
+				+ (1 - (int)d[5]) / 2.0) / d[1];
+	all->raycast->ray_x = all->raycast->px + all->raycast->perp * d[0];
+	all->raycast->ray_y = all->raycast->py + all->raycast->perp * d[1];
+	if (!side && d[4] > 0)
+		all->raycast->wall_tex = TEX_WE;
+	else if (!side)
+		all->raycast->wall_tex = TEX_EA;
+	else if (side && d[5] > 0)
+		all->raycast->wall_tex = TEX_NO;
+	else
+		all->raycast->wall_tex = TEX_SO;
+}
 
-// void	draw_vision_line(t_all *all)
-// {
-// 	int		hit;
-// 	double	prev_x;
-// 	double	prev_y;
-// 	double	dx;
-// 	double	dy;
+/* -------- fonction à appeler depuis draw_vision_line --------------------- */
+void	dda_cast(t_all *all)
+{
+	int		mx;
+	int		my;
+	double	d[8];
 
-// 	hit = 0;
-// 	all->raycast->px = all->player->x;
-// 	all->raycast->py = all->player->y;
-// 	all->raycast->ray_x = all->raycast->px;
-// 	all->raycast->ray_y = all->raycast->py;
-// 	while (!hit)
-// 	{
-// 		prev_x = all->raycast->ray_x;
-// 		prev_y = all->raycast->ray_y;
-// 		all->raycast->ray_x += all->raycast->ray_dir_x * 0.005;
-// 		all->raycast->ray_y += all->raycast->ray_dir_y * 0.005;
-// 		if (all->map->line[(int)all->raycast->ray_y]
-// 			[(int)all->raycast->ray_x] == '1')
-// 		{
-// 			hit = 1;
-// 			dx = fabs(all->raycast->ray_x - prev_x);
-// 			dy = fabs(all->raycast->ray_y - prev_y);
-// 			if (dx > dy)
-// 			{
-// 				if (all->raycast->ray_dir_x > 0)
-// 					all->raycast->wall_tex = TEX_WE;
-// 				else
-// 					all->raycast->wall_tex = TEX_EA;
-// 			}
-// 			else
-// 			{
-// 				if (all->raycast->ray_dir_y > 0)
-// 					all->raycast->wall_tex = TEX_NO;
-// 				else
-// 					all->raycast->wall_tex = TEX_SO;
-// 			}
-// 		}
-// 		//printf("DEBUG wall_text = %d\n", all->raycast->wall_tex);
-// 	}
-// 	draw_walls(all);
-// 	all->raycast->start_x = (double)all->minimap->offset_x
-// 		+ all->raycast->px * (double)all->mlx->tile_size;
-// 	all->raycast->start_y = (double)all->minimap->offset_y
-// 		+ all->raycast->py * (double)all->mlx->tile_size;
-// 	all->raycast->end_x = (double)all->minimap->offset_x
-// 		+ all->raycast->ray_x * (double)all->mlx->tile_size;
-// 	all->raycast->end_y = (double)all->minimap->offset_y
-// 		+ all->raycast->ray_y * (double)all->mlx->tile_size;
-// 	all->mlx->x0 = all->raycast->start_x;
-// 	all->mlx->y0 = all->raycast->start_y;
-// 	all->mlx->x1 = all->raycast->end_x;
-// 	all->mlx->y1 = all->raycast->end_y;
-// 	all->mlx->color = 0x0000FF;
-// 	draw_line(all, all->mlx);
-// }
+	dda_init(all, &mx, &my, d);
+	dda_loop(all, mx, my, d);
+}
 
 void	draw_vision_line(t_all *all)
 {
-	int		hit;
-	double	prev_x;
-	double	prev_y;
-	int		cell_x, cell_y;
-	int		prev_cx, prev_cy;
-
-	hit = 0;
 	all->raycast->px = all->player->x;
 	all->raycast->py = all->player->y;
-	all->raycast->ray_x = all->raycast->px;
-	all->raycast->ray_y = all->raycast->py;
-	while (!hit)
-	{
-		prev_x = all->raycast->ray_x;
-		prev_y = all->raycast->ray_y;
-		all->raycast->ray_x += all->raycast->ray_dir_x * 0.005;
-		all->raycast->ray_y += all->raycast->ray_dir_y * 0.005;
-
-		cell_x = (int)all->raycast->ray_x;
-		cell_y = (int)all->raycast->ray_y;
-		prev_cx = (int)prev_x;
-		prev_cy = (int)prev_y;
-
-		if (all->map->line[cell_y][cell_x] == '1')
-		{
-			if (cell_x != prev_cx && cell_y == prev_cy)
-			{
-				if (all->raycast->ray_dir_x > 0)
-					all->raycast->wall_tex = TEX_WE;
-				else
-					all->raycast->wall_tex = TEX_EA;
-			}
-			else if (cell_y != prev_cy && cell_x == prev_cx)
-			{
-				if (all->raycast->ray_dir_y > 0)
-					all->raycast->wall_tex = TEX_NO;
-				else
-					all->raycast->wall_tex = TEX_SO;
-			}
-			else
-			{
-				double dx = fabs(all->raycast->ray_x - prev_x);
-				double dy = fabs(all->raycast->ray_y - prev_y);
-				if (dx > dy)
-					all->raycast->wall_tex = (all->raycast->ray_dir_x > 0) ? TEX_WE : TEX_EA;
-				else
-					all->raycast->wall_tex = (all->raycast->ray_dir_y > 0) ? TEX_NO : TEX_SO;
-			}
-			hit = 1;
-		}
-	}
+	dda_cast(all);
 	draw_walls(all);
-
 	all->raycast->start_x = all->minimap->offset_x + all->raycast->px * all->mlx->tile_size;
 	all->raycast->start_y = all->minimap->offset_y + all->raycast->py * all->mlx->tile_size;
 	all->raycast->end_x = all->minimap->offset_x + all->raycast->ray_x * all->mlx->tile_size;
