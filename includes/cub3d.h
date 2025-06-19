@@ -213,7 +213,7 @@ void	draw_walls(t_all *all);
 
 /* ====	display_map.c	==============================================*/
 
-void	display_minimap(t_all *all);
+void	display_screen(t_all *all);
 
 /* ====	free.c	==============================================================*/
 

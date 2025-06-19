@@ -79,5 +79,5 @@ void	move_player(t_all *all, int keycode)
 	}
 	else if (keycode == KEY_ARROW_LEFT || keycode == KEY_ARROW_RIGHT)
 		rotate(keycode, &all->player->or);
-	display_minimap(all);
+	display_screen(all);
 }

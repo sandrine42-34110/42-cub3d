@@ -54,7 +54,7 @@ void	display_player(t_all *all)
 }
 
 
-void	display_minimap(t_all *all)
+void	display_screen(t_all *all)
 {
 	display_map(all);
 	display_player(all);

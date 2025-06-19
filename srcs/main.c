@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 	all->mlx = init_mlx(all);
 	load_images(all);
 	all->screen = init_screen(all);
-	display_minimap(all);
+	display_screen(all);
 	mlx_hook(all->mlx->win_ptr, 17, 0, close_window, all);
 	mlx_hook(all->mlx->win_ptr, 2, (1L << 0), key_hook, all);
 	mlx_loop(all->mlx->mlx_ptr);
