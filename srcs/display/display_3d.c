@@ -28,7 +28,8 @@ void	draw_floor(t_all *all)
 	int	y;
 	int	color;
 
-	color = ((all->text->floor_r << 16) | (all->text->floor_g << 8)
+	color = ((all->text->floor_r << 16)
+			| (all->text->floor_g << 8)
 			| (all->text->floor_b));
 	y = H_WIN / 2;
 	while (y < H_WIN)

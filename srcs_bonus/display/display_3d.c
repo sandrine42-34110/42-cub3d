@@ -28,7 +28,8 @@ void	draw_floor(t_all *all)
 	int	y;
 	int	color;
 
-	color = ((all->text->floor_r << 16) | (all->text->floor_g << 8)
+	color = ((all->text->floor_r << 16)
+			| (all->text->floor_g << 8)
 			| (all->text->floor_b));
 	y = H_WIN / 2;
 	while (y < H_WIN)
@@ -53,7 +54,7 @@ double	height_wall(t_all *all, int *y_0, int *y_1)
 
 	if (all->raycast->perp < 0.0001)
 		all->raycast->perp = 0.0001;
-	h = (1.0 / all->raycast->perp) * ((W_WIN / 2.0) / tan(FOV_RAD / 2.0));
+	h = (1.0 / all->raycast->perp) * ((W_WIN / 2.0) / tan(FOV * M_PI / 360.0));
 	*y_0 = (int)((H_WIN - h) / 2.0);
 	*y_1 = (int)((H_WIN + h) / 2.0);
 	if (*y_0 < 0)

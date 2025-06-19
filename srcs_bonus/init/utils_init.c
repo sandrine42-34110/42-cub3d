@@ -40,14 +40,14 @@ double	begin_dir_pl(char dir)
 void	load_texture(t_all *all, t_img *img, char *path)
 {
 	img->img = mlx_xpm_file_to_image(all->mlx->mlx_ptr,
-				path, &img->width,
-				&img->height);
+			path, &img->width,
+			&img->height);
 	if (!img->img)
 		error_and_close_all("Error : Impossible to load texture\n", all);
 	img->addr = mlx_get_data_addr(img->img,
-				&img->bpp,
-				&img->line_length,
-				&img->endian);
+			&img->bpp,
+			&img->line_length,
+			&img->endian);
 }
 
 void	load_images(t_all *all)

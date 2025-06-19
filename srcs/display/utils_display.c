@@ -33,7 +33,7 @@ void	draw_circle(t_all *all, int cx, int cy, int radius)
 	int	sqr_radius;
 	int	color;
 
-	color = 0xFF0000;
+	color = PL_CLR;
 	x = -radius;
 	sqr_radius = radius * radius;
 	while (x <= radius)

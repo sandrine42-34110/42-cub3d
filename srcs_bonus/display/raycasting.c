@@ -1,5 +1,18 @@
 #include "cub3d.h"
 
+void shorten_ray_before_wall(t_mlx *mlx)
+{
+	int dx = mlx->x1 - mlx->x0;
+	int dy = mlx->y1 - mlx->y0;
+	double len = sqrt(dx * dx + dy * dy);
+
+	if (len < 1.0)
+		return ;
+	double scale = (len - 1.0) / len;
+	mlx->x1 = mlx->x0 + dx * scale;
+	mlx->y1 = mlx->y0 + dy * scale;
+}
+
 void	draw_vision_line(t_all *all)
 {
 	all->raycast->px = all->player->x;
@@ -14,7 +27,8 @@ void	draw_vision_line(t_all *all)
 		+ all->raycast->ray_x * all->mlx->tile_size;
 	all->mlx->y1 = all->minimap->offset_y
 		+ all->raycast->ray_y * all->mlx->tile_size;
-	all->mlx->color = 0x0000FF;
+	all->mlx->color = CONE_CLR;
+	shorten_ray_before_wall(all->mlx);
 	draw_line(all, all->mlx);
 }
 
@@ -28,8 +42,8 @@ void	draw_vision_cone(t_all *all)
 
 	dir_x = cos(all->player->or);
 	dir_y = sin(all->player->or);
-	plane_x = -dir_y * tan(FOV_RAD / 2.0);
-	plane_y = dir_x * tan(FOV_RAD / 2.0);
+	plane_x = -dir_y * tan(FOV * M_PI / 360.0);
+	plane_y = dir_x * tan(FOV * M_PI / 360.0);
 	all->raycast->pos_px_x = 0;
 	while (all->raycast->pos_px_x < W_WIN)
 	{

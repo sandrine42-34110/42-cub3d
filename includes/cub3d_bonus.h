@@ -8,6 +8,17 @@
 # include <math.h>
 # include <stdio.h>
 
+#ifdef __APPLE__
+# define KEY_W_UP			13
+# define KEY_S_DOWN			1
+# define KEY_A_LEFT			0
+# define KEY_D_RIGHT		2
+# define KEY_ARROW_UP		126
+# define KEY_ARROW_DOWN		125
+# define KEY_ARROW_LEFT		123
+# define KEY_ARROW_RIGHT	124
+# define KEY_ESCAPE			53
+#else
 # define KEY_W_UP			119
 # define KEY_S_DOWN			115
 # define KEY_A_LEFT			97
@@ -15,6 +26,7 @@
 # define KEY_ESCAPE			65307
 # define KEY_ARROW_LEFT		65361
 # define KEY_ARROW_RIGHT	65363
+#endif
 
 # define W_WIN				1500
 # define H_WIN				900
@@ -22,6 +34,7 @@
 # define MOVE_SPEED			0.125f
 # define ANGLE_ROT			0.1f
 # define COLL_PAD			0.1f
+
 # define FOV				60.0f
 
 # define TITLE "cub3d"
