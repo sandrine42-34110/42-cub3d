@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	translation(int keycode, double angle, double *dx, double *dy)
 {
@@ -36,7 +36,7 @@ void	rotate(int keycode, double *or)
 		else if (keycode == KEY_ARROW_LEFT)
 			(*or) -= ANGLE_ROT;
 	}
-	return ;
+	return;
 }
 
 void	new_pos_player(t_all *all)
@@ -80,4 +80,20 @@ void	move_player(t_all *all, int keycode)
 	else if (keycode == KEY_ARROW_LEFT || keycode == KEY_ARROW_RIGHT)
 		rotate(keycode, &all->player->or);
 	display_screen(all);
+}
+
+int	mouse_hook(int x, int y, t_all *all)
+{
+	static int	prev_x = -1;
+
+	(void)y;
+	if (prev_x == -1)
+		prev_x = x;
+	if (x > prev_x)
+		all->player->or += ANGLE_ROT / 0.1;
+	else if (x < prev_x)
+		all->player->or -= ANGLE_ROT / 0.1;
+	prev_x = x;
+	display_screen(all);
+	return (0);
 }

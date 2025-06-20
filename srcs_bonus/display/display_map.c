@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	minimap_colors(t_all *all, int x, int y)
 {

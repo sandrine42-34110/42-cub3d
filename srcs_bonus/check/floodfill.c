@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 char	**duplicate_map(t_map *map, t_all *all)
 {

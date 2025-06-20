@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	ft_free_split(char **split, char *msg, t_all *all)
 {

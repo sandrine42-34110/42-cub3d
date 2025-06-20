@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	error_msg_and_close(char *msg, t_all *all)
 {

@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	dda_init(t_all *all, int *mx, int *my, double d[8])
 {

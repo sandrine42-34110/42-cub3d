@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void shorten_ray_before_wall(t_mlx *mlx)
 {

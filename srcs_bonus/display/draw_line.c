@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	init_draw_vars(t_mlx *mlx, t_bresenham *b)
 {

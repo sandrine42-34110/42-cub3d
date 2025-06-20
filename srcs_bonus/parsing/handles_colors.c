@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	parse_rgb(const char *str, int *rgb, t_all *all)
 {

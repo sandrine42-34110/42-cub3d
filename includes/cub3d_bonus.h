@@ -1,5 +1,5 @@
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
@@ -28,11 +28,12 @@
 # define KEY_ARROW_RIGHT	65363
 #endif
 
-# define W_WIN				1500
-# define H_WIN				900
+# define W_WIN				1100
+# define H_WIN				600
 
 # define MOVE_SPEED			0.125f
-# define ANGLE_ROT			0.1f
+# define ANGLE_ROT			0.01f
+
 # define COLL_PAD			0.1f
 
 # define FOV				60.0f
@@ -275,11 +276,11 @@ int			check_map_name(char *str);
 int			tile_size(t_all *all);
 double		begin_dir_pl(char dir);
 void		load_images(t_all *all);
-
 /* ====	move.c	=============================================================*/
 
 int			translation(int keycode, double angle, double *dx, double *dy);
 void		move_player(t_all *all, int keycode);
+int			mouse_hook(int x, int y, t_all *all);
 
 /* ====	parsing.c	=========================================================*/
 

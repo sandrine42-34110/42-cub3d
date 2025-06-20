@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 t_minimap	*init_minimap(t_all *all)
 {

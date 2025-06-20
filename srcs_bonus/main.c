@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	main(int argc, char **argv)
 {
@@ -15,6 +15,8 @@ int	main(int argc, char **argv)
 	display_screen(all);
 	mlx_hook(all->mlx->win_ptr, 17, 0, close_window, all);
 	mlx_hook(all->mlx->win_ptr, 2, (1L << 0), key_hook, all);
+	mlx_mouse_hide(all->mlx->mlx_ptr, all->mlx->win_ptr);
+	mlx_hook(all->mlx->win_ptr, 6, (1L << 6), mouse_hook, all);
 	mlx_loop(all->mlx->mlx_ptr);
 	mlx_destroy_window(all->mlx->mlx_ptr, all->mlx->win_ptr);
 	#ifdef __linux__															// À supprimer lorsque on aura plus besoin de travailler sur le Mac
