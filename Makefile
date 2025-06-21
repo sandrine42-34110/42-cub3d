@@ -47,6 +47,7 @@ SRC_BONUS =	srcs_bonus/check/check_text_and_map.c \
 			srcs_bonus/init/init.c \
 			srcs_bonus/init/utils_init.c \
 			srcs_bonus/move/move_player.c \
+			srcs_bonus/move/move_mouse.c \
 			srcs_bonus/parsing/handle_map.c \
 			srcs_bonus/parsing/handle_textures.c \
 			srcs_bonus/parsing/handles_colors.c \

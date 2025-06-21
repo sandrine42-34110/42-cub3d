@@ -31,7 +31,7 @@
 # define W_WIN				1100
 # define H_WIN				600
 
-# define MOVE_SPEED			0.125f
+# define MOVE_SPEED			0.01f
 # define ANGLE_ROT			0.01f
 
 # define COLL_PAD			0.1f
@@ -53,6 +53,16 @@ typedef struct s_player		t_player;
 typedef struct s_raycast	t_raycast;
 typedef struct s_img		t_img;
 
+typedef struct s_input
+{
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	left;
+	int	right;
+}		t_input;
+
 typedef struct s_all
 {
 	int			height_file;
@@ -64,6 +74,7 @@ typedef struct s_all
 	t_player	*player;
 	t_raycast	*raycast;
 	t_img		*screen;
+	t_input		input;
 }				t_all;
 
 typedef struct s_map
@@ -231,6 +242,9 @@ void		draw_line(t_all *all, t_mlx *mlx);
 
 int			close_window(t_all *all);
 int			key_hook(int keycode, t_all *all);
+int			key_press_hook(int keycode, t_all *all);
+int			key_release_hook(int keycode, t_all *all);
+int		update_frame(t_all *all);
 
 /* ====	raycating.c	=========================================================*/
 
@@ -276,6 +290,7 @@ int			check_map_name(char *str);
 int			tile_size(t_all *all);
 double		begin_dir_pl(char dir);
 void		load_images(t_all *all);
+
 /* ====	move.c	=============================================================*/
 
 int			translation(int keycode, double angle, double *dx, double *dy);
@@ -308,5 +323,10 @@ void		handle_colors(t_all *all, char *line, int fd);
 /* ====	utils.c	=============================================================*/
 
 void		go_to_end_fd(int fd, char *line);
+
+
+// Dans includes/cub3d_bonus.h
+void	rotate(int keycode, double *angle);
+void	new_pos_player(t_all *all);
 
 #endif

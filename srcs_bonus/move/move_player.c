@@ -82,7 +82,7 @@ void	move_player(t_all *all, int keycode)
 	display_screen(all);
 }
 
-int	mouse_hook(int x, int y, t_all *all)
+/* int	mouse_hook(int x, int y, t_all *all)
 {
 	static int	prev_x = -1;
 
@@ -96,4 +96,4 @@ int	mouse_hook(int x, int y, t_all *all)
 	prev_x = x;
 	display_screen(all);
 	return (0);
-}
+} */

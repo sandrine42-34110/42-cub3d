@@ -14,8 +14,10 @@ int	main(int argc, char **argv)
 	all->screen = init_screen(all);
 	display_screen(all);
 	mlx_hook(all->mlx->win_ptr, 17, 0, close_window, all);
-	mlx_hook(all->mlx->win_ptr, 2, (1L << 0), key_hook, all);
+	mlx_hook(all->mlx->win_ptr, 2, (1L << 0), key_press_hook, all);
+	mlx_hook(all->mlx->win_ptr, 3, (1L << 1), key_release_hook, all);
 	mlx_mouse_hide(all->mlx->mlx_ptr, all->mlx->win_ptr);
+	mlx_loop_hook(all->mlx->mlx_ptr, update_frame, all);
 	mlx_hook(all->mlx->win_ptr, 6, (1L << 6), mouse_hook, all);
 	mlx_loop(all->mlx->mlx_ptr);
 	mlx_destroy_window(all->mlx->mlx_ptr, all->mlx->win_ptr);

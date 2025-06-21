@@ -45,6 +45,12 @@ t_all	*init_all(int argc, char **argv)
 	}
 	all->height_file = 0;
 	all->pos_line_read_file = 0;
+	all->input.w = 0;
+	all->input.s = 0;
+	all->input.a = 0;
+	all->input.d = 0;
+	all->input.left = 0;
+	all->input.right = 0;
 	return (all);
 }
 
