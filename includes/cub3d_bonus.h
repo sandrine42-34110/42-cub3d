@@ -26,6 +26,7 @@
 # define KEY_ESCAPE			65307
 # define KEY_ARROW_LEFT		65361
 # define KEY_ARROW_RIGHT	65363
+# define KEY_M				109
 #endif
 
 # define W_WIN				1100
@@ -61,6 +62,7 @@ typedef struct s_input
 	int	d;
 	int	left;
 	int	right;
+	int	mouse_locked;
 }		t_input;
 
 typedef struct s_all
@@ -115,6 +117,9 @@ typedef struct s_player
 	double	x;
 	double	y;
 	double	or;
+	int		mouse;
+	int		mouse_enabled;
+
 }			t_player;
 
 typedef struct s_text
@@ -244,7 +249,7 @@ int			close_window(t_all *all);
 int			key_hook(int keycode, t_all *all);
 int			key_press_hook(int keycode, t_all *all);
 int			key_release_hook(int keycode, t_all *all);
-int		update_frame(t_all *all);
+int			update_frame(t_all *all);
 
 /* ====	raycating.c	=========================================================*/
 
@@ -328,5 +333,8 @@ void		go_to_end_fd(int fd, char *line);
 // Dans includes/cub3d_bonus.h
 void	rotate(int keycode, double *angle);
 void	new_pos_player(t_all *all);
+int	mouse_click_hook(int button, int x, int y, t_all *all);
+int	mouse_hook(int x, int y, t_all *all);
+
 
 #endif

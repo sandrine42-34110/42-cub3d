@@ -1,7 +1,14 @@
 #include "cub3d_bonus.h"
 
+void	restore_mouse(t_all *all)
+{
+	if (all && all->mlx && all->mlx->mlx_ptr && all->mlx->win_ptr)
+		mlx_mouse_show(all->mlx->mlx_ptr, all->mlx->win_ptr);
+}
+
 int	close_window(t_all *all)
 {
+	restore_mouse(all);
 	if (all->mlx->img_w_n.img)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_n.img);
 	if (all->mlx->img_w_s.img)
@@ -12,12 +19,12 @@ int	close_window(t_all *all)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_w.img);
 	if (all->screen->img)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->screen->img);
-	#ifdef __linux__
-		return (mlx_loop_end(all->mlx->mlx_ptr));
-	#else
-		(void)all;
-		exit(0);
-	#endif
+	if (all->mlx->win_ptr)
+		mlx_destroy_window(all->mlx->mlx_ptr, all->mlx->win_ptr);
+	if (all->mlx->mlx_ptr)
+		mlx_destroy_display(all->mlx->mlx_ptr);
+	free_all(all);
+	exit(0);
 }
 /* 
 int	key_hook(int keycode, t_all *all)
@@ -33,6 +40,7 @@ int	key_hook(int keycode, t_all *all)
 
 int	key_press_hook(int keycode, t_all *all)
 {
+	
 	if (keycode == KEY_ESCAPE)
 		close_window(all);
 	else if (keycode == KEY_W_UP)
@@ -131,5 +139,6 @@ int	update_frame(t_all *all)
 		move_player_by_delta(all, dx, dy);
 
 	display_screen(all);
+
 	return (0);
 }

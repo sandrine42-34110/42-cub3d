@@ -27,6 +27,8 @@ t_player	*init_player(t_all *all)
 	player->x = all->map->x_p + 0.5;
 	player->y = all->map->y_p + 0.5;
 	player->or = begin_dir_pl(all->map->or_p);
+	player->mouse = 0;
+	player->mouse_enabled = 1;
 	return (player);
 }
 
