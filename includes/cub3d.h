@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:26:56 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/23 16:26:59 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:02:41 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 # include "../minilibx-linux/mlx.h"
 
 # include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
+# include <X11/X.h>
 
 # define KEY_W_UP			119
 # define KEY_S_DOWN			115
