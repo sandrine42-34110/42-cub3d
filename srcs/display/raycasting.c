@@ -1,14 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/23 16:28:14 by sapupier          #+#    #+#             */
+/*   Updated: 2025/06/23 16:28:15 by sapupier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void shorten_ray_before_wall(t_mlx *mlx)
+void	shorten_ray_before_wall(t_mlx *mlx)
 {
-	int dx = mlx->x1 - mlx->x0;
-	int dy = mlx->y1 - mlx->y0;
-	double len = sqrt(dx * dx + dy * dy);
+	int		dx;
+	int		dy;
+	double	len;
+	double	scale;
 
+	dx = mlx->x1 - mlx->x0;
+	dy = mlx->y1 - mlx->y0;
+	len = sqrt(dx * dx + dy * dy);
 	if (len < 1.0)
 		return ;
-	double scale = (len - 1.0) / len;
+	scale = (len - 1.0) / len;
 	mlx->x1 = mlx->x0 + dx * scale;
 	mlx->y1 = mlx->y0 + dy * scale;
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/23 16:26:56 by sapupier          #+#    #+#             */
+/*   Updated: 2025/06/23 16:26:59 by sapupier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -16,12 +28,14 @@
 # define KEY_ARROW_LEFT		65361
 # define KEY_ARROW_RIGHT	65363
 
-# define W_WIN				1500
-# define H_WIN				900
+# define W_WIN				1100
+# define H_WIN				600
 
-# define MOVE_SPEED			0.125f
-# define ANGLE_ROT			0.1f
+# define MOVE_SPEED			0.01f
+# define ANGLE_ROT			0.01f
+
 # define COLL_PAD			0.1f
+
 # define FOV				60.0f
 
 # define TITLE "cub3d"
@@ -39,6 +53,16 @@ typedef struct s_player		t_player;
 typedef struct s_raycast	t_raycast;
 typedef struct s_img		t_img;
 
+typedef struct s_input
+{
+	int	w;
+	int	s;
+	int	a;
+	int	d;
+	int	left;
+	int	right;
+}		t_input;
+
 typedef struct s_all
 {
 	int			height_file;
@@ -50,6 +74,7 @@ typedef struct s_all
 	t_player	*player;
 	t_raycast	*raycast;
 	t_img		*screen;
+	t_input		input;
 }				t_all;
 
 typedef struct s_map
@@ -216,7 +241,6 @@ void		draw_line(t_all *all, t_mlx *mlx);
 /* ====	handle_win.c	=====================================================*/
 
 int			close_window(t_all *all);
-int			key_hook(int keycode, t_all *all);
 
 /* ====	raycating.c	=========================================================*/
 
@@ -263,10 +287,18 @@ int			tile_size(t_all *all);
 double		begin_dir_pl(char dir);
 void		load_images(t_all *all);
 
-/* ====	move.c	=============================================================*/
+/* ====	move_player.c	=====================================================*/
 
-int			translation(int keycode, double angle, double *dx, double *dy);
-void		move_player(t_all *all, int keycode);
+int			is_walkable(t_all *all, double x, double y);
+void		move_player_by_delta(t_all *all, double dx, double dy);
+void		rotation(t_all *all);
+void		translation(t_all *all, double *dy, double *dx);
+int			update_frame(t_all *all);
+
+/* ====	utils_move.c	=====================================================*/
+
+int			key_press_hook(int keycode, t_all *all);
+int			key_release_hook(int keycode, t_all *all);
 
 /* ====	parsing.c	=========================================================*/
 

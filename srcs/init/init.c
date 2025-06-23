@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/23 16:28:49 by sapupier          #+#    #+#             */
+/*   Updated: 2025/06/23 16:28:51 by sapupier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_text	*init_text(void)
@@ -39,12 +51,15 @@ t_all	*init_all(int argc, char **argv)
 	all->text = init_text();
 	all->map = init_map();
 	if (!all->text || !all->map)
-	{
-		free_text_and_map(all);
-		return (NULL);
-	}
+		return (free_text_and_map(all), NULL);
 	all->height_file = 0;
 	all->pos_line_read_file = 0;
+	all->input.w = 0;
+	all->input.s = 0;
+	all->input.a = 0;
+	all->input.d = 0;
+	all->input.left = 0;
+	all->input.right = 0;
 	return (all);
 }
 

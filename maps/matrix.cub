@@ -1,10 +1,10 @@
-NO textures/matrix.xpm
-SO textures/matrix.xpm
-WE textures/matrix.xpm
-EA textures/matrix.xpm
+NO textures/cobblestone.xpm
+SO textures/red_brick.xpm
+WE textures/mossy_cobblestone1.xpm
+EA textures/cobblestone_02.xpm
 
-F 0,0,0
-C 0,0,0
+C 157 , 198, 239
+F 25, 67, 24
 
 111111111111111111111
 101000001000000000001

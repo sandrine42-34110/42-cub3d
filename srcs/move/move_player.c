@@ -1,83 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move_player.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/23 16:29:06 by sapupier          #+#    #+#             */
+/*   Updated: 2025/06/23 16:29:07 by sapupier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int	translation(int keycode, double angle, double *dx, double *dy)
+int	is_walkable(t_all *all, double x, double y)
 {
-	if (keycode == KEY_W_UP)
-	{
-		*dx = cos(angle) * MOVE_SPEED;
-		*dy = sin(angle) * MOVE_SPEED;
-	}
-	else if (keycode == KEY_S_DOWN)
-	{
-		*dx = -cos(angle) * MOVE_SPEED;
-		*dy = -sin(angle) * MOVE_SPEED;
-	}
-	else if (keycode == KEY_D_RIGHT)
-	{
-		*dx = cos(angle + M_PI / 2) * MOVE_SPEED;
-		*dy = sin(angle + M_PI / 2) * MOVE_SPEED;
-	}
-	else if (keycode == KEY_A_LEFT)
-	{
-		*dx = cos(angle - M_PI / 2) * MOVE_SPEED;
-		*dy = sin(angle - M_PI / 2) * MOVE_SPEED;
-	}
-	else
-		return (1);
-	return (0);
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)x;
+	map_y = (int)y;
+	if (all->map->line[map_y][map_x] == '1')
+		return (0);
+	return (1);
 }
 
-void	rotate(int keycode, double *or)
-{
-	if (keycode)
-	{
-		if (keycode == KEY_ARROW_RIGHT)
-			(*or) += ANGLE_ROT;
-		else if (keycode == KEY_ARROW_LEFT)
-			(*or) -= ANGLE_ROT;
-	}
-	return ;
-}
-
-void	new_pos_player(t_all *all)
+void	move_player_by_delta(t_all *all, double dx, double dy)
 {
 	double	new_x;
 	double	new_y;
 
-	new_x = all->player->x + all->player->dx;
-	new_y = all->player->y + all->player->dy;
-	if (all->player->dx < 0)
+	new_x = all->player->x + dx;
+	new_y = all->player->y + dy;
+	if (is_walkable(all, new_x, all->player->y))
+		all->player->x = new_x;
+	if (is_walkable(all, all->player->x, new_y))
+		all->player->y = new_y;
+}
+
+void	rotation(t_all *all)
+{
+	if (all->input.left)
+		all->player->or -= ANGLE_ROT;
+	if (all->input.right)
+		all->player->or += ANGLE_ROT;
+}
+
+void	translation(t_all *all, double *dy, double *dx)
+{
+	if (all->input.w)
 	{
-		if (all->map->line[(int)all->player->y][(int)(new_x - COLL_PAD)] != '1')
-			all->player->x = new_x;
+		*dx += cos(all->player->or) * MOVE_SPEED;
+		*dy += sin(all->player->or) * MOVE_SPEED;
 	}
-	else
+	if (all->input.s)
 	{
-		if (all->map->line[(int)all->player->y][(int)(new_x + COLL_PAD)] != '1')
-			all->player->x = new_x;
+		*dx -= cos(all->player->or) * MOVE_SPEED;
+		*dy -= sin(all->player->or) * MOVE_SPEED;
 	}
-	if (all->player->dy < 0)
+	if (all->input.d)
 	{
-		if (all->map->line[(int)(new_y - COLL_PAD)][(int)all->player->x] != '1')
-			all->player->y = new_y;
+		*dx += cos(all->player->or + M_PI_2) * MOVE_SPEED;
+		*dy += sin(all->player->or + M_PI_2) * MOVE_SPEED;
 	}
-	else
+	if (all->input.a)
 	{
-		if (all->map->line[(int)(new_y + COLL_PAD)][(int)all->player->x] != '1')
-			all->player->y = new_y;
+		*dx += cos(all->player->or - M_PI_2) * MOVE_SPEED;
+		*dy += sin(all->player->or - M_PI_2) * MOVE_SPEED;
 	}
 }
 
-void	move_player(t_all *all, int keycode)
+int	update_frame(t_all *all)
 {
-	if (keycode == KEY_W_UP || keycode == KEY_S_DOWN
-		|| keycode == KEY_A_LEFT || keycode == KEY_D_RIGHT)
-	{
-		translation(keycode, all->player->or, &all->player->dx,
-			&all->player->dy);
-		new_pos_player(all);
-	}
-	else if (keycode == KEY_ARROW_LEFT || keycode == KEY_ARROW_RIGHT)
-		rotate(keycode, &all->player->or);
+	double	dx;
+	double	dy;
+
+	dx = 0;
+	dy = 0;
+	rotation(all);
+	translation(all, &dy, &dx);
+	if (dx != 0 || dy != 0)
+		move_player_by_delta(all, dx, dy);
 	display_screen(all);
+	return (0);
 }

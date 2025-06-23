@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_win.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/23 16:28:09 by sapupier          #+#    #+#             */
+/*   Updated: 2025/06/23 16:28:10 by sapupier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	close_window(t_all *all)
@@ -12,16 +24,10 @@ int	close_window(t_all *all)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->mlx->img_w_w.img);
 	if (all->screen->img)
 		mlx_destroy_image(all->mlx->mlx_ptr, all->screen->img);
-	return (mlx_loop_end(all->mlx->mlx_ptr));
-}
-
-int	key_hook(int keycode, t_all *all)
-{
-	if (keycode == KEY_ESCAPE)
-	{
-		close_window(all);
-	}
-	else
-		move_player(all, keycode);
-	return (0);
+	if (all->mlx->win_ptr)
+		mlx_destroy_window(all->mlx->mlx_ptr, all->mlx->win_ptr);
+	if (all->mlx->mlx_ptr)
+		mlx_destroy_display(all->mlx->mlx_ptr);
+	free_all(all);
+	exit(0);
 }
