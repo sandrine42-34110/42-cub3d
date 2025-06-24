@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:27:34 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/24 11:06:32 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:30:53 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,28 @@ int	find_start(t_map *map, int *start_x, int *start_y)
 	return (0);
 }
 
+int	find_unclose_map(t_map *map, char **map_copy, t_all *all)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < map->h_map)
+	{
+		x = 0;
+		while (x < map->w_map)
+		{
+			if (map->line[y][x] == '0')
+			{
+				flood_fill(map_copy, x, y, all);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
 void	ctrl_only_one_player(t_map *map, int start_x, int start_y, t_all *all)
 {
 	int	x;
@@ -103,20 +125,4 @@ void	ctrl_only_one_player(t_map *map, int start_x, int start_y, t_all *all)
 		x = 0;
 		y++;
 	}
-}
-
-void	check_close_map(t_all *all)
-{
-	int		x;
-	int		y;
-	char	**map_copy;
-
-	x = 0;
-	y = 0;
-	if (!find_start(all->map, &x, &y))
-		error_msg_and_close("Error : No player!\n", all);
-	ctrl_only_one_player(all->map, x, y, all);
-	map_copy = duplicate_map(all->map, all);
-	flood_fill(map_copy, x, y, all);
-	free_map_copy(map_copy, all->map->h_map);
 }

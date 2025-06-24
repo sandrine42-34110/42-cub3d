@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:26:56 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/24 10:40:27 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:36:08 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,10 +211,16 @@ typedef enum e_texture
 /* ====	check_text_and_map.c	=============================================*/
 
 void		check_text_and_map(t_all *all);
+void		check_close_map(t_all *all);
 
 /* ====	floodfill.c	=========================================================*/
 
-void		check_close_map(t_all *all);
+char		**duplicate_map(t_map *map, t_all *all);
+void		flood_fill(char **map, int x, int y, t_all *all);
+int			find_start(t_map *map, int *start_x, int *start_y);
+int			find_unclose_map(t_map *map, char **map_copy, t_all *all);
+void		ctrl_only_one_player(t_map *map, int start_x, int start_y,
+				t_all *all);
 
 /* ====	dda.c	=============================================================*/
 

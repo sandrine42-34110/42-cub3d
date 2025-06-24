@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:27:26 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/24 10:57:57 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:30:36 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,23 @@ void	invalid_tile(t_all *all)
 		}
 		y++;
 	}
+}
+
+void	check_close_map(t_all *all)
+{
+	int		x;
+	int		y;
+	char	**map_copy;
+
+	x = 0;
+	y = 0;
+	if (!find_start(all->map, &x, &y))
+		error_msg_and_close("Error : No player!\n", all);
+	ctrl_only_one_player(all->map, x, y, all);
+	map_copy = duplicate_map(all->map, all);
+	flood_fill(map_copy, x, y, all);
+	find_unclose_map(all->map, map_copy, all);
+	free_map_copy(map_copy, all->map->h_map);
 }
 
 void	check_map(t_all *all)

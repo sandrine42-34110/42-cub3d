@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:29:36 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/24 10:41:19 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:35:25 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	parse_rgb(const char *str, int *rgb, t_all *all, char *line)
 	{
 		j = 0;
 		if (!ft_isdigit_and_spaces(split[i]))
-			ft_free_split(split, "Error : RGB must be positive numbers\n", all, line);
+			ft_free_split(split, "RGB must be positive numbers\n", all, line);
 		while (split[i][j] && (split[i][j] == ' ' || split[i][j] == '\t'))
 			j++;
 		if (split[i][j] == '\0' || split[i][j] == '\n')
-			ft_free_split(split, "Error : RGB value cannot be empty\n", all, line);
+			ft_free_split(split, "RGB value cannot be empty\n", all, line);
 		val = ft_atoi(split[i]);
 		if (val < 0 || val > 255)
-			ft_free_split(split, "Error : RGB value out of limits\n", all, line);
+			ft_free_split(split, "RGB value out of limits\n", all, line);
 		rgb[i] = val;
 	}
 	ft_free_split(split, NULL, all, line);

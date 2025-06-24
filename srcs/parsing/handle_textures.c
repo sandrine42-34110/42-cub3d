@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:29:31 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/24 10:44:11 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:34:34 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	parse_texture(char **split, t_all *all, int fd, char *line)
 	{
 		go_to_end_fd(fd, line);
 		free(trim);
-		ft_free_split(split, "Error : Duplicate or invalid texture\n", all, line);
+		ft_free_split(split, "Error : Duplicate or invalid texture\n",
+			all, line);
 	}
 	ft_free_split(split, NULL, all, line);
 	free(trim);
@@ -101,7 +102,8 @@ void	handle_textures(t_all *all, char *line, int fd)
 	if (split[2] && split[2][0] != '\n')
 	{
 		go_to_end_fd(fd, line);
-		ft_free_split(split, "Error : Too many arguments for texture\n", all, line);
+		ft_free_split(split, "Error : Too many arguments for texture\n",
+			all, line);
 	}
 	parse_texture(split, all, fd, line);
 }
