@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:29:42 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/23 16:29:43 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:36:27 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	handle_file(t_all *all, char *file)
 	char	*line;
 
 	fd = open(file, O_RDONLY);
+	all->fd = fd;
 	line = get_next_line(fd);
 	while (line)
 	{

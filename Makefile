@@ -7,7 +7,7 @@ MINILIBX_LINUX_DIR = ./minilibx-linux
 MLX = $(MINILIBX_LINUX_DIR)/libmlx.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I includes
+CFLAGS = -Wall -Wextra -Werror -O3 -I includes
 
 SRC =	srcs/check/check_text_and_map.c \
 		srcs/check/floodfill.c \

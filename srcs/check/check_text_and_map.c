@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:27:26 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/23 17:03:57 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:57:57 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	invalid_tile(t_all *all)
 		x = 0;
 		while (x < all->map->w_map)
 		{
-			if (all->map->line[y][x] != '\0')
+			if (all->map->line[y][x] == '\0')
 				break ;
 			else if (all->map->line[y][x] != 'N' && all->map->line[y][x] != 'S'
 				&& all->map->line[y][x] != 'E' && all->map->line[y][x] != 'W'

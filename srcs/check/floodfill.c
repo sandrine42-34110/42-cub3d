@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:27:34 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/23 16:27:35 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:06:32 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	flood_fill(char **map, int x, int y, t_all *all)
 		return ;
 	if (map[y][x] != '0' && map[y][x] != 'N' && map[y][x] != 'S' &&
 		map[y][x] != 'E' && map[y][x] != 'W')
+	{
+		free_map_copy(map, all->map->h_map);
 		error_msg_and_close("Error : Map isn't valid!\n", all);
+	}
 	flood_fill(map, x + 1, y, all);
 	map[y][x] = 'F';
 	flood_fill(map, x - 1, y, all);

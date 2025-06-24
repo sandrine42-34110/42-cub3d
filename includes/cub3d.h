@@ -6,7 +6,7 @@
 /*   By: sapupier <sapupier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:26:56 by sapupier          #+#    #+#             */
-/*   Updated: 2025/06/23 17:02:41 by sapupier         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:40:27 by sapupier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_all
 {
 	int			height_file;
 	int			pos_line_read_file;
+	int			fd;
 	t_map		*map;
 	t_text		*text;
 	t_mlx		*mlx;
@@ -316,13 +317,13 @@ void		handle_map(t_all *all, char *line, int fd);
 
 /* ====	handle_textures.c	=================================================*/
 
-void		ft_free_split(char **split, char *msg, t_all *all);
+void		ft_free_split(char **split, char *msg, t_all *all, char *line);
 int			is_texture(char *line);
 void		handle_textures(t_all *all, char *line, int fd);
 
 /* ====	handle_colors.c	=====================================================*/
 
-void		set_color(t_all *all, char type, const char *str);
+void		set_color(t_all *all, char type, const char *str, char *line);
 int			is_color(char *line);
 void		handle_colors(t_all *all, char *line, int fd);
 
